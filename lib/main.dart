@@ -18,7 +18,7 @@ class _QioskAppState extends State<QioskApp> {
         children: <Widget>[
           Container(
             child: Scaffold(
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.blue,
               body: Column(
                 children: [
                   ItemHeader(),

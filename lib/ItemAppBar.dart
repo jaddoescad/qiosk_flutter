@@ -13,10 +13,12 @@ class ItemAppBar extends StatelessWidget {
         backgroundColor: Colors.transparent, //No more green
         elevation: 0.0, //Shadow gone
         leading: new IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent, // makes highlight invisible too
           icon: new SvgPicture.asset(
             'assets/svg_images/backButton.svg',
-            height: 43.0,
-            width: 43.0,
+            height: 35.0,
+            width: 35.0,
             allowDrawingOutsideViewBox: true,
           ),
           onPressed: () => Navigator.of(context).pop(),
