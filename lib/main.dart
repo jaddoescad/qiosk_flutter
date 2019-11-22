@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import './ItemAppBar.dart';
-import './ItemHeader.dart';
+import './Item.dart';
 
-void main() => runApp(QioskApp());
+
+void main() {
+  runApp(QioskApp());
+} 
 
 class QioskApp extends StatefulWidget {
   @override
@@ -18,10 +20,11 @@ class _QioskAppState extends State<QioskApp> {
         children: <Widget>[
           Container(
             child: Scaffold(
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.white,
               body: Column(
                 children: [
-                  ItemHeader(),
+                  ItemBody(), 
+                  AddToCartButton(), 
                 ],
               ),
             ),
