@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './constants.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import './RadioButton.dart';
 
 const imgUrl =
     "https://cdn.vox-cdn.com/thumbor/d0jfYnyJ79WTE51N-nNbq8mBJMg=/896x473:7792x5502/1200x800/filters:focal(3649x2201:5039x3591)/cdn.vox-cdn.com/uploads/chorus_image/image/65731015/cz4jwpcaqabnupumbhji.0.jpg";
@@ -124,11 +124,9 @@ class ItemAppBar extends StatelessWidget {
         leading: new IconButton(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent, // makes highlight invisible too
-          icon: new SvgPicture.asset(
-            'assets/svg_images/backButton.svg',
+          icon: Image.asset('assets/images/backButton.png',
             height: 35.0,
             width: 35.0,
-            allowDrawingOutsideViewBox: true,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -189,52 +187,27 @@ class AddToCartButton extends StatelessWidget {
 
 void printObject() {}
 
-// List convertSectionMapIntoArray(map) {
-//   List sectionArray = [];
-//   map.forEach((k, v) {
-//     v['id'] = k;
-//     sectionArray.add(v);
-//   });
-//   sectionArray.sort((a, b) {
-//     return a['order']
-//         .toString()
-//         .toLowerCase()
-//         .compareTo(b['order'].toString().toLowerCase());
-//   });
-//   return sectionArray;
-// }
+List convertSectionMapIntoArray(map) {
+  List sectionArray = [];
+  map.forEach((k, v) {
+    v['id'] = k;
+    sectionArray.add(v);
+  });
+  sectionArray.sort((a, b) {
+    return a['order']
+        .toString()
+        .toLowerCase()
+        .compareTo(b['order'].toString().toLowerCase());
+  });
+  return sectionArray;
+}
 
-// class Section extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Divider(),
-//       width: 100,
-//       height: 100,
-//       decoration: BoxDecoration(
-//         border: Border.all(),
-//       ),
-//     );
-//   }
-// }
-
-// class ItemBody extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Expanded(
-//       child: ListView(
-//         padding: const EdgeInsets.all(8),
-//         children: <Widget>[
-//             // ...convertSectionMapIntoArray(sections).map((section) =>Section()),
-//             Section(),
-//             Section(),
-//             Section(),
-//             Section(),
-//         ],
-//       ),
-//     );
-//   }
-// }
+class Section extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: CustomRadio());
+  }
+}
 
 class ItemBody extends StatelessWidget {
   @override
@@ -250,17 +223,10 @@ class ItemBody extends StatelessWidget {
             ],
           ),
         ),
-        SliverFixedExtentList(
-          itemExtent: 50.0,
+        SliverList(
           delegate: SliverChildListDelegate(
             [
-              Container(color: Colors.red),
-              Container(color: Colors.purple),
-              Container(color: Colors.green),
-              Container(color: Colors.orange),
-              Container(color: Colors.yellow),
-              Container(color: Colors.pink),
-              Container(color: Colors.yellow),
+              ...convertSectionMapIntoArray(sections).map((section) =>Section()),
             ],
           ),
         ),
