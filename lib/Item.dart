@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './constants.dart';
 import './RadioButton.dart';
+import './checkbox.dart';
+
 
 const imgUrl =
     "https://cdn.vox-cdn.com/thumbor/d0jfYnyJ79WTE51N-nNbq8mBJMg=/896x473:7792x5502/1200x800/filters:focal(3649x2201:5039x3591)/cdn.vox-cdn.com/uploads/chorus_image/image/65731015/cz4jwpcaqabnupumbhji.0.jpg";
@@ -205,7 +207,7 @@ List convertSectionMapIntoArray(map) {
 class Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(child: CustomRadio());
+    return Container(child: TimePreferencesWidget());
   }
 }
 

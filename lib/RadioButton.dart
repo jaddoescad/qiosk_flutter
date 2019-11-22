@@ -1,95 +1,46 @@
 import 'package:flutter/material.dart';
 
-class CustomRadio extends StatefulWidget {
-  @override
-  createState() {
-    return new CustomRadioState();
-  }
+class TimeValue {
+    final int _key;
+    final String _value;
+    TimeValue(this._key, this._value);
 }
 
-class CustomRadioState extends State<CustomRadio> {
-  List<RadioModel> sampleData = new List<RadioModel>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    sampleData.add(new RadioModel(false, 'A', 'April 18'));
-    sampleData.add(new RadioModel(false, 'B', 'April 17'));
-    sampleData.add(new RadioModel(false, 'C', 'April 16'));
-    sampleData.add(new RadioModel(false, 'D', 'April 15'));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ...sampleData.map((sample) {
-          var index = sampleData.indexOf(sample);
-          return 
-          InkWell(
-                splashColor: Colors.transparent,
-                onTap: () {
-                  setState(() {
-                    sampleData.forEach((element) => element.isSelected = false);
-                    sampleData[index].isSelected = true;
-                  });
-                },
-                child: new RadioItem(sampleData[index]),
-              );
-        })
-      ],
-    );
-  }
+class TimePreferencesWidget extends StatefulWidget {
+    @override
+    TimePreferencesWidgetState createState() => TimePreferencesWidgetState();
 }
 
+class TimePreferencesWidgetState extends State<TimePreferencesWidget> {
+    int _currentTimeValue = 1;
 
-class RadioItem extends StatelessWidget {
-  final RadioModel _item;
-  RadioItem(this._item);
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      margin: new EdgeInsets.all(15.0),
-      child: new Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          new Container(
-            height: 50.0,
-            width: 50.0,
-            child: new Center(
-              child: new Text(_item.buttonText,
-                  style: new TextStyle(
-                      color:
-                          _item.isSelected ? Colors.white : Colors.black,
-                      //fontWeight: FontWeight.bold,
-                      fontSize: 18.0)),
+    final _buttonOptions = [
+        TimeValue(30,  "30 minutes"),
+        TimeValue(60,  "1 hour"),
+        TimeValue(120, "2 hours"),
+        TimeValue(240, "4 hours"),
+        TimeValue(480, "8 hours"),
+        TimeValue(720, "12 hours"),
+    ];
+
+    @override
+    Widget build(BuildContext context) {
+        return Container(
+            child: Column(
+              children: _buttonOptions.map((radioValue) {
+                  return RadioListTile(
+                    groupValue: _currentTimeValue,
+                    title: Text(radioValue._value),
+                    value: radioValue._key,
+                    onChanged: (val) {
+                        setState(() {
+                            debugPrint('VAL = $val');
+                            _currentTimeValue = val;
+                        });
+                    },
+                );
+                }).toList(),
             ),
-            decoration: new BoxDecoration(
-              color: _item.isSelected
-                  ? Colors.blueAccent
-                  : Colors.transparent,
-              border: new Border.all(
-                  width: 1.0,
-                  color: _item.isSelected
-                      ? Colors.blueAccent
-                      : Colors.grey),
-              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
-            ),
-          ),
-          new Container(
-            margin: new EdgeInsets.only(left: 10.0),
-            child: new Text(_item.text),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class RadioModel {
-  bool isSelected;
-  final String buttonText;
-  final String text;
-  RadioModel(this.isSelected, this.buttonText, this.text);
+        );
+    }
 }
