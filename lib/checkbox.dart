@@ -18,6 +18,7 @@ class DemoState extends State<Demo> {
           return new CheckboxListTile(
             title: new Text(key),
             value: values[key],
+            secondary: Text("\$2.55"),
             onChanged: (bool value) {
               setState(() {
                 values[key] = value;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import './Item.dart';
 
-
-
 void main() {
   runApp(QioskApp());
 } 

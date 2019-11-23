@@ -23,6 +23,7 @@ class TimePreferencesWidgetState extends State<TimePreferencesWidget> {
         TimeValue(720, "12 hours"),
     ];
 
+
     @override
     Widget build(BuildContext context) {
         return Container(
@@ -32,6 +33,7 @@ class TimePreferencesWidgetState extends State<TimePreferencesWidget> {
                     groupValue: _currentTimeValue,
                     title: Text(radioValue._value),
                     value: radioValue._key,
+                    secondary: Text("\$2.55"),
                     onChanged: (val) {
                         setState(() {
                             debugPrint('VAL = $val');
