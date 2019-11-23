@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './constants.dart';
 import './RadioButton.dart';
-import './checkbox.dart';
+import './CheckboxGroup.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 const imgUrl =
@@ -10,15 +10,30 @@ const title = 'Burger Angus Original';
 const description =
     'Whether spicy or mild, our Bonafide Chicken is marinated for at least 12 hours, then hand-battered, hand-breaded and bursting with bold Louisiana flavour.';
 
-var sections = {
+
+Map sections_ = {
   '8778': {
     'max': 0,
     'title': 'Breakfast',
     'type': 'Checkbox',
-    'order': '3',
+    'order': 3,
     'selections': {
-      '7888': {'price': '2', 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': '3'}
+      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
+      '8939': {'title': 'Large Hashbrowns', 'price': 3}
+    }
+  },
+};
+
+
+Map sections = {
+  '8778': {
+    'max': 0,
+    'title': 'Breakfast',
+    'type': 'Checkbox',
+    'order': 3,
+    'selections': {
+      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
+      '8939': {'title': 'Large Hashbrowns', 'price': 3}
     }
   },
   '8779': {
@@ -26,10 +41,10 @@ var sections = {
     'min': 1,
     'title': 'Lunch',
     'type': 'Checkbox',
-    'order': '1',
+    'order': 1,
     'selections': {
-      '7888': {'price': '2', 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': '3'}
+      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
+      '8939': {'title': 'Large Hashbrowns', 'price': 3}
     }
   },
   '8378': {
@@ -37,10 +52,10 @@ var sections = {
     'min': 0,
     'title': 'Dinner',
     'type': 'Radio',
-    'order': '2',
+    'order': 2,
     'selections': {
-      '7888': {'price': '2', 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': '3'}
+      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
+      '8939': {'title': 'Large Hashbrowns', 'price': 3}
     }
   },
   '8478': {
@@ -49,8 +64,8 @@ var sections = {
     'title': 'Breakfast',
     'type': 'Radio',
     'selections': {
-      '7888': {'price': '2', 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': '3'}
+      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
+      '8939': {'title': 'Large Hashbrowns', 'price': 3}
     }
   }
 };
@@ -219,6 +234,17 @@ List convertSectionMapIntoArray(map) {
   return sectionArray;
 }
 
+List convertSelectionMapIntoArray(map) {
+  List selectionArray = [];
+  map.forEach((id, selection) {
+    selection['id'] = id;
+    selection['selected'] = false;
+    selectionArray.add(selection);
+  });
+  selectionArray = sortArray(selectionArray);
+  return selectionArray;
+}
+
 class Header extends StatelessWidget {
   Header({this.section});
   final section;
@@ -284,31 +310,15 @@ class Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String type = section['type'] ?? "Radio";
+    final selections = section['selections'];
+    final sectionId = section['id'];
     return Column(children: <Widget>[
     Header(section: section),
-    if (section['selections'] != null) if (type=="Checkbox") Demo(),
-    if (section['selections'] != null) if (type=="Radio") TimePreferencesWidget()
-    ],);
-    
-    
+    if (selections != null) if (type=="Checkbox") CheckboxGroup(sectionId: sectionId,  selections: convertSelectionMapIntoArray(selections)),
+    if (selections != null) if (type=="Radio") TimePreferencesWidget(sectionId: sectionId, selections: convertSelectionMapIntoArray(selections))
+    ],);  
   }
 }
-
-
-// class Section extends StatelessWidget {
-//   Section({this.section});
-//   final section;
-//   @override
-//   Widget build(BuildContext context) {
-//     final List selections = section['selections'];
-//     return Container(
-      // children: <Widget>[
-    // Header(section: section),
-    // if (selections.isNotEmpty) Demo()
-    // ],
-    // );
-  // }
-// }
 
 
 
