@@ -14,17 +14,44 @@ class CheckboxGroupState extends State<CheckboxGroup> {
   Widget build(BuildContext context) {
     return Column(
         children: widget.selections.map<Widget>((selection) {
-          return new CheckboxListTile(
-            title: new Text(selection['title']),
+          return Stack(
+            children: <Widget>[
+          Checkbox(
             value: selection['selected'],
-            secondary: Text("\$2.55"),
             onChanged: (bool value) {
               setState(() {
                 selection['selected']= value;
               });
             },
+          ),
+          InkWell(
+                  onTap: () {
+                    setState(() {
+                      selection['selected']= !selection['selected'];
+                      // _selected = selection['id'];
+                    });
+                  },
+                  child: Container(
+                    color: Colors.red.withAlpha(0),
+                    width: double.infinity,
+                    height: 100,
+                  )),
+            ]
           );
         }).toList(),
-      );
+            
+        );
   }
 }
+
+
+// Stack(
+//             children: <Widget>[
+//               Radio(
+//                 groupValue: _selected,
+//                 value: selection['id'],
+//                 onChanged: (selected) {},
+//               ),
+              
+//             ],
+//           );
