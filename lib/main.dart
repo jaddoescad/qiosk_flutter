@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import './Item.dart';
+import 'package:flutter/rendering.dart';
+
 
 void main() {
+  // debugPaintSizeEnabled = true; //         <--- enable visual rendering
   runApp(QioskApp());
 } 
 

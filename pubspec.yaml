@@ -27,6 +27,7 @@ dependencies:
 dev_dependencies:
   json_annotation: ^3.0.0
   flutter_sticky_header: "^0.4.0"
+  flutter_counter: ^1.0.3
   flutter_test:
     sdk: flutter
 

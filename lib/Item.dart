@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import './constants.dart';
-import './RadioButton.dart';
-import './CheckboxGroup.dart';
-import 'package:json_annotation/json_annotation.dart';
+import './SelectionGroup.dart';
+
 
 const imgUrl =
     "https://cdn.vox-cdn.com/thumbor/d0jfYnyJ79WTE51N-nNbq8mBJMg=/896x473:7792x5502/1200x800/filters:focal(3649x2201:5039x3591)/cdn.vox-cdn.com/uploads/chorus_image/image/65731015/cz4jwpcaqabnupumbhji.0.jpg";
@@ -255,7 +254,7 @@ class Header extends StatelessWidget {
       child: Container(
           color: kSectionColor,
           padding: EdgeInsets.only(left: kLeftPadding, right: kRightPadding),
-          height: 75,
+          height: 65,
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,8 +313,8 @@ class Section extends StatelessWidget {
     final sectionId = section['id'];
     return Column(children: <Widget>[
     Header(section: section),
-    if (selections != null) if (type=="Checkbox") CheckboxGroup(sectionId: sectionId,  selections: convertSelectionMapIntoArray(selections)),
-    if (selections != null) if (type=="Radio") TimePreferencesWidget(sectionId: sectionId, selections: convertSelectionMapIntoArray(selections))
+    if (selections != null) CheckboxGroup(sectionId: sectionId, type: type, selections: convertSelectionMapIntoArray(selections)),
+    // if (selections != null) if (type=="Radio") TimePreferencesWidget(sectionId: sectionId, selections: convertSelectionMapIntoArray(selections))
     ],);  
   }
 }
@@ -382,10 +381,74 @@ class ItemBody extends StatelessWidget {
             [
               ...convertSectionMapIntoArray(sections)
                   .map((section) => Section(section: section)),
+              ItemCounter()
             ],
           ),
         ),
       ],
     ));
+  }
+}
+
+
+class ItemCounter extends StatefulWidget {
+  @override
+  _ItemCounterState createState() => _ItemCounterState();
+}
+
+
+class _ItemCounterState extends State<ItemCounter> {
+ int _defaultValue =1;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+      InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Stack(alignment: Alignment.center, children: <Widget>[
+        Icon(Icons.remove, color: kMainColor,), 
+        counterButtonContainer()
+      ],) , onTap: () {
+        if (_defaultValue > 1) {
+         setState(() {
+           _defaultValue =_defaultValue - 1;
+         }); 
+        }
+      }),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text('$_defaultValue', style: TextStyle(color: kMainColor),),
+      ),
+      
+      
+      
+      InkWell( 
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        
+        child: Stack( alignment: Alignment.center,
+        children: <Widget> [
+          counterButtonContainer(), 
+          Icon(Icons.add, color: kMainColor,)
+        ]), onTap: () {
+        setState(() {
+                _defaultValue = _defaultValue +1;
+        });
+      })
+      ]),
+    );
+}
+
+  Container counterButtonContainer() {
+    return Container(width: 50, 
+      height: 50, 
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: kMainColor, width: 2)));
   }
 }
