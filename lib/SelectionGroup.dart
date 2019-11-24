@@ -24,27 +24,33 @@ class SelectionGroupState extends State<SelectionGroup> {
             onTap: () {
               setState(() {
                 if (widget.type == 'Checkbox') selectCheckBox(widget.sectionId, widget.selections, selection, widget.selectedList);
-                if (widget.type == 'Radio') selectRadio(widget.sectionId, widget.selections, radioSelected, selection, widget.selectedList);
+                if (widget.type == 'Radio') selectRadio(widget.sectionId, selection, widget.selectedList);
               });
             },
             child: new SelectionContainer(type: widget.type, selection: selection, radioSelected: radioSelected));
       }).toList(),
     );
   }
+
+  selectRadio(sectionId, selection, selectedList) {
+    radioSelected = selection['id'];
+    selectedList[sectionId] = selection;
+    
+  }
 }
 
 void selectCheckBox(sectionId, selections, selection, selectedList){
   selection['selected'] = !selection['selected'];
   //loop thru selections and return array of section_id and selection_id
-  var selected = selections.where((selection) {
+  var checkSelected = selections.where((selection) {
     return selection['selected'] == true ;
   }).toList();
-  selectedList[sectionId] = selected;
+  selectedList[sectionId] = checkSelected;
   print(selectedList);
 }
 
-void selectRadio(sectionId, selections, radioSelected, selection, selectedList) {
-radioSelected = selection['id'];
+void selectRadio(radioSelected, selection) {
+// radioSelected = selection['id'];
 // selectedList[sectionId] = selections[radioSelected];
 // print(selectedList);
 }
