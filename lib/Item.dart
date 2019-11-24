@@ -10,18 +10,6 @@ const description =
     'Whether spicy or mild, our Bonafide Chicken is marinated for at least 12 hours, then hand-battered, hand-breaded and bursting with bold Louisiana flavour.';
 
 
-Map sections_ = {
-  '8778': {
-    'max': 0,
-    'title': 'Breakfast',
-    'type': 'Checkbox',
-    'order': 3,
-    'selections': {
-      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': 3}
-    }
-  },
-};
 
 
 Map sections = {
@@ -303,8 +291,9 @@ class Selection extends StatelessWidget {
 
 
 class Section extends StatelessWidget {
-  Section({this.section});
+  Section({this.section, this.selectedList});
   final section;
+  final selectedList;
 
   @override
   Widget build(BuildContext context) {
@@ -313,7 +302,7 @@ class Section extends StatelessWidget {
     final sectionId = section['id'];
     return Column(children: <Widget>[
     Header(section: section),
-    if (selections != null) CheckboxGroup(sectionId: sectionId, type: type, selections: convertSelectionMapIntoArray(selections)),
+    if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: convertSelectionMapIntoArray(selections)),
     // if (selections != null) if (type=="Radio") TimePreferencesWidget(sectionId: sectionId, selections: convertSelectionMapIntoArray(selections))
     ],);  
   }
@@ -364,6 +353,8 @@ List sortArray(map) {
 }
 
 class ItemBody extends StatelessWidget {
+  ItemBody({this.selectedList});
+  final selectedList;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -380,7 +371,7 @@ class ItemBody extends StatelessWidget {
           delegate: SliverChildListDelegate(
             [
               ...convertSectionMapIntoArray(sections)
-                  .map((section) => Section(section: section)),
+                  .map((section) => Section(section: section, selectedList:selectedList)),
               ItemCounter()
             ],
           ),
@@ -410,6 +401,7 @@ class _ItemCounterState extends State<ItemCounter> {
       InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
+        
         child: Stack(alignment: Alignment.center, children: <Widget>[
         Icon(Icons.remove, color: kMainColor,), 
         counterButtonContainer()

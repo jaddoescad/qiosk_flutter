@@ -1,39 +1,51 @@
 import 'package:flutter/material.dart';
 import './Item.dart';
-import 'package:flutter/rendering.dart';
 
 
 void main() {
   // debugPaintSizeEnabled = true; //         <--- enable visual rendering
-  runApp(QioskApp());
+  runApp(MyApp());
 } 
 
-class QioskApp extends StatefulWidget {
+class MyApp extends StatefulWidget {
   @override
-  _QioskAppState createState() => _QioskAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _QioskAppState extends State<QioskApp> {
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: Stack(
-        children: <Widget>[
-          Container(
-            child: Scaffold(
-              backgroundColor: Colors.white,
-              body: Column(
-                children: [
-                  ItemBody(), 
-                  AddToCartButton(), 
-                ],
-              ),
+      home: Item(),
+    );
+  }
+}
+
+class Item extends StatefulWidget {
+  Map selectedList = {};
+  @override
+  _ItemState createState() => _ItemState();
+}
+
+class _ItemState extends State<Item> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            body: Column(
+              children: [
+                ItemBody(selectedList: widget.selectedList), 
+                AddToCartButton(), 
+              ],
             ),
           ),
-          ItemAppBar()
-        ],
-      ),
+        ),
+        ItemAppBar()
+      ],
     );
   }
 }

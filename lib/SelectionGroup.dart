@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
 
-class CheckboxGroup extends StatefulWidget {
-  CheckboxGroup({this.selections, this.sectionId, this.type});
+class SelectionGroup extends StatefulWidget {
+  SelectionGroup({this.selections, this.sectionId, this.type, this.selectedList});
   final selections;
   final sectionId;
   final type;
+  final selectedList;
 
   @override
-  CheckboxGroupState createState() => new CheckboxGroupState();
+  SelectionGroupState createState() => new SelectionGroupState();
 }
 
-class CheckboxGroupState extends State<CheckboxGroup> {
+class SelectionGroupState extends State<SelectionGroup> {
   var radioSelected;
   @override
   Widget build(BuildContext context) {
@@ -22,14 +23,30 @@ class CheckboxGroupState extends State<CheckboxGroup> {
           splashColor: Colors.transparent,
             onTap: () {
               setState(() {
-                if (widget.type == 'Checkbox') selection['selected'] = !selection['selected'];
-                if (widget.type == 'Radio') radioSelected = selection['id'];
+                if (widget.type == 'Checkbox') selectCheckBox(widget.sectionId, widget.selections, selection, widget.selectedList);
+                if (widget.type == 'Radio') selectRadio(widget.sectionId, widget.selections, radioSelected, selection, widget.selectedList);
               });
             },
             child: new SelectionContainer(type: widget.type, selection: selection, radioSelected: radioSelected));
       }).toList(),
     );
   }
+}
+
+void selectCheckBox(sectionId, selections, selection, selectedList){
+  selection['selected'] = !selection['selected'];
+  //loop thru selections and return array of section_id and selection_id
+  var selected = selections.where((selection) {
+    return selection['selected'] == true ;
+  }).toList();
+  selectedList[sectionId] = selected;
+  print(selectedList);
+}
+
+void selectRadio(sectionId, selections, radioSelected, selection, selectedList) {
+radioSelected = selection['id'];
+// selectedList[sectionId] = selections[radioSelected];
+// print(selectedList);
 }
 
 class SelectionContainer extends StatelessWidget {
