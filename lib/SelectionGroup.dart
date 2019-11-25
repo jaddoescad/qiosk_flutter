@@ -18,17 +18,26 @@ class SelectionGroupState extends State<SelectionGroup> {
   Widget build(BuildContext context) {
     return Column(
       children: widget.selections.map<Widget>((selection) {
-        return InkWell(
-          
-          // highlightColor: Colors.transparent,
-          // splashColor: Colors.transparent,
-            onTap: () {
-              setState(() {
-                if (widget.type == 'Checkbox') selectCheckBox(widget.sectionId, widget.selections, selection, widget.selectedList);
-                if (widget.type == 'Radio') selectRadio(widget.sectionId, selection, widget.selectedList);
-              });
-            },
-            child: new SelectionContainer(type: widget.type, selection: selection, radioSelected: radioSelected));
+        return Container(
+          height: 65,
+          width: double.infinity,
+          child: Stack(
+            children: <Widget>[
+              SelectionContainer(type: widget.type, selection: selection, radioSelected: radioSelected),
+              InkWell(
+                child: Container(height: 65, width: double.infinity),
+                
+                // highlightColor: Colors.transparent,
+                // splashColor: Colors.transparent,
+                  onTap: () {
+                    setState(() {
+                      if (widget.type == 'Checkbox') selectCheckBox(widget.sectionId, widget.selections, selection, widget.selectedList);
+                      if (widget.type == 'Radio') selectRadio(widget.sectionId, selection, widget.selectedList);
+                    });
+                  },
+                  )          ],
+          ),
+        );
       }).toList(),
     );
   }
@@ -60,26 +69,22 @@ class SelectionContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 65,
-      width: double.infinity,
-      child: Stack(
-        children: <Widget>[
-          Align(alignment: Alignment.centerRight, child: Padding(
-            padding: const EdgeInsets.all(18),
-            child: Text('\$ ${selection['price'].toString()}', style: TextStyle(fontSize: 16, color: kMainColor),),
-          )),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              children: <Widget>[
-                (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(radioSelected: radioSelected, selection: selection),
-                Text(selection['title'], style: TextStyle(fontSize: 16, color: kMainColor)),
-              ],
-            ),
+    return Stack(
+      children: <Widget>[
+        Align(alignment: Alignment.centerRight, child: Padding(
+          padding: const EdgeInsets.all(18),
+          child: Text('\$ ${selection['price'].toString()}', style: TextStyle(fontSize: 16, color: kMainColor),),
+        )),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: <Widget>[
+              (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(radioSelected: radioSelected, selection: selection),
+              Text(selection['title'], style: TextStyle(fontSize: 16, color: kMainColor)),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
