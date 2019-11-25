@@ -19,8 +19,9 @@ class SelectionGroupState extends State<SelectionGroup> {
     return Column(
       children: widget.selections.map<Widget>((selection) {
         return InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
+          
+          // highlightColor: Colors.transparent,
+          // splashColor: Colors.transparent,
             onTap: () {
               setState(() {
                 if (widget.type == 'Checkbox') selectCheckBox(widget.sectionId, widget.selections, selection, widget.selectedList);
@@ -49,11 +50,7 @@ void selectCheckBox(sectionId, selections, selection, selectedList){
   print(selectedList);
 }
 
-void selectRadio(radioSelected, selection) {
-// radioSelected = selection['id'];
-// selectedList[sectionId] = selections[radioSelected];
-// print(selectedList);
-}
+
 
 class SelectionContainer extends StatelessWidget {
   SelectionContainer({this.selection, this.radioSelected, this.type});
@@ -94,7 +91,9 @@ class SingleCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Checkbox(
       value: selection['selected'],
-      onChanged: (bool value) {},
+      onChanged: (bool value) {
+        print("hello");
+      },
     );
   }
 }
