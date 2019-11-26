@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-const imgUrl =
-    "https://cdn.vox-cdn.com/thumbor/d0jfYnyJ79WTE51N-nNbq8mBJMg=/896x473:7792x5502/1200x800/filters:focal(3649x2201:5039x3591)/cdn.vox-cdn.com/uploads/chorus_image/image/65731015/cz4jwpcaqabnupumbhji.0.jpg";
-const title = 'Burger Angus Original';
-const description =
-    'Whether spicy or mild, our Bonafide Chicken is marinated for at least 12 hours, then hand-battered, hand-breaded and bursting with bold Louisiana flavour.';
 
 Map sections = {
   '8778': {
@@ -53,13 +48,16 @@ Map sections = {
 };
 
 class ItemHeader extends StatelessWidget {
+  ItemHeader({this.item});
+  final item;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        imgUrl.isNotEmpty ? ItemImage() : Spacer(),
-        ItemTitle(),
-        if (description.isNotEmpty) ItemDescription(),
+        item.imgUrl.isNotEmpty ? ItemImage(imgUrl: item.imgUrl) : Spacer(),
+        ItemTitle(title: item.title),
+        if (item.description.isNotEmpty) ItemDescription(description: item.description),
       ],
     );
   }
@@ -78,6 +76,8 @@ class Spacer extends StatelessWidget {
 }
 
 class ItemImage extends StatelessWidget {
+  ItemImage({this.imgUrl});
+  final imgUrl;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -92,6 +92,8 @@ class ItemImage extends StatelessWidget {
 }
 
 class ItemTitle extends StatelessWidget {
+  ItemTitle({this.title});
+  final title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -111,6 +113,8 @@ class ItemTitle extends StatelessWidget {
 }
 
 class ItemDescription extends StatelessWidget {
+  ItemDescription({this.description});
+  final description;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -206,26 +210,6 @@ class AddToCartButton extends StatelessWidget {
 
 void printObject() {}
 
-List convertSectionMapIntoArray(map) {
-  List sectionArray = [];
-  map.forEach((id, section) {
-    section['id'] = id;
-    sectionArray.add(section);
-  });
-  sectionArray = sortArray(sectionArray);
-  return sectionArray;
-}
-
-List convertSelectionMapIntoArray(map) {
-  List selectionArray = [];
-  map.forEach((id, selection) {
-    selection['id'] = id;
-    selection['selected'] = false;
-    selectionArray.add(selection);
-  });
-  selectionArray = sortArray(selectionArray);
-  return selectionArray;
-}
 
 class Header extends StatelessWidget {
   Header({this.section});
@@ -246,7 +230,7 @@ class Header extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    section['title'],
+                    section.title,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -292,13 +276,12 @@ class Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String type = section['type'] ?? "Radio";
-    final selections = section['selections'];
-    final sectionId = section['id'];
+    final String type = section.type ?? "Radio";
+    final selections = section.selections;
+    final sectionId = section.id;
     return Column(children: <Widget>[
     Header(section: section),
-    if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: convertSelectionMapIntoArray(selections)),
-    // if (selections != null) if (type=="Radio") TimePreferencesWidget(sectionId: sectionId, selections: convertSelectionMapIntoArray(selections))
+    if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: selections),
     ],);  
   }
 }
@@ -308,8 +291,8 @@ class Section extends StatelessWidget {
 
 
 String getSectionSubHeader(section) {
-  var min = section['min'] ?? 0;
-  var max = section['max'];
+  var min = section.min ?? 0;
+  var max = section.max;
   String requiredText = min > 0 ? "Required" : "Optional";
   String conditionText = "";
 
@@ -323,50 +306,43 @@ String getSectionSubHeader(section) {
     } else if (max != 0){
       conditionText = "- Choose up to $max";
     } else {
-    if (section['selections'] != null) {
-        var selectionLength = section['selections'].length;
+    if (section.selections != null) {
+        var selectionLength = section.selections.length;
         conditionText = "- Choose up to $selectionLength";
     }
     }
   } else {
-    if (section['selections'] != null) {
-        var selectionLength = section['selections'].length;
+    if (section.selections != null) {
+        var selectionLength = section.selections.length;
         conditionText = "- Choose up to $selectionLength";
     }
   }
   return '$requiredText $conditionText';
 }
 
-List sortArray(map) {
-  map.sort((a, b) {
-    return a['order']
-        .toString()
-        .toLowerCase()
-        .compareTo(b['order'].toString().toLowerCase());
-  });
-  return map;
-}
 
 class ItemBody extends StatelessWidget {
-  ItemBody({this.selectedList});
+  ItemBody({this.selectedList, this.item});
   final selectedList;
+  final item;
   @override
   Widget build(BuildContext context) {
+    print(item.sections[0].title);
     return Expanded(
         child: CustomScrollView(
       slivers: <Widget>[
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              ItemHeader(),
+              ItemHeader(item: item),
             ],
           ),
         ),
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              ...convertSectionMapIntoArray(sections)
-                  .map((section) => Section(section: section, selectedList:selectedList)),
+              
+              ...item.sections.map((section) => Section(section: section, selectedList:selectedList)),
               ItemCounter()
             ],
           ),
@@ -483,20 +459,20 @@ class SelectionGroupState extends State<SelectionGroup> {
   }
 
   selectRadio(sectionId, selection, selectedList) {
-    radioSelected = selection['id'];
+    radioSelected = selection.id;
     selectedList[sectionId] = selection;
     
   }
 }
 
 void selectCheckBox(sectionId, selections, selection, selectedList){
-  selection['selected'] = !selection['selected'];
+  selection.selected = !selection.selected;
+  // selection.selected = !selection.selected;
   //loop thru selections and return array of section_id and selection_id
   var checkSelected = selections.where((selection) {
-    return selection['selected'] == true ;
+    return selection.selected == true ;
   }).toList();
   selectedList[sectionId] = checkSelected;
-  print(selectedList);
 }
 
 
@@ -513,14 +489,14 @@ class SelectionContainer extends StatelessWidget {
       children: <Widget>[
         Align(alignment: Alignment.centerRight, child: Padding(
           padding: const EdgeInsets.all(18),
-          child: Text('\$ ${selection['price'].toString()}', style: TextStyle(fontSize: 16, color: kMainColor),),
+          child: Text('\$ ${selection.price.toString()}', style: TextStyle(fontSize: 16, color: kMainColor),),
         )),
         Align(
           alignment: Alignment.centerLeft,
           child: Row(
             children: <Widget>[
               (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(radioSelected: radioSelected, selection: selection),
-              Text(selection['title'], style: TextStyle(fontSize: 16, color: kMainColor)),
+              Text(selection.title, style: TextStyle(fontSize: 16, color: kMainColor)),
             ],
           ),
         ),
@@ -535,9 +511,8 @@ class SingleCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      value: selection['selected'],
+      value: selection.selected,
       onChanged: (bool value) {
-        print("hello");
       },
     );
   }
@@ -557,7 +532,7 @@ class SingleRadio extends StatelessWidget {
   Widget build(BuildContext context) {
     return Radio(
       groupValue: radioSelected,
-      value: selection['id'],
+      value: selection.id,
       onChanged: (selected) {},
     );
   }

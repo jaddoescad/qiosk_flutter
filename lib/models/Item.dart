@@ -90,6 +90,6 @@ class Selection {
   final double price;
   final String title;
   final int order;
-  final bool selected;
+  bool selected;
   Selection({@required this.id, this.price,@required this.title, this.order, this.selected = false});
 }

@@ -11,38 +11,48 @@ class ItemOverview extends StatefulWidget {
 }
 
 class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver {
-  // Item item;
+  Future<Item> item;
 
   @override
   void initState() {
     super.initState();
-    fetchSelection( Item(id: "rkfmrmrkf",basePrice: 18.95, description: "jdjendje", imgUrl: "kdmekdmek", title: "dfkefkmrke")).then((value) {
-      print(value.sections[0].selections[0].title);
-    });
+    item = fetchSelection( Item(id: "rkfmrmrkf",basePrice: 18.95, description: "jdjendje", imgUrl: "https://assets.bonappetit.com/photos/5d1cb1880813410008e914fc/16:9/w_1200,c_limit/Print-Summer-Smash-Burger.jpg", title: "dfkefkmrke"));
   }
   @override
   void dispose() {
-    // WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<Item>(
+      future: item,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return selectionPage(snapshot.data);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      }
+      );}
+
+  Stack selectionPage(Item item) {
     return Stack(
-      children: <Widget>[
-        Container(
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            body: Column(
-              children: [
-                ItemBody(selectedList: widget.selectedList), 
-                AddToCartButton(), 
-              ],
-            ),
+    children: <Widget>[
+      Container(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Column(
+            children: [
+              ItemBody(selectedList: widget.selectedList, item: item), 
+              AddToCartButton(), 
+            ],
           ),
         ),
-        ItemAppBar()
-      ],
-    );
+      ),
+      ItemAppBar()
+    ],
+  );
   }
 }
