@@ -16,7 +16,7 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
   @override
   void initState() {
     super.initState();
-    item = fetchSelection( Item(id: "rkfmrmrkf",basePrice: 18.95, description: "jdjendje", imgUrl: "https://assets.bonappetit.com/photos/5d1cb1880813410008e914fc/16:9/w_1200,c_limit/Print-Summer-Smash-Burger.jpg", title: "dfkefkmrke"));
+    item = fetchSelection( Item(id: "Mighty Hamburger",basePrice: 18.95, description: "Delicious Sauced hamburger with a hint of Khara", imgUrl: "https://assets.bonappetit.com/photos/5d1cb1880813410008e914fc/16:9/w_1200,c_limit/Print-Summer-Smash-Burger.jpg", title: "dfkefkmrke"));
   }
   @override
   void dispose() {

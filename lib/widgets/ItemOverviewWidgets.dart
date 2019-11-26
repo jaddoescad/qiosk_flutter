@@ -1,39 +1,26 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-class ItemHeader extends StatelessWidget {
-  ItemHeader({this.item});
-  final item;
-
-  @override
-  Widget build(BuildContext context) {
+Widget itemHeader (item) {
     return Column(
       children: <Widget>[
-        item.imgUrl.isNotEmpty ? ItemImage(imgUrl: item.imgUrl) : Spacer(),
-        ItemTitle(title: item.title),
-        if (item.description.isNotEmpty) ItemDescription(description: item.description),
+        item.imgUrl.isNotEmpty ? itemImage(item.imgUrl) : Spacer(),
+        itemTitle(item.title),
+        if (item.description.isNotEmpty) itemDescription(item.description),
       ],
     );
-  }
 }
 
-class Spacer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+Widget spacer() {
     return SafeArea(
       child: Container(
         child:
             Container(height: 56, width: double.infinity, color: Colors.white),
       ),
     );
-  }
 }
 
-class ItemImage extends StatelessWidget {
-  ItemImage({this.imgUrl});
-  final imgUrl;
-  @override
-  Widget build(BuildContext context) {
+Widget itemImage (imgUrl) {
     return Container(
       height: 250,
       width: double.infinity,
@@ -42,14 +29,9 @@ class ItemImage extends StatelessWidget {
         fit: BoxFit.cover,
       ),
     );
-  }
 }
 
-class ItemTitle extends StatelessWidget {
-  ItemTitle({this.title});
-  final title;
-  @override
-  Widget build(BuildContext context) {
+Widget itemTitle (title) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -63,14 +45,9 @@ class ItemTitle extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 
-class ItemDescription extends StatelessWidget {
-  ItemDescription({this.description});
-  final description;
-  @override
-  Widget build(BuildContext context) {
+Widget itemDescription(description) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -84,7 +61,6 @@ class ItemDescription extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 
 class ItemAppBar extends StatelessWidget {
@@ -240,15 +216,10 @@ class Section extends StatelessWidget {
   }
 }
 
-
-
-
-
 String getSectionSubHeader(section) {
  
   return section.getSectionConditionString();
 }
-
 
 class ItemBody extends StatelessWidget {
   ItemBody({this.selectedList, this.item});
@@ -263,7 +234,7 @@ class ItemBody extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              ItemHeader(item: item),
+              itemHeader(item),
             ],
           ),
         ),
@@ -316,9 +287,6 @@ class _ItemCounterState extends State<ItemCounter> {
         padding: const EdgeInsets.all(8.0),
         child: Text('$_defaultValue', style: TextStyle(color: kMainColor),),
       ),
-      
-      
-      
       InkWell( 
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -335,7 +303,6 @@ class _ItemCounterState extends State<ItemCounter> {
       ]),
     );
 }
-
   Container counterButtonContainer() {
     return Container(width: 50, 
       height: 50, 
@@ -424,7 +391,7 @@ class SelectionContainer extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Row(
             children: <Widget>[
-              (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(radioSelected: radioSelected, selection: selection),
+              (type == 'Checkbox') ? singleCheckbox(selection) : singleRadio(radioSelected, selection),
               Text(selection.title, style: TextStyle(fontSize: 16, color: kMainColor)),
             ],
           ),
@@ -434,35 +401,19 @@ class SelectionContainer extends StatelessWidget {
   }
 }
 
-class SingleCheckbox extends StatelessWidget {
-  const SingleCheckbox({this.selection});
-  final selection;
-  @override
-  Widget build(BuildContext context) {
+Widget singleCheckbox (selection) {
     return Checkbox(
       value: selection.selected,
       onChanged: (bool value) {
       },
     );
-  }
 }
 
 
-class SingleRadio extends StatelessWidget {
-  const SingleRadio({
-    this.radioSelected,
-    this.selection
-  });
-
-  final radioSelected;
-  final selection;
-
-  @override
-  Widget build(BuildContext context) {
+Widget singleRadio(radioSelected, selection) {
     return Radio(
       groupValue: radioSelected,
       value: selection.id,
       onChanged: (selected) {},
     );
-  }
 }
