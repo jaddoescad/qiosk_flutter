@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-Widget itemHeader (item) {
+Widget itemHeaderWidget (item) {
     return Column(
       children: <Widget>[
-        item.imgUrl.isNotEmpty ? itemImage(item.imgUrl) : Spacer(),
-        itemTitle(item.title),
-        if (item.description.isNotEmpty) itemDescription(item.description),
+        item.imgUrl.isNotEmpty ? itemImageWidget(item.imgUrl) : Spacer(),
+        itemTitleWidget(item.title),
+        if (item.description.isNotEmpty) itemDescriptionWidget(item.description),
       ],
     );
 }
 
-Widget spacer() {
+Widget spacerWidget() {
     return SafeArea(
       child: Container(
         child:
@@ -20,7 +20,7 @@ Widget spacer() {
     );
 }
 
-Widget itemImage (imgUrl) {
+Widget itemImageWidget (imgUrl) {
     return Container(
       height: 250,
       width: double.infinity,
@@ -31,7 +31,7 @@ Widget itemImage (imgUrl) {
     );
 }
 
-Widget itemTitle (title) {
+Widget itemTitleWidget (title) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -47,7 +47,7 @@ Widget itemTitle (title) {
     );
 }
 
-Widget itemDescription(description) {
+Widget itemDescriptionWidget(description) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -63,9 +63,7 @@ Widget itemDescription(description) {
     );
 }
 
-class ItemAppBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+Widget itemAppBarWidget (context) {
     return Positioned(
       //Place it at the top, and not use the entire screen
       top: 0.0,
@@ -86,12 +84,9 @@ class ItemAppBar extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 
-class AddToCartButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+Widget addToCartButtonWidget () {
     return Container(
         width: double.infinity,
         color: Colors.red,
@@ -135,18 +130,12 @@ class AddToCartButton extends StatelessWidget {
             ),
           ),
         ));
-  }
 }
 
 void printObject() {}
 
 
-class Header extends StatelessWidget {
-  Header({this.section});
-  final section;
-
-  @override
-  Widget build(BuildContext context) {
+Widget headerWidget (section) {
     return Container(
       child: Container(
           color: kSectionColor,
@@ -179,25 +168,17 @@ class Header extends StatelessWidget {
             ],
           )),
     );
-  }
 }
 
 
-class Section extends StatelessWidget {
-  Section({this.section, this.selectedList});
-  final section;
-  final selectedList;
-
-  @override
-  Widget build(BuildContext context) {
+Widget sectionWidget (section, selectedList) {
     final String type = section.type ?? "Radio";
     final selections = section.selections;
     final sectionId = section.id;
     return Column(children: <Widget>[
-    Header(section: section),
+    headerWidget(section),
     if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: selections),
     ],);  
-  }
 }
 
 String getSectionSubHeader(section) {
@@ -205,20 +186,14 @@ String getSectionSubHeader(section) {
   return section.getSectionConditionString();
 }
 
-class ItemBody extends StatelessWidget {
-  ItemBody({this.selectedList, this.item});
-  final selectedList;
-  final item;
-  @override
-  Widget build(BuildContext context) {
-    print(item.sections[0].title);
+Widget itemBodyWidget(selectedList,item ) {
     return Expanded(
         child: CustomScrollView(
       slivers: <Widget>[
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              itemHeader(item),
+              itemHeaderWidget(item),
             ],
           ),
         ),
@@ -226,14 +201,13 @@ class ItemBody extends StatelessWidget {
           delegate: SliverChildListDelegate(
             [
               
-              ...item.sections.map((section) => Section(section: section, selectedList:selectedList)),
+              ...item.sections.map((_section) => sectionWidget(_section, selectedList)),
               ItemCounter()
             ],
           ),
         ),
       ],
     ));
-  }
 }
 
 
@@ -319,12 +293,10 @@ class SelectionGroupState extends State<SelectionGroup> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              SelectionContainer(type: widget.type, selection: selection, radioSelected: radioSelected),
-              InkWell(
-                child: Container(height: 65, width: double.infinity),
-                
-                // highlightColor: Colors.transparent,
-                // splashColor: Colors.transparent,
+              selectionContainerWidget(widget.type, selection, radioSelected),
+              InkWell(                
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                   onTap: () {
                     setState(() {
                       if (widget.type == 'Checkbox') selectCheckBox(widget.sectionId, widget.selections, selection, widget.selectedList);
@@ -357,14 +329,7 @@ void selectCheckBox(sectionId, selections, selection, selectedList){
 
 
 
-class SelectionContainer extends StatelessWidget {
-  SelectionContainer({this.selection, this.radioSelected, this.type});
-  final selection;
-  final radioSelected;
-  final type;
-
-  @override
-  Widget build(BuildContext context) {
+Widget selectionContainerWidget (type, selection, radioSelected) {
     return Stack(
       children: <Widget>[
         Align(alignment: Alignment.centerRight, child: Padding(
@@ -375,17 +340,16 @@ class SelectionContainer extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Row(
             children: <Widget>[
-              (type == 'Checkbox') ? singleCheckbox(selection) : singleRadio(radioSelected, selection),
+              (type == 'Checkbox') ? singleCheckboxWidget(selection) : singleRadioWidget(radioSelected, selection),
               Text(selection.title, style: TextStyle(fontSize: 16, color: kMainColor)),
             ],
           ),
         ),
       ],
     );
-  }
 }
 
-Widget singleCheckbox (selection) {
+Widget singleCheckboxWidget (selection) {
     return Checkbox(
       value: selection.selected,
       onChanged: (bool value) {
@@ -394,7 +358,7 @@ Widget singleCheckbox (selection) {
 }
 
 
-Widget singleRadio(radioSelected, selection) {
+Widget singleRadioWidget(radioSelected, selection) {
     return Radio(
       groupValue: radioSelected,
       value: selection.id,

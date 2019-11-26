@@ -29,7 +29,7 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
       future: item,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return selectionPage(snapshot.data);
+          return selectionPageWidget(snapshot.data, context);
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
@@ -37,7 +37,7 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
       }
       );}
 
-  Stack selectionPage(Item item) {
+  Widget selectionPageWidget(Item item, context) {
     return Stack(
     children: <Widget>[
       Container(
@@ -45,13 +45,13 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
           backgroundColor: Colors.white,
           body: Column(
             children: [
-              ItemBody(selectedList: widget.selectedList, item: item), 
-              AddToCartButton(), 
+              itemBodyWidget(widget.selectedList, item), 
+              addToCartButtonWidget(), 
             ],
           ),
         ),
       ),
-      ItemAppBar()
+      itemAppBarWidget(context)
     ],
   );
   }
