@@ -1,52 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-
-Map sections = {
-  '8778': {
-    'max': 0,
-    'title': 'Breakfast',
-    'type': 'Checkbox',
-    'order': 3,
-    'selections': {
-      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': 3}
-    }
-  },
-  '8779': {
-    'max': 2,
-    'min': 1,
-    'title': 'Lunch',
-    'type': 'Checkbox',
-    'order': 1,
-    'selections': {
-      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': 3}
-    }
-  },
-  '8378': {
-    'max': 2,
-    'min': 0,
-    'title': 'Dinner',
-    'type': 'Radio',
-    'order': 2,
-    'selections': {
-      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': 3}
-    }
-  },
-  '8478': {
-    'max': 2,
-    'min': 0,
-    'title': 'Breakfast',
-    'type': 'Radio',
-    'selections': {
-      '7888': {'price': 2, 'title': 'Medium Hashbrowns'},
-      '8939': {'title': 'Large Hashbrowns', 'price': 3}
-    }
-  }
-};
-
 class ItemHeader extends StatelessWidget {
   ItemHeader({this.item});
   final item;
@@ -291,33 +245,8 @@ class Section extends StatelessWidget {
 
 
 String getSectionSubHeader(section) {
-  var min = section.min ?? 0;
-  var max = section.max;
-  String requiredText = min > 0 ? "Required" : "Optional";
-  String conditionText = "";
-
-  if (max != null) {
-    if (min == max && max != 0)  {
-      conditionText = "- Choose $max";
-    } else if (max > min && min == 0) {
-      conditionText = "- Choose up to $max";
-    } else if (max > min && min > 0) {
-      conditionText = "- Choose $min to $max";
-    } else if (max != 0){
-      conditionText = "- Choose up to $max";
-    } else {
-    if (section.selections != null) {
-        var selectionLength = section.selections.length;
-        conditionText = "- Choose up to $selectionLength";
-    }
-    }
-  } else {
-    if (section.selections != null) {
-        var selectionLength = section.selections.length;
-        conditionText = "- Choose up to $selectionLength";
-    }
-  }
-  return '$requiredText $conditionText';
+ 
+  return section.getSectionConditionString();
 }
 
 

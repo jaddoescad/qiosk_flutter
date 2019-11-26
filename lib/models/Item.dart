@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 Future<Item> fetchSelection(itemFromMenu) async {
@@ -71,6 +70,7 @@ static List sortArray(map) {
   });
   return map;
 }
+
 }
 
 class Section {
@@ -83,6 +83,36 @@ class Section {
   final List<Selection> selections;
 
   Section({@required this.id, this.max, this.min = 0,@required this.title, this.type, this.selections, this.order});
+
+String getSectionConditionString() {
+  var min = this.min ?? 0;
+  var max = this.max;
+  String requiredText = min > 0 ? "Required" : "Optional";
+  String conditionText = "";
+
+  if (max != null) {
+    if (min == max && max != 0)  {
+      conditionText = "- Choose $max";
+    } else if (max > min && min == 0) {
+      conditionText = "- Choose up to $max";
+    } else if (max > min && min > 0) {
+      conditionText = "- Choose $min to $max";
+    } else if (max != 0){
+      conditionText = "- Choose up to $max";
+    } else {
+    if (this.selections != null) {
+        var selectionLength = this.selections.length;
+        conditionText = "- Choose up to $selectionLength";
+    }
+    }
+  } else {
+    if (this.selections != null) {
+        var selectionLength = this.selections.length;
+        conditionText = "- Choose up to $selectionLength";
+    }
+  }
+  return '$requiredText $conditionText';
+}
 }
 
 class Selection {
