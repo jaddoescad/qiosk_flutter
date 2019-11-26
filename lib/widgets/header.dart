@@ -25,7 +25,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
               Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/sandwich.jpg"),
+                      image: NetworkImage("https://media.blogto.com/listings/20180802-2048-LesMoulins7.jpg?w=2048&cmd=resize_then_crop&height=1365&quality=70"),
                       fit: BoxFit.cover,
                     )
                 ),

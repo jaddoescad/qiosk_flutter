@@ -1,0 +1,51 @@
+ {
+  "id" : 994949488,
+  "base_price" : 15.26,
+  "title" : "Large Hashbrowns",
+  "description" : "A bright flavor like that of lemons, limes, oranges, and other citrus fruits.",
+  "imgUrl": "https://assets.biggreenegg.eu/app/uploads/2019/03/28145521/topimage-classic-hamburger-2019m04-800x534.jpg",
+  "sections" : {
+    "8778": {
+      "max": 0,
+      "title": "Breakfast",
+      "type": "Checkbox",
+      "order": 3,
+      "selections": {
+        "7888": {"price": 2, "title": "Medium Hashbrowns"},
+        "8939": {"title": "Large Hashbrowns", "price": 3}
+      }
+    },
+    "8779": {
+      "max": 2,
+      "min": 1,
+      "title": "Lunch",
+      "type": "Checkbox",
+      "order": 1,
+      "selections": {
+        "7888": {"price": 2, "title": "Medium Hashbrowns"},
+        "8939": {"title": "Large Hashbrowns", "price": 3}
+      }
+    },
+    "8378": {
+      "max": 2,
+      "min": 0,
+      "title": "Dinner",
+      "type": "Radio",
+      "order": 2,
+      "selections": {
+        "7888": {"price": 2, "title": "Medium Hashbrowns"},
+        "8939": {"title": "Large Hashbrowns", "price": 3}
+      }
+    },
+    "8478": {
+      "max": 2,
+      "min": 0,
+      "title": "Breakfast",
+      "type": "Radio",
+      "selections": {
+        "7888": {"price": 2, "title": "Medium Hashbrowns"},
+        "8939": {"title": "Large Hashbrowns", "price": 3}
+      }
+    }
+  }
+}

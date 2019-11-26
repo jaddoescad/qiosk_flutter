@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/ItemOverviewWidgets.dart';
+import '../models/Item.dart';
+
 
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
@@ -9,12 +11,15 @@ class ItemOverview extends StatefulWidget {
 }
 
 class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver {
+  // Item item;
+
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addObserver(this);
+    fetchSelection( Item(id: "rkfmrmrkf",basePrice: 18.95, description: "jdjendje", imgUrl: "kdmekdmek", title: "dfkefkmrke")).then((value) {
+      print(value.sections[0].selections[0].title);
+    });
   }
-
   @override
   void dispose() {
     // WidgetsBinding.instance.removeObserver(this);

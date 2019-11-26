@@ -45,7 +45,7 @@ class ItemContainer extends StatelessWidget {
               margin: EdgeInsets.only(left: 25.0),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/sandwich.jpg"),
+                  image: NetworkImage("https://media.blogto.com/uploads/2018/08/02/20180802-2048-LesMoulins3.jpg?cmd=resize&quality=70&w=1400&height=2500"),
                   fit: BoxFit.cover,
                 ),
               ),
