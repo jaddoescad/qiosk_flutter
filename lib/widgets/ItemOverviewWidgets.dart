@@ -183,22 +183,6 @@ class Header extends StatelessWidget {
 }
 
 
-
-class Selection extends StatelessWidget {
-  Selection({this.selection});
-  final selection;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: double.infinity,
-      color: Colors.red,
-    );
-  }
-}
-
-
 class Section extends StatelessWidget {
   Section({this.section, this.selectedList});
   final section;
