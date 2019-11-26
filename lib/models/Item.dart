@@ -71,6 +71,8 @@ static List sortArray(map) {
   return map;
 }
 
+
+
 }
 
 class Section {
@@ -113,6 +115,7 @@ String getSectionConditionString() {
   }
   return '$requiredText $conditionText';
 }
+
 }
 
 class Selection {

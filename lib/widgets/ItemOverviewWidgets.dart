@@ -171,13 +171,13 @@ Widget headerWidget (section) {
 }
 
 
-Widget sectionWidget (section, selectedList) {
+Widget sectionWidget (section, selectedList, item) {
     final String type = section.type ?? "Radio";
     final selections = section.selections;
     final sectionId = section.id;
     return Column(children: <Widget>[
     headerWidget(section),
-    if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: selections),
+    if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: selections, item: item),
     ],);  
 }
 
@@ -201,7 +201,7 @@ Widget itemBodyWidget(selectedList,item ) {
           delegate: SliverChildListDelegate(
             [
               
-              ...item.sections.map((_section) => sectionWidget(_section, selectedList)),
+              ...item.sections.map((_section) => sectionWidget(_section, selectedList, item)),
               ItemCounter()
             ],
           ),
@@ -272,11 +272,12 @@ class _ItemCounterState extends State<ItemCounter> {
 
 
 class SelectionGroup extends StatefulWidget {
-  SelectionGroup({this.selections, this.sectionId, this.type, this.selectedList});
+  SelectionGroup({this.selections, this.sectionId, this.type, this.selectedList, this.item});
   final selections;
   final sectionId;
   final type;
   final selectedList;
+  final item;
 
   @override
   SelectionGroupState createState() => new SelectionGroupState();
@@ -299,32 +300,34 @@ class SelectionGroupState extends State<SelectionGroup> {
                 splashColor: Colors.transparent,
                   onTap: () {
                     setState(() {
-                      if (widget.type == 'Checkbox') selectCheckBox(widget.sectionId, widget.selections, selection, widget.selectedList);
-                      if (widget.type == 'Radio') selectRadio(widget.sectionId, selection, widget.selectedList);
+                      if (widget.type == 'Checkbox') selectCheckBox(selection);
+                      if (widget.type == 'Radio') radioSelected = selectRadio(selection, widget.selections);
                     });
                   },
-                  )          ],
+                  )],
           ),
         );
       }).toList(),
     );
   }
-
-  selectRadio(sectionId, selection, selectedList) {
-    radioSelected = selection.id;
-    selectedList[sectionId] = selection;
-    
-  }
 }
 
-void selectCheckBox(sectionId, selections, selection, selectedList){
+String selectRadio(selection, selections) {
+    selections.map((_selection){
+      _selection.selected = false;
+    });
+    selection.selected = true;
+    return selection.id;
+  }
+  
+void selectCheckBox(selection){
   selection.selected = !selection.selected;
   // selection.selected = !selection.selected;
   //loop thru selections and return array of section_id and selection_id
-  var checkSelected = selections.where((selection) {
-    return selection.selected == true ;
-  }).toList();
-  selectedList[sectionId] = checkSelected;
+  // var checkSelected = selections.where((selection) {
+  //   return selection.selected == true ;
+  // }).toList();
+  // selectedList[sectionId] = checkSelected;
 }
 
 
