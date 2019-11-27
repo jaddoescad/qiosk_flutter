@@ -3,27 +3,40 @@ import 'package:iamrich/models/Item.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 
-Widget itemHeaderWidget (item) {
+
+class ItemHeader extends StatelessWidget {
+  ItemHeader({this.item});
+  final item;
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        item.imgUrl.isNotEmpty ? itemImageWidget(item.imgUrl) : Spacer(),
-        itemTitleWidget(item.title),
-        if (item.description.isNotEmpty) itemDescriptionWidget(item.description),
+        item.imgUrl.isNotEmpty ? ItemImage(imgUrl: item.imgUrl) : ItemSelectionSpacer(),
+        ItemTitle(title: item.title),
+        if (item.description.isNotEmpty) ItemDescription(description: item.description),
       ],
     );
 }
+  }
 
-Widget spacerWidget() {
+class ItemSelectionSpacer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
         child:
             Container(height: 56, width: double.infinity, color: Colors.white),
       ),
     );
+  }
 }
 
-Widget itemImageWidget (imgUrl) {
-    return Container(
+class ItemImage extends StatelessWidget {
+  ItemImage({this.imgUrl});
+  final imgUrl;
+  @override
+  Widget build(BuildContext context) {
+      return Container(
       height: 250,
       width: double.infinity,
       child: Image.network(
@@ -31,9 +44,14 @@ Widget itemImageWidget (imgUrl) {
         fit: BoxFit.cover,
       ),
     );
+  }
 }
 
-Widget itemTitleWidget (title) {
+class ItemTitle extends StatelessWidget {
+  ItemTitle({this.title});
+  final title;
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -47,9 +65,15 @@ Widget itemTitleWidget (title) {
         ),
       ),
     );
+  }
 }
 
-Widget itemDescriptionWidget(description) {
+class ItemDescription extends StatelessWidget {
+  ItemDescription({this.description});
+  final description;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -63,10 +87,15 @@ Widget itemDescriptionWidget(description) {
         ),
       ),
     );
+  }
 }
 
-Widget itemAppBarWidget (context) {
-    return Positioned(
+class ItemAppBar extends StatelessWidget {
+
+
+  @override
+  Widget build(BuildContext context) {
+return Positioned(
       //Place it at the top, and not use the entire screen
       top: 0.0,
       left: 0.0,
@@ -86,9 +115,13 @@ Widget itemAppBarWidget (context) {
         ),
       ),
     );
+  }
 }
 
-Widget addToCartButtonWidget () {
+class AddToCartButton extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
         color: Colors.red,
@@ -132,12 +165,16 @@ Widget addToCartButtonWidget () {
             ),
           ),
         ));
+  }
 }
 
 void printObject() {}
 
-
-Widget headerWidget (section) {
+class Header extends StatelessWidget {
+  Header({this.section});
+  final section;
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: Container(
           color: kSectionColor,
@@ -160,7 +197,7 @@ Widget headerWidget (section) {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
-                  getSectionSubHeader(section),
+                  section.getSectionConditionString(),
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w300,
@@ -170,32 +207,43 @@ Widget headerWidget (section) {
             ],
           )),
     );
+  }
 }
 
+class Section extends StatelessWidget {
 
-Widget sectionWidget (section, selectedList, item) {
+  Section({this.section, this.selectedList, this.item});
+
+  final section;
+  final selectedList;
+  final item;
+
+  @override
+  Widget build(BuildContext context) {
     final String type = section.type ?? "Radio";
     final selections = section.selections;
     final sectionId = section.id;
     return Column(children: <Widget>[
-    headerWidget(section),
+    Header(section: section),
     if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: selections, item: item),
     ],);  
+  }
 }
 
-String getSectionSubHeader(section) {
- 
-  return section.getSectionConditionString();
-}
+class ItemBody extends StatelessWidget {
+  ItemBody({this.item, this.selectedList});
+  final item;
+  final selectedList;
 
-Widget itemBodyWidget(selectedList,item ) {
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
         child: CustomScrollView(
       slivers: <Widget>[
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              itemHeaderWidget(item),
+              ItemHeader(item: item),
             ],
           ),
         ),
@@ -203,13 +251,14 @@ Widget itemBodyWidget(selectedList,item ) {
           delegate: SliverChildListDelegate(
             [
               
-              ...item.sections.map((_section) => sectionWidget(_section, selectedList, item)),
+              ...item.sections.map((section) => Section(section: section, selectedList: selectedList,item: item)),
               ItemCounter()
             ],
           ),
         ),
       ],
     ));
+  }
 }
 
 
@@ -286,7 +335,7 @@ class SelectionGroupState extends State<SelectionGroup> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              selectionContainerWidget(widget.type, selection, radioSelected),
+              SelectionContainer(type: widget.type, selection: selection, radioSelected: radioSelected),
               InkWell(                
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
@@ -323,8 +372,14 @@ void selectCheckBox(selection){
 }
 
 
+class SelectionContainer extends StatelessWidget {
+  SelectionContainer({this.selection, this.radioSelected, this.type});
+  final selection;
+  final radioSelected;
+  final type;
 
-Widget selectionContainerWidget (type, selection, radioSelected) {
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Align(alignment: Alignment.centerRight, child: Padding(
@@ -335,28 +390,40 @@ Widget selectionContainerWidget (type, selection, radioSelected) {
           alignment: Alignment.centerLeft,
           child: Row(
             children: <Widget>[
-              (type == 'Checkbox') ? singleCheckboxWidget(selection) : singleRadioWidget(radioSelected, selection),
+              (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(radioSelected: radioSelected,selection: selection),
               Text(selection.title, style: TextStyle(fontSize: 16, color: kMainColor)),
             ],
           ),
         ),
       ],
     );
+  }
 }
 
-Widget singleCheckboxWidget (selection) {
+class SingleCheckbox extends StatelessWidget {
+  SingleCheckbox({this.selection});
+  final selection;
+  @override
+  Widget build(BuildContext context) {
     return Checkbox(
       value: selection.selected,
       onChanged: (bool value) {
       },
     );
+  }
 }
 
+class SingleRadio extends StatelessWidget {
+  SingleRadio({this.radioSelected, this.selection});
+  final radioSelected;
+  final selection;
 
-Widget singleRadioWidget(radioSelected, selection) {
+  @override
+  Widget build(BuildContext context) {
     return Radio(
       groupValue: radioSelected,
       value: selection.id,
       onChanged: (selected) {},
     );
+  }
 }

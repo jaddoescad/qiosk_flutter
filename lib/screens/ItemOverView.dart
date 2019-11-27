@@ -48,13 +48,13 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
           backgroundColor: Colors.white,
           body: Column(
             children: [
-              itemBodyWidget(widget.selectedList, item), 
-              addToCartButtonWidget(), 
+              ItemBody(selectedList: widget.selectedList, item: item), 
+              AddToCartButton(), 
             ],
           ),
         ),
       ),
-      itemAppBarWidget(context)
+      ItemAppBar()
     ],
   );
   }
