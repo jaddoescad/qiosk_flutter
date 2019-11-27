@@ -8,7 +8,6 @@ class ItemContainer extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
-    print(item);
     return Scaffold(
       backgroundColor: Colors.white,
       body: GestureDetector(

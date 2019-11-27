@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
+
+  Header({this.restaurant});
+  final restaurant;
+
   @override
 
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
-      delegate: MyDynamicHeader(),
+      delegate: MyDynamicHeader(restaurant: restaurant),
     );
   }
 }
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {
+
+  MyDynamicHeader({this.restaurant});
+  final restaurant;
+
   int opacity = 0;
 
   @override
@@ -25,7 +33,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
               Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage("https://media.blogto.com/listings/20180802-2048-LesMoulins7.jpg?w=2048&cmd=resize_then_crop&height=1365&quality=70"),
+                      image: NetworkImage(restaurant.imgUrl),
                       fit: BoxFit.cover,
                     )
                 ),
@@ -55,7 +63,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text('Pure Kitchen', overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 20, color: Colors.white,),),
+                            Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 20, color: Colors.white,),),
                             Text('', overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 5, color: Colors.white,),),
                             Text('Table 10', overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: Colors.white,),),
                           ],

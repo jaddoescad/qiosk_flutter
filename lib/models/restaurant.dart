@@ -24,8 +24,8 @@ class Restaurant {
     final String _id = json.keys.toList()[0].toString();
     return Restaurant(
         id: _id,
-        title: json['title'],
-        imgUrl: json['imgUrl'],
+        title: json[_id]['title'],
+        imgUrl: json[_id]['imgUrl'],
         sections: getSection(json[_id]['sections'])
     );
   }
