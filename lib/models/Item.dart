@@ -13,16 +13,31 @@ Future<Item> fetchSelection(itemFromMenu) async {
 }
 
 
-class Item {
+class Item extends ChangeNotifier {
   final String id;
   final double basePrice;
   final String title;
   final String description;
   final String imgUrl;
   final List<Section> sections;
+  int itemCount = 1;
 
   Item({@required this.id,this.basePrice = 0, @required this.title, this.description, this.imgUrl, this.sections});
+  
+  increment() {
+    itemCount = itemCount + 1;
+    notifyListeners();
+  }
 
+    
+  decrement() {
+    if (itemCount > 1) {
+    itemCount = itemCount - 1;
+    notifyListeners();
+    }
+  }
+
+  
   factory Item.fromSelectionJson(Map<String,dynamic> json, Item itemFromMenu) {
     getSection(json['sections']);
     return Item(
@@ -70,9 +85,6 @@ static List sortArray(map) {
   });
   return map;
 }
-
-
-
 }
 
 class Section {

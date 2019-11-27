@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../widgets/ItemOverviewWidgets.dart';
 import '../models/Item.dart';
 
@@ -29,7 +30,9 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
       future: item,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return selectionPageWidget(snapshot.data, context);
+          return ChangeNotifierProvider<Item>.value(
+            value: snapshot.data,
+            child: selectionPageWidget(snapshot.data, context));
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }

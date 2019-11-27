@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/models/Item.dart';
+import 'package:provider/provider.dart';
 import '../constants.dart';
 
 Widget itemHeaderWidget (item) {
@@ -211,16 +213,12 @@ Widget itemBodyWidget(selectedList,item ) {
 }
 
 
-class ItemCounter extends StatefulWidget {
-  @override
-  _ItemCounterState createState() => _ItemCounterState();
-}
-
-
-class _ItemCounterState extends State<ItemCounter> {
- int _defaultValue =1;
+class ItemCounter extends StatelessWidget{
+//  int _defaultValue =1;
   @override
   Widget build(BuildContext context) {
+    final Item item = Provider.of<Item>(context);
+
     return Container(
       height: 100,
       child: Row(
@@ -235,15 +233,11 @@ class _ItemCounterState extends State<ItemCounter> {
         Icon(Icons.remove, color: kMainColor,), 
         counterButtonContainer()
       ],) , onTap: () {
-        if (_defaultValue > 1) {
-         setState(() {
-           _defaultValue =_defaultValue - 1;
-         }); 
-        }
+        item.decrement();
       }),
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text('$_defaultValue', style: TextStyle(color: kMainColor),),
+        child: Text('${item.itemCount}', style: TextStyle(color: kMainColor),),
       ),
       InkWell( 
         splashColor: Colors.transparent,
@@ -254,9 +248,7 @@ class _ItemCounterState extends State<ItemCounter> {
           counterButtonContainer(), 
           Icon(Icons.add, color: kMainColor,)
         ]), onTap: () {
-        setState(() {
-                _defaultValue = _defaultValue +1;
-        });
+          item.increment();
       })
       ]),
     );
