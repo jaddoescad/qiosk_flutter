@@ -24,7 +24,6 @@ class Item {
   Item({@required this.id,this.basePrice = 0, @required this.title, this.description, this.imgUrl, this.sections});
 
   factory Item.fromSelectionJson(Map<String,dynamic> json, Item itemFromMenu) {
-    getSection(json['sections']);
     return Item(
       id: itemFromMenu.id,
       basePrice: itemFromMenu.basePrice,

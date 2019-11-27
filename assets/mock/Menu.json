@@ -1,0 +1,144 @@
+{
+  "1234": {
+    "title": "Pure Kitchen",
+    "imgUrl": "https://tastet.ca/wp-content/uploads/2018/09/capture-d%E2%80%99e%CC%81cran-2018-09-12-a%CC%80-10.15.51-1022x1024.png",
+    "sections": {
+      "12341": {
+        "title": "Recommended",
+        "order": 1,
+        "items": {
+          "123411": {
+            "order": 1,
+            "title": "Fantastic",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "16.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+          },
+          "123412": {
+            "order": 2,
+            "title": "Liberty Buffalo Cauliflower",
+            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "price": "16.50",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+          },
+          "123413": {
+            "order": 3,
+            "title": "Radical Cauliflower Wings",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "15.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+          },
+          "123414": {
+            "order": 4,
+            "title": "Royale With Cheese",
+            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "price": "18.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+          }
+        }
+      },
+      "12342": {
+        "title": "Appetizers",
+        "order": 2,
+        "items": {
+          "123421": {
+            "order": 1,
+            "title": "Fantastic",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "16.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+          },
+          "123422": {
+            "order": 2,
+            "title": "Liberty Buffalo Cauliflower",
+            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "price": "16.50",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+          },
+          "123423": {
+            "order": 3,
+            "title": "Radical Cauliflower Wings",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "15.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+          },
+          "123424": {
+            "order": 4,
+            "title": "Royale With Cheese",
+            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "price": "18.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+          }
+        }
+      },
+      "12343": {
+        "title": "Sandwiches",
+        "order": 3,
+        "items": {
+          "123431": {
+            "order": 1,
+            "title": "Fantastic",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "16.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+          },
+          "123432": {
+            "order": 2,
+            "title": "Liberty Buffalo Cauliflower",
+            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "price": "16.50",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+          },
+          "123433": {
+            "order": 3,
+            "title": "Radical Cauliflower Wings",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "15.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+          },
+          "123434": {
+            "order": 4,
+            "title": "Royale With Cheese",
+            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "price": "18.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+          }
+        }
+      },
+      "12344": {
+        "title": "Hot Bowls",
+        "order": 4,
+        "items": {
+          "123441": {
+            "order": 1,
+            "title": "Fantastic",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "16.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+          },
+          "123442": {
+            "order": 2,
+            "title": "Liberty Buffalo Cauliflower",
+            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "price": "16.50",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+          },
+          "123443": {
+            "order": 3,
+            "title": "Radical Cauliflower Wings",
+            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "price": "15.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+          },
+          "123444": {
+            "order": 4,
+            "title": "Royale With Cheese",
+            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "price": "18.00",
+            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+          }
+        }
+      }
+    }
+  }
+}

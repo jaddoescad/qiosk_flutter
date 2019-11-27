@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import '../screens/ItemOverview.dart';
 
 class ItemContainer extends StatelessWidget {
+  ItemContainer({this.item});
+  final item;
+
   @override
 
   Widget build(BuildContext context) {
+    print(item);
     return Scaffold(
       backgroundColor: Colors.white,
       body: GestureDetector(
@@ -28,15 +32,15 @@ class ItemContainer extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Text("Name", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
+                    child: Text(item.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
                   ),
                   Expanded(
                     flex: 2,
-                    child: Text("Description", overflow: TextOverflow.ellipsis, maxLines: 3, style: TextStyle(fontSize: 12, color: Color(0xFF365e7a),),),
+                    child: Text(item.description, overflow: TextOverflow.ellipsis, maxLines: 3, style: TextStyle(fontSize: 12, color: Color(0xFF365e7a),),),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text("Price", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
+                    child: Text(item.price, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
                   ),
                 ],
               ),
@@ -45,7 +49,7 @@ class ItemContainer extends StatelessWidget {
               margin: EdgeInsets.only(left: 25.0),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage("https://media.blogto.com/uploads/2018/08/02/20180802-2048-LesMoulins3.jpg?cmd=resize&quality=70&w=1400&height=2500"),
+                  image: NetworkImage(item.imgUrl),
                   fit: BoxFit.cover,
                 ),
               ),

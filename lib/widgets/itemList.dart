@@ -3,8 +3,8 @@ import './item.dart';
 
 class ItemContainerList extends StatelessWidget {
 
-  ItemContainerList({this.name});
-  final String name;
+  ItemContainerList({this.section});
+  final section;
   @override
 
   Widget build(BuildContext context) {
@@ -14,15 +14,15 @@ class ItemContainerList extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return CustomScrollView(
-            key: PageStorageKey<String>(name),
+            key: PageStorageKey<String>(section.title),
             slivers: <Widget>[
               SliverFixedExtentList(
                 itemExtent: 125.0,
                 delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                    return ItemContainer();
+                    return ItemContainer(item: section.items[index]);
                   },
-                  childCount: 30,
+                  childCount: section.items.length,
                 ),
               ),
             ],

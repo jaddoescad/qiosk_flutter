@@ -98,19 +98,47 @@ final List<Tab> myTabs = <Tab>[
   Tab(text: 'Recommended'),
   Tab(text: 'Appetizers'),
   Tab(text: 'Sandwiches'),
-  Tab(text: 'Burgers'),
   Tab(text: 'Hot Bowls'),
-  Tab(text: 'Cold Bowls'),
 ];
 
-var _tabs = ['Recommended', 'Appetizers', 'Sandwiches', 'Burgers', 'Hot Bowls', 'Cold Bowls'];
+class Menu extends StatefulWidget {
+  Menu({Key key}) : super(key: key);
 
-class Menu extends StatelessWidget {
   @override
+  _MenuState createState() => _MenuState();
+}
 
+class _MenuState extends State<Menu> {
+  Future<Restaurant> restaurant;
+
+  @override
+  void initState() {
+    super.initState();
+    restaurant = fetchRestaurant();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return FutureBuilder<Restaurant>(
+        future: restaurant,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return menuPage(snapshot.data);
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return CircularProgressIndicator();
+        }
+    );}
+
+  DefaultTabController menuPage(Restaurant restaurant) {
+    print(restaurant.sections);
     return DefaultTabController(
-      length: loadedData[0].sections.length,
+      length: restaurant.sections.length,
       child: Scaffold(
         backgroundColor: Colors.white,
         bottomNavigationBar: Cart(),
@@ -122,8 +150,8 @@ class Menu extends StatelessWidget {
             ];
           },
           body: TabBarView(
-            children: _tabs.map((String name) {
-              return ItemContainerList(name: name);
+            children: restaurant.sections.map((section) {
+              return ItemContainerList(section: section);
             }).toList(),
           ),
         ),

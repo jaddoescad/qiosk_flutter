@@ -5,16 +5,14 @@ final List<Tab> myTabs = <Tab>[
   Tab(text: 'Recommended'),
   Tab(text: 'Appetizers'),
   Tab(text: 'Sandwiches'),
-  Tab(text: 'Burgers'),
   Tab(text: 'Hot Bowls'),
-  Tab(text: 'Cold Bowls'),
 ];
 
 class NavBar extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
-    return                 SliverPersistentHeader(
+    return SliverPersistentHeader(
       pinned: true,
       delegate: _SliverAppBarDelegate(
         minHeight: 50.0,
