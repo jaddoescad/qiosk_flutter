@@ -337,8 +337,8 @@ class SelectionGroupState extends State<SelectionGroup> {
                 splashColor: Colors.transparent,
                   onTap: () {
                     setState(() {
-                      if (widget.type == 'Checkbox') selectCheckBox(selection);
-                      if (widget.type == 'Radio') radioSelected = selectRadio(selection, widget.selections);
+                      // if (widget.type == 'Checkbox') selectCheckBox(selection);
+                      // if (widget.type == 'Radio') radioSelected = selectRadio(selection, widget.selections);
                     });
                   },
                   )],
