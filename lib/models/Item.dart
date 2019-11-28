@@ -21,11 +21,36 @@ class Item extends ChangeNotifier {
   String imgUrl;
   List<Section> sections;
   int itemCount = 1;
+  double selectionPrice = 0;
 
   Item({this.id,this.basePrice = 0, this.title, this.description, this.imgUrl, this.sections});
   
+  get totalPrice {
+   return ((basePrice+selectionPrice)*itemCount).toStringAsFixed(2);
+  }
+
+  getTotalPrice() {
+    List prices = [];
+    print("hell;o");
+    sections.map((section) {
+      section.selections.map((selection){
+        print(selection.price);
+        // if (selection.price != null) {
+          // if (selection.selected) {
+          // prices.add(selection.price);
+          // }
+        // }
+      }).toList();
+    }).toList();
+    selectionPrice = prices.reduce((a, b) => a + b);
+
+    // notifyListeners();
+  }
+  
+
   increment() {
     itemCount = itemCount + 1;
+    // getTot,alPrice();
     notifyListeners();
   }
 
@@ -33,6 +58,7 @@ class Item extends ChangeNotifier {
   decrement() {
     if (itemCount > 1) {
     itemCount = itemCount - 1;
+    // getTotalPrice();
     notifyListeners();
     }
   }

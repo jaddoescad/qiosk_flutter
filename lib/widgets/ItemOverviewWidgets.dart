@@ -121,6 +121,7 @@ class AddToCartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Item>(context);
     return Container(
         width: double.infinity,
         color: Colors.red,
@@ -151,7 +152,7 @@ class AddToCartButton extends StatelessWidget {
                       alignment: Alignment.center,
                     ),
                     Align(
-                      child: Text('\$14.95',
+                      child: Text('\$ ${item.totalPrice}',
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
@@ -356,15 +357,7 @@ String selectRadio(selection, selections) {
     return selection.id;
   }
   
-void selectCheckBox(selection){
-  selection.selected = !selection.selected;
-  // selection.selected = !selection.selected;
-  //loop thru selections and return array of section_id and selection_id
-  // var checkSelected = selections.where((selection) {
-  //   return selection.selected == true ;
-  // }).toList();
-  // selectedList[sectionId] = checkSelected;
-}
+
 
 
 class SelectionContainer extends StatelessWidget {
