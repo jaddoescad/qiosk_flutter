@@ -72,7 +72,6 @@ class Item extends ChangeNotifier {
       description= itemFromMenu.description;
       imgUrl= itemFromMenu.imgUrl;
       sections= getSection(json['sections']);
-
   }
 
   static List<Section> getSection(sectionsJson) {

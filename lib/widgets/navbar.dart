@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-final List<Tab> myTabs = <Tab>[
-  Tab(text: 'Recommended'),
-  Tab(text: 'Appetizers'),
-  Tab(text: 'Sandwiches'),
-  Tab(text: 'Burgers'),
-  Tab(text: 'Hot Bowls'),
-  Tab(text: 'Cold Bowls'),
-];
-
 class NavBar extends StatelessWidget {
+
+  NavBar({this.sections});
+  final sections;
+
+  final List<Tab> myTabs = <Tab>[];
+
   @override
 
   Widget build(BuildContext context) {
-    return                 SliverPersistentHeader(
+
+    sections.forEach((final section) {
+    myTabs.add(Tab(
+        text: section.title
+      ));
+    });
+
+    return SliverPersistentHeader(
       pinned: true,
       delegate: _SliverAppBarDelegate(
         minHeight: 50.0,
