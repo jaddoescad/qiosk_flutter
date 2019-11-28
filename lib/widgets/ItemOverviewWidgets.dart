@@ -122,6 +122,7 @@ class AddToCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context);
+    final buttonTextColor = !item.disableCart ? Colors.white : Colors.grey;
     return Container(
         width: double.infinity,
         color: Colors.red,
@@ -147,7 +148,7 @@ class AddToCartButton extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
-                            color: Colors.white),
+                            color: buttonTextColor),
                       ),
                       alignment: Alignment.center,
                     ),
@@ -156,7 +157,7 @@ class AddToCartButton extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
-                              color: Colors.white)),
+                              color: buttonTextColor)),
                       alignment: Alignment.centerRight,
                     ),
                   ],

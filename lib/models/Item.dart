@@ -22,9 +22,32 @@ class Item extends ChangeNotifier {
   List<Section> sections;
   int itemCount = 1;
   double selectionPrice = 0;
+  bool disableCart = true;
 
   Item({this.id,this.basePrice = 0, this.title, this.description, this.imgUrl, this.sections});
   
+  checkIfItemMeetsAllConditions() {
+    // var exitLoop = false;
+    for (var section in sections) {
+      final selectionsLength = (section.selections.where((i) => i.selected).toList()).length;
+      if (section.type == "Radio") {
+        if ( selectionsLength < 1 ) {
+        disableCart = true;
+        return;
+        }
+      } else if (section.min != null) {
+        if (section.min > 0) {
+        if (!(selectionsLength >= section.min)){
+          disableCart = true;
+          return;
+        }
+        }
+
+      }
+    }
+    disableCart = false;
+  }
+
   get totalPrice {
    return ((basePrice+selectionPrice)*itemCount).toStringAsFixed(2);
   }
@@ -32,6 +55,7 @@ class Item extends ChangeNotifier {
   void selectCheckbox(Selection selection) {
     selection.selected = !selection.selected;
     getTotalPrice();
+    checkIfItemMeetsAllConditions();
     notifyListeners();
   }
 
@@ -42,6 +66,7 @@ class Item extends ChangeNotifier {
     selection.selected = true;
     section.radioSelected = selection.id;
     getTotalPrice();
+    checkIfItemMeetsAllConditions();
     notifyListeners();
   }
 
@@ -61,7 +86,7 @@ class Item extends ChangeNotifier {
     } else {
       selectionPrice = 0;
     }
-    print(selectionPrice);
+
   }
   
 
