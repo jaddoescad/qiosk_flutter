@@ -218,13 +218,11 @@ class Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final item = Provider.of<Item>(context);
     final String type = section.type ?? "Radio";
     final selections = section.selections;
-    final sectionId = section.id;
     return Column(children: <Widget>[
     Header(section: section),
-    if (selections != null) SelectionGroup(sectionId: sectionId, type: type, selections: selections, item: item),
+    if (selections != null) SelectionGroup(type: type, section: section),
     ],);  
   }
 }
@@ -298,6 +296,7 @@ class ItemCounter extends StatelessWidget{
       ]),
     );
 }
+
   Container counterButtonContainer() {
     return Container(width: 50, 
       height: 50, 
@@ -308,38 +307,34 @@ class ItemCounter extends StatelessWidget{
 }
 
 
-class SelectionGroup extends StatefulWidget {
-  SelectionGroup({this.selections, this.sectionId, this.type, this.selectedList, this.item});
-  final selections;
-  final sectionId;
+
+class SelectionGroup extends StatelessWidget{
+
+  SelectionGroup({this.type, this.section});
+  final section;
   final type;
-  final selectedList;
-  final item;
-
-  @override
-  SelectionGroupState createState() => new SelectionGroupState();
-}
-
-class SelectionGroupState extends State<SelectionGroup> {
-  var radioSelected;
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Item>(context);
     return Column(
-      children: widget.selections.map<Widget>((selection) {
+      children: section.selections.map<Widget>((selection) {
         return Container(
           height: 65,
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              SelectionContainer(type: widget.type, selection: selection, radioSelected: radioSelected),
+              SelectionContainer(type: type, selection: selection, section: section),
               InkWell(                
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                   onTap: () {
-                    setState(() {
+                    if (type == 'Checkbox') item.selectCheckbox(selection);
+                    if (type == 'Radio') item.selectRadio(selection, section);
+
+                    // setState(() {
                       // if (widget.type == 'Checkbox') selectCheckBox(selection);
                       // if (widget.type == 'Radio') radioSelected = selectRadio(selection, widget.selections);
-                    });
+                    // });
                   },
                   )],
           ),
@@ -349,22 +344,18 @@ class SelectionGroupState extends State<SelectionGroup> {
   }
 }
 
-String selectRadio(selection, selections) {
-    selections.map((_selection){
-      _selection.selected = false;
-    });
-    selection.selected = true;
-    return selection.id;
-  }
+
+
   
 
 
 
 class SelectionContainer extends StatelessWidget {
-  SelectionContainer({this.selection, this.radioSelected, this.type});
+  SelectionContainer({this.selection, this.section, this.type});
   final selection;
-  final radioSelected;
+  final section;
   final type;
+
 
   @override
   Widget build(BuildContext context) {
@@ -378,7 +369,7 @@ class SelectionContainer extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Row(
             children: <Widget>[
-              (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(radioSelected: radioSelected,selection: selection),
+              (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(section: section,selection: selection),
               Text(selection.title, style: TextStyle(fontSize: 16, color: kMainColor)),
             ],
           ),
@@ -402,14 +393,14 @@ class SingleCheckbox extends StatelessWidget {
 }
 
 class SingleRadio extends StatelessWidget {
-  SingleRadio({this.radioSelected, this.selection});
-  final radioSelected;
+  SingleRadio({this.section, this.selection});
+  final section;
   final selection;
 
   @override
   Widget build(BuildContext context) {
     return Radio(
-      groupValue: radioSelected,
+      groupValue: section.radioSelected,
       value: selection.id,
       onChanged: (selected) {},
     );

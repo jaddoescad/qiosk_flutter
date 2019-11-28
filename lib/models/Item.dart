@@ -29,28 +29,32 @@ class Item extends ChangeNotifier {
    return ((basePrice+selectionPrice)*itemCount).toStringAsFixed(2);
   }
 
+  void selectCheckbox(Selection selection) {
+    selection.selected = !selection.selected;
+    notifyListeners();
+  }
+
+  selectRadio(selection, section) {
+    section.selections.map((_selection){
+      _selection.selected = false;
+    });
+    selection.selected = true;
+    section.radioSelected = selection.id;
+    notifyListeners();
+  }
+
   getTotalPrice() {
-    List prices = [];
-    print("hell;o");
     sections.map((section) {
       section.selections.map((selection){
-        print(selection.price);
-        // if (selection.price != null) {
-          // if (selection.selected) {
-          // prices.add(selection.price);
-          // }
-        // }
+        print(selection.selected);
       }).toList();
     }).toList();
-    selectionPrice = prices.reduce((a, b) => a + b);
-
-    // notifyListeners();
   }
   
 
   increment() {
     itemCount = itemCount + 1;
-    // getTot,alPrice();
+    getTotalPrice();
     notifyListeners();
   }
 
@@ -119,6 +123,7 @@ class Section {
   final int order;
   final String type;
   final List<Selection> selections;
+  String radioSelected;
 
   Section({@required this.id, this.max, this.min = 0,@required this.title, this.type, this.selections, this.order});
 
