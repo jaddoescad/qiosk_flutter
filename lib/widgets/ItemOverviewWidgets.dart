@@ -140,7 +140,7 @@ class AddToCartButton extends StatelessWidget {
               child: MaterialButton(
                 color: kMainColor,
                 disabledColor: kMainColor,
-                onPressed: item.disableCart ? null : () => {printObject()},
+                onPressed: item.disableCart ? null : () => {Navigator.of(context).pop()},
                 child: Stack(
                   children: <Widget>[
                     Align(
