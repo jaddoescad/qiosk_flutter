@@ -27,7 +27,7 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-    final item = Provider.of<Item>(context);
+    final item = Provider.of<Item>(context, listen: false);
     return FutureBuilder(
       future: itemFuture,
       builder: (context, snapshot) {
