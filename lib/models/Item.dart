@@ -31,6 +31,7 @@ class Item extends ChangeNotifier {
 
   void selectCheckbox(Selection selection) {
     selection.selected = !selection.selected;
+    getTotalPrice();
     notifyListeners();
   }
 
@@ -40,15 +41,27 @@ class Item extends ChangeNotifier {
     });
     selection.selected = true;
     section.radioSelected = selection.id;
+    getTotalPrice();
     notifyListeners();
   }
 
   getTotalPrice() {
+    List price = [];
     sections.map((section) {
       section.selections.map((selection){
-        print(selection.selected);
+        if(selection.price != null) {
+          if (selection.selected) {
+            price.add(selection.price);
+          }
+        }
       }).toList();
     }).toList();
+    if (price.isNotEmpty) {
+      selectionPrice = price.reduce((a, b) => a + b);
+    } else {
+      selectionPrice = 0;
+    }
+    print(selectionPrice);
   }
   
 
@@ -62,7 +75,7 @@ class Item extends ChangeNotifier {
   decrement() {
     if (itemCount > 1) {
     itemCount = itemCount - 1;
-    // getTotalPrice();
+    getTotalPrice();
     notifyListeners();
     }
   }
@@ -130,10 +143,15 @@ class Section {
 String getSectionConditionString() {
   var min = this.min ?? 0;
   var max = this.max;
+  var type = this.type;
   String requiredText = min > 0 ? "Required" : "Optional";
   String conditionText = "";
 
-  if (max != null) {
+  if (type == "Radio"){
+    requiredText = "Required";
+    conditionText = "- Choose 1";
+  }
+  else if (max != null) {
     if (min == max && max != 0)  {
       conditionText = "- Choose $max";
     } else if (max > min && min == 0) {
