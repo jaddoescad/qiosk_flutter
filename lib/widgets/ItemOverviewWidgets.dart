@@ -5,10 +5,9 @@ import '../constants.dart';
 
 
 class ItemHeader extends StatelessWidget {
-  ItemHeader({this.item});
-  final item;
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Item>(context);
     return Column(
       children: <Widget>[
         item.imgUrl.isNotEmpty ? ItemImage(imgUrl: item.imgUrl) : ItemSelectionSpacer(),
@@ -212,38 +211,34 @@ class Header extends StatelessWidget {
 
 class Section extends StatelessWidget {
 
-  Section({this.section, this.selectedList, this.item});
-
+  Section({this.section});
   final section;
-  final selectedList;
-  final item;
+
 
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Item>(context);
     final String type = section.type ?? "Radio";
     final selections = section.selections;
     final sectionId = section.id;
     return Column(children: <Widget>[
     Header(section: section),
-    if (selections != null) SelectionGroup(selectedList: selectedList, sectionId: sectionId, type: type, selections: selections, item: item),
+    if (selections != null) SelectionGroup(sectionId: sectionId, type: type, selections: selections, item: item),
     ],);  
   }
 }
 
 class ItemBody extends StatelessWidget {
-  ItemBody({this.item, this.selectedList});
-  final item;
-  final selectedList;
-
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Item>(context);
     return Expanded(
         child: CustomScrollView(
       slivers: <Widget>[
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              ItemHeader(item: item),
+              ItemHeader(),
             ],
           ),
         ),
@@ -251,7 +246,7 @@ class ItemBody extends StatelessWidget {
           delegate: SliverChildListDelegate(
             [
               
-              ...item.sections.map((section) => Section(section: section, selectedList: selectedList,item: item)),
+              ...item.sections.map((section) => Section(section: section)),
               ItemCounter()
             ],
           ),

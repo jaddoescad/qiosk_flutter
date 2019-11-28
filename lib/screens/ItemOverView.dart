@@ -32,24 +32,27 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
         if (snapshot.hasData) {
           return ChangeNotifierProvider<Item>.value(
             value: snapshot.data,
-            child: selectionPageWidget(snapshot.data, context));
+            child: SelectionPage());
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
         return CircularProgressIndicator();
       }
       );}
+}
 
-  Widget selectionPageWidget(Item item, context) {
-    return Stack(
+class SelectionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+  return Stack(
     children: <Widget>[
       Container(
         child: Scaffold(
           backgroundColor: Colors.white,
           body: Column(
             children: [
-              ItemBody(selectedList: widget.selectedList, item: item), 
-              AddToCartButton(), 
+              ItemBody(), 
+              AddToCartButton(),
             ],
           ),
         ),
