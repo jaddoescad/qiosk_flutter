@@ -12,12 +12,13 @@ class ItemOverview extends StatefulWidget {
 }
 
 class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver {
-  Future<Item> item;
+  Future itemFuture;
+  final menuItem = Item(id: "Mighty Hamburger",basePrice: 18.95, description: "Delicious Sauced hamburger with a hint of Khara", imgUrl: "https://assets.bonappetit.com/photos/5d1cb1880813410008e914fc/16:9/w_1200,c_limit/Print-Summer-Smash-Burger.jpg", title: "dfkefkmrke");
 
   @override
   void initState() {
     super.initState();
-    item = fetchSelection( Item(id: "Mighty Hamburger",basePrice: 18.95, description: "Delicious Sauced hamburger with a hint of Khara", imgUrl: "https://assets.bonappetit.com/photos/5d1cb1880813410008e914fc/16:9/w_1200,c_limit/Print-Summer-Smash-Burger.jpg", title: "dfkefkmrke"));
+    itemFuture = fetchSelection();
   }
   @override
   void dispose() {
@@ -26,19 +27,20 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Item>(
-      future: item,
+    final item = Provider.of<Item>(context);
+    return FutureBuilder(
+      future: itemFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ChangeNotifierProvider<Item>.value(
-            value: snapshot.data,
-            child: SelectionPage());
+          item.fromSelectionJson(snapshot.data, menuItem);
+          return SelectionPage();
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
         return CircularProgressIndicator();
       }
-      );}
+      );
+    }
 }
 
 class SelectionPage extends StatelessWidget {

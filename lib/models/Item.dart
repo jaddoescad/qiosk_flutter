@@ -4,25 +4,25 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-Future<Item> fetchSelection(itemFromMenu) async {
+Future fetchSelection() async {
     final response = await rootBundle.loadString('assets/mock/Item.json').then((itemData) {
     return itemData;
   });
 
-  return Item.fromSelectionJson(json.decode(response), itemFromMenu);
+  return json.decode(response);
 }
 
 
 class Item extends ChangeNotifier {
-  final String id;
-  final double basePrice;
-  final String title;
-  final String description;
-  final String imgUrl;
-  final List<Section> sections;
+  String id;
+  double basePrice;
+  String title;
+  String description;
+  String imgUrl;
+  List<Section> sections;
   int itemCount = 1;
 
-  Item({@required this.id,this.basePrice = 0, @required this.title, this.description, this.imgUrl, this.sections});
+  Item({this.id,this.basePrice = 0, this.title, this.description, this.imgUrl, this.sections});
   
   increment() {
     itemCount = itemCount + 1;
@@ -38,16 +38,15 @@ class Item extends ChangeNotifier {
   }
 
   
-  factory Item.fromSelectionJson(Map<String,dynamic> json, Item itemFromMenu) {
-    getSection(json['sections']);
-    return Item(
-      id: itemFromMenu.id,
-      basePrice: itemFromMenu.basePrice,
-      title: itemFromMenu.title,
-      description: itemFromMenu.description,
-      imgUrl: itemFromMenu.imgUrl,
-      sections: getSection(json['sections'])
-    );
+  fromSelectionJson(Map<String,dynamic> json, Item itemFromMenu) {
+
+      id= itemFromMenu.id;
+      basePrice = itemFromMenu.basePrice;
+      title= itemFromMenu.title;
+      description= itemFromMenu.description;
+      imgUrl= itemFromMenu.imgUrl;
+      sections= getSection(json['sections']);
+
   }
 
   static List<Section> getSection(sectionsJson) {
