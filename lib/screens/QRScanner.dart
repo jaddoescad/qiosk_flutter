@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/screens/menu.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'dart:async';
 import '../main.dart';
-
-import 'dart:developer' as logger;
-
 
 class QRViewExample extends StatefulWidget {
   var state;
@@ -30,13 +26,11 @@ class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
     @override
   void didPush() {
     // Route was pushed onto navigator and is now topmost route.
-    logger.log("push");
   }
 
   @override
   void didPopNext() {
     setState(() => _isloading = !_isloading);
-
     // Covering route was popped off the navigator.
     // logger.log("pop");
     if (controller != null) {
@@ -61,23 +55,15 @@ class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
   }
 
   void _onQRViewCreated(QRViewController controller) {
-
     this.controller = controller;
-
-
     controller.scannedDataStream.listen((scanData) {
       controller.pauseCamera();
-      // Future.delayed(const Duration(milliseconds: 300), () {
-
-        
-
         if (!_isloading) {
         setState(() => _isloading = !_isloading);
         Navigator.of(context).push(
           MaterialPageRoute(builder: (ctx) => Menu()),
         );
         }
-    // });
   });
   
   }

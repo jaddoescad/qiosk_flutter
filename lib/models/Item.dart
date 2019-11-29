@@ -25,6 +25,18 @@ class Item extends ChangeNotifier {
   bool disableCart = true;
 
   Item({this.id,this.basePrice = 0, this.title, this.description, this.imgUrl, this.sections});
+
+  reset() {
+    id = null;
+    basePrice = 0;
+    title = null;
+    description = null;
+    imgUrl = null;
+    sections = null;
+    itemCount = 1;
+    selectionPrice = 0;
+    disableCart = true;
+  }
   
   checkIfItemMeetsAllConditions() {
     // var exitLoop = false;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/CartPage.dart';
 
 class Cart extends StatelessWidget {
   @override
@@ -19,7 +20,13 @@ class Cart extends StatelessWidget {
         elevation: 10,
         child: Text('View Your Cart', style: TextStyle(fontSize: 15, color: Colors.white),),
         color: Color(0xFF365e7a),
-        onPressed:  () {},
+        onPressed:  () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (ctx) => CartPage()
+            ),
+          );
+        },
       ),
     );
   }
