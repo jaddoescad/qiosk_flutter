@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/models/cart.dart';
+import 'package:provider/provider.dart';
 
-class CartItem extends StatelessWidget {
+
+class CartItemCard extends StatelessWidget {
 
   @override
-
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(

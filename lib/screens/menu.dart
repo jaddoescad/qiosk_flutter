@@ -44,7 +44,7 @@ class _MenuState extends State<Menu> {
       length: restaurant.sections.length,
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: Cart(),
+        bottomNavigationBar: CartButton(),
         body:NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[

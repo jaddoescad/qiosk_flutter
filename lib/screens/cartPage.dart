@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
-import '../widgets/cartItem.dart';
-import '../widgets/addCart.dart';
+import 'package:iamrich/models/cart.dart';
+import 'package:iamrich/widgets/addCart.dart';
+import 'package:iamrich/widgets/cartItem.dart';
+
+// import '../widgets/cartItem.dart';
+// import '../models/cart.dart';
+
 
 class CartPage extends StatelessWidget {
 static const routeName = '/CartPage';
 
   @override
   Widget build(BuildContext context) {
+    // final cart = Provider.of<Cart>(context);
+    // print(cart.items);
     return Scaffold(
       bottomNavigationBar: Container(
       height: 65,
@@ -65,7 +72,7 @@ static const routeName = '/CartPage';
                 itemExtent: 125.0,
                 delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                      return CartItem();
+                      return CartItemCard();
                   },
                   childCount: 6,
                 ),

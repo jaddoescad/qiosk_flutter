@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/models/cart.dart';
+import 'package:provider/provider.dart';
 import '../screens/CartPage.dart';
 
-class Cart extends StatelessWidget {
+
+class CartButton extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Container(
       height: 65,
       padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
@@ -18,7 +22,7 @@ class Cart extends StatelessWidget {
       ),
       child: RaisedButton(
         elevation: 10,
-        child: Text('View Your Cart', style: TextStyle(fontSize: 15, color: Colors.white),),
+        child: Text('View Your Cart \$ ${cart.totalAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 15, color: Colors.white),),
         color: Color(0xFF365e7a),
         onPressed:  () {
           Navigator.of(context).push(

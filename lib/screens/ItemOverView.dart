@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import '../widgets/ItemOverviewWidgets.dart';
 import '../models/Item.dart';
@@ -34,7 +35,6 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
 
 @override
   void didPop() {
-    // TODO: implement didPop
     super.didPop();
     final item = Provider.of<Item>(context);
     item.reset();

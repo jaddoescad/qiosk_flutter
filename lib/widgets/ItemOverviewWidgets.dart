@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/Item.dart';
+import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
+
 
 
 class ItemHeader extends StatelessWidget {
@@ -140,7 +142,7 @@ class AddToCartButton extends StatelessWidget {
               child: MaterialButton(
                 color: kMainColor,
                 disabledColor: kMainColor,
-                onPressed: item.disableCart ? null : () => {Navigator.of(context).pop()},
+                onPressed: item.disableCart ? null : () => {addtocart(context)},
                 child: Stack(
                   children: <Widget>[
                     Align(
@@ -154,7 +156,7 @@ class AddToCartButton extends StatelessWidget {
                       alignment: Alignment.center,
                     ),
                     Align(
-                      child: Text('\$ ${item.totalPrice}',
+                      child: Text('\$ ${item.totalPrice.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
@@ -167,6 +169,14 @@ class AddToCartButton extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  void addtocart(context) {
+    final cart = Provider.of<Cart>(context);
+    final item = Provider.of<Item>(context);
+
+    cart.addItem(item.id, item.totalPrice, item.title, item.itemCount, item.selections);
+    Navigator.of(context).pop();
   }
 }
 

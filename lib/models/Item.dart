@@ -23,6 +23,7 @@ class Item extends ChangeNotifier {
   int itemCount = 1;
   double selectionPrice = 0;
   bool disableCart = true;
+  List selections = [];
 
   Item({this.id,this.basePrice = 0, this.title, this.description, this.imgUrl, this.sections});
 
@@ -38,6 +39,7 @@ class Item extends ChangeNotifier {
     disableCart = true;
   }
   
+
   checkIfItemMeetsAllConditions() {
     // var exitLoop = false;
     for (var section in sections) {
@@ -61,7 +63,7 @@ class Item extends ChangeNotifier {
   }
 
   get totalPrice {
-   return ((basePrice+selectionPrice)*itemCount).toStringAsFixed(2);
+   return ((basePrice+selectionPrice)*itemCount);
   }
 
   void selectCheckbox(Selection selection) {
@@ -86,8 +88,9 @@ class Item extends ChangeNotifier {
     List price = [];
     sections.map((section) {
       section.selections.map((selection){
-        if(selection.price != null) {
+          selections.add(selection);
           if (selection.selected) {
+            if(selection.price != null) {
             price.add(selection.price);
           }
         }
