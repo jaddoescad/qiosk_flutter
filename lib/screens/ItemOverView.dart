@@ -6,7 +6,6 @@ import '../models/Item.dart';
 
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
-  final Map selectedList = {};
   @override
   _ItemOverviewState createState() => _ItemOverviewState();
 }

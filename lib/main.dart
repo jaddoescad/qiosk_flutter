@@ -3,6 +3,10 @@ import 'package:iamrich/models/Item.dart';
 import 'package:provider/provider.dart';
 import './screens/ItemOverview.dart';
 import './screens/menu.dart';
+import './screens/QRScanner.dart';
+import 'dart:developer' as logger;
+
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 
 void main() {
@@ -22,12 +26,16 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider.value(
           value: Item(),
-        ),
+        )
       ],
           child: MaterialApp(
         title: 'Qiosk',
-        home: Menu(),
-        routes: {ItemOverview.routeName: (ctx) => ItemOverview()},
+        home: QRViewExample(),
+        navigatorObservers: [routeObserver],
+        routes: {
+          ItemOverview.routeName: (ctx) => ItemOverview(),
+          Menu.routeName: (ctx) => Menu()
+        },
       ),
     );
   }

@@ -6,7 +6,7 @@ import '../widgets/header.dart';
 import '../widgets/navbar.dart';
 
 class Menu extends StatefulWidget {
-  Menu({Key key}) : super(key: key);
+  static const routeName = '/Menu';
 
   @override
   _MenuState createState() => _MenuState();
