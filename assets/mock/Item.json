@@ -17,8 +17,8 @@
       "type": "Checkbox",
       "order": 1,
       "selections": {
-        "7888": {"price": 2, "title": "Medium Hashbrowns"},
-        "8939": {"title": "Large Hashbrowns", "price": 3}
+        "7888": {"price": 2, "title": "Medium Eggs"},
+        "8939": {"title": "Large Vegetables", "price": 3}
       }
     },
     "8378": {
@@ -28,8 +28,8 @@
       "type": "Radio",
       "order": 2,
       "selections": {
-        "7888": {"price": 2, "title": "Medium Hashbrowns"},
-        "8939": {"title": "Large Hashbrowns", "price": 3}
+        "7888": {"price": 2, "title": "Medium Ameers"},
+        "8939": {"title": "Large Rayans", "price": 3}
       }
     },
     "8478": {
@@ -38,8 +38,8 @@
       "title": "Breakfast",
       "type": "Radio",
       "selections": {
-        "7888": {"price": 2, "title": "Medium Hashbrowns"},
-        "8939": {"title": "Large Hashbrowns", "price": 3}
+        "7888": {"price": 2, "title": "Medium Sarmads"},
+        "8939": {"title": "Large Jads", "price": 3}
       }
     }
   }

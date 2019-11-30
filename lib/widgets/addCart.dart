@@ -5,6 +5,10 @@ import '../screens/CartPage.dart';
 
 
 class CartButton extends StatelessWidget {
+  CartButton({this.title, this.func});
+  final title;
+  final func;
+
   @override
 
   Widget build(BuildContext context) {
@@ -22,15 +26,9 @@ class CartButton extends StatelessWidget {
       ),
       child: RaisedButton(
         elevation: 10,
-        child: Text('View Your Cart \$ ${cart.totalAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 15, color: Colors.white),),
+        child: Text('$title \$ ${cart.totalAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 15, color: Colors.white),),
         color: Color(0xFF365e7a),
-        onPressed:  () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-                builder: (ctx) => CartPage()
-            ),
-          );
-        },
+        onPressed:  () {func();},
       ),
     );
   }

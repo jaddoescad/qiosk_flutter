@@ -86,10 +86,12 @@ class Item extends ChangeNotifier {
 
   getTotalPrice() {
     List price = [];
+    List selected = [];
     sections.map((section) {
       section.selections.map((selection){
-          selections.add(selection);
           if (selection.selected) {
+            selected.add(selection);
+            selections = selected;
             if(selection.price != null) {
             price.add(selection.price);
           }

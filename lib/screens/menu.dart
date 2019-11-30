@@ -4,6 +4,7 @@ import '../widgets/addCart.dart';
 import '../widgets/itemList.dart';
 import '../widgets/header.dart';
 import '../widgets/navbar.dart';
+import '../screens/cartPage.dart';
 
 class Menu extends StatefulWidget {
   static const routeName = '/Menu';
@@ -25,6 +26,14 @@ class _MenuState extends State<Menu> {
     super.dispose();
   }
 
+  void viewYourCart() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+         builder: (ctx) => CartPage()
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Restaurant>(
@@ -44,7 +53,7 @@ class _MenuState extends State<Menu> {
       length: restaurant.sections.length,
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: CartButton(),
+        bottomNavigationBar: CartButton(title: "View Your Cart", func: viewYourCart),
         body:NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[

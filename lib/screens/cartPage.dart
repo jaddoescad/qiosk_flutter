@@ -1,39 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
 import 'package:iamrich/models/cart.dart';
-import 'package:iamrich/widgets/addCart.dart';
+import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
-
-// import '../widgets/cartItem.dart';
-// import '../models/cart.dart';
-
+import 'package:iamrich/widgets/addCart.dart';
 
 class CartPage extends StatelessWidget {
 static const routeName = '/CartPage';
 
   @override
   Widget build(BuildContext context) {
-    // final cart = Provider.of<Cart>(context);
-    // print(cart.items);
+    final item = Provider.of<Cart>(context);
+
     return Scaffold(
-      bottomNavigationBar: Container(
-      height: 65,
-      padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [BoxShadow(
-            color: Colors.grey,
-            blurRadius: 6.0,
-          ),
-          ]
-      ),
-      child: RaisedButton(
-        elevation: 10,
-        child: Text('Place Your Order', style: TextStyle(fontSize: 15, color: Colors.white),),
-        color: Color(0xFF365e7a),
-        onPressed:  () {}
-      ),
-    ),
+      bottomNavigationBar: CartButton(title: "Place Your Order"),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55.0),
         child: AppBar(
@@ -68,13 +48,11 @@ static const routeName = '/CartPage';
                           ),
                         ),
               ),
-              SliverFixedExtentList(
-                itemExtent: 125.0,
-                delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                      return CartItemCard();
-                  },
-                  childCount: 6,
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [   
+                   ...item.items.values.toList().map((item) => CartItemCard(item: item)),
+                  ]
                 ),
               ),
            ]

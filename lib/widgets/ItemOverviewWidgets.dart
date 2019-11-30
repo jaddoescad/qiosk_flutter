@@ -119,66 +119,98 @@ return Positioned(
   }
 }
 
-class AddToCartButton extends StatelessWidget {
+class SelectionCartButton extends StatelessWidget {
 
   @override
+
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context);
     final buttonTextColor = !item.disableCart ? Colors.white : Colors.grey;
     return Container(
-        width: double.infinity,
-        color: Colors.red,
-        child: Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: Container(
-            color: Colors.white,
-            width: double.infinity,
-            height: kBottomButtonContainerHeight,
-            child: Container(
-              margin: const EdgeInsets.only(
-                  bottom: kButtonContainerMargin,
-                  left: kButtonContainerMargin,
-                  right: kButtonContainerMargin),
-              child: MaterialButton(
-                color: kMainColor,
-                disabledColor: kMainColor,
-                onPressed: item.disableCart ? null : () => {addtocart(context)},
-                child: Stack(
-                  children: <Widget>[
-                    Align(
-                      child: Text(
-                        'Add To Cart',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: buttonTextColor),
-                      ),
-                      alignment: Alignment.center,
-                    ),
-                    Align(
-                      child: Text('\$ ${item.totalPrice.toStringAsFixed(2)}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: buttonTextColor)),
-                      alignment: Alignment.centerRight,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      height: 65,
+      padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [BoxShadow(
+            color: Colors.grey,
+            blurRadius: 6.0,
           ),
-        ));
+          ]
+      ),
+      child: RaisedButton(
+        disabledColor: kMainColor,
+        elevation: 10,
+        child: Text('Add To Cart \$ ${item.totalPrice.toStringAsFixed(2)}', style: TextStyle(fontSize: 15, color: buttonTextColor),),
+        color: Color(0xFF365e7a),
+        onPressed: item.disableCart ? null : () => {addtocart(context)},
+      ),
+    );
   }
 
-  void addtocart(context) {
+    void addtocart(context) {
     final cart = Provider.of<Cart>(context);
     final item = Provider.of<Item>(context);
 
     cart.addItem(item.id, item.totalPrice, item.title, item.itemCount, item.selections);
     Navigator.of(context).pop();
   }
+
 }
+
+// class AddToCartButton extends StatelessWidget {
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final item = Provider.of<Item>(context);
+//     final buttonTextColor = !item.disableCart ? Colors.white : Colors.grey;
+//     return Container(
+//         width: double.infinity,
+//         color: Colors.red,
+//         child: Align(
+//           alignment: FractionalOffset.bottomCenter,
+//           child: Container(
+//             color: Colors.white,
+//             width: double.infinity,
+//             height: kBottomButtonContainerHeight,
+//             child: Container(
+//               margin: const EdgeInsets.only(
+//                   bottom: kButtonContainerMargin,
+//                   left: kButtonContainerMargin,
+//                   right: kButtonContainerMargin),
+//               child: MaterialButton(
+//                 color: kMainColor,
+//                 disabledColor: kMainColor,
+//                 onPressed: item.disableCart ? null : () => {addtocart(context)},
+//                 child: Stack(
+//                   children: <Widget>[
+//                     Align(
+//                       child: Text(
+//                         'Add To Cart',
+//                         style: TextStyle(
+//                             fontWeight: FontWeight.w500,
+//                             fontSize: 16,
+//                             color: buttonTextColor),
+//                       ),
+//                       alignment: Alignment.center,
+//                     ),
+//                     Align(
+//                       child: Text('\$ ${item.totalPrice.toStringAsFixed(2)}',
+//                           style: TextStyle(
+//                               fontWeight: FontWeight.w400,
+//                               fontSize: 14,
+//                               color: buttonTextColor)),
+//                       alignment: Alignment.centerRight,
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ));
+//   }
+
+
+
 
 void printObject() {}
 
@@ -256,7 +288,6 @@ class ItemBody extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              
               ...item.sections.map((section) => Section(section: section)),
               ItemCounter()
             ],

@@ -4,15 +4,12 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../main.dart';
 
 class QRViewExample extends StatefulWidget {
-  var state;
   @override
   _QRViewExampleState createState() => _QRViewExampleState();
 }
 
 class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  _QRViewExampleState({this.state});
-  var state = false;
   var qrText = "";
   bool _isloading = false;
   QRViewController controller;
@@ -41,7 +38,9 @@ class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
+        children: <Widget>[
+        Column(
         children: <Widget>[
           Expanded(
             child: QRView(
@@ -50,6 +49,27 @@ class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
             ),
           ),
         ],
+      ),
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          color: Color(0xFF365e7a).withOpacity(0.4),
+        ),
+        Center(
+          child: Opacity(
+          opacity: 0.5,
+          child: Container(
+          height: 200,
+          width: 200,
+          decoration: BoxDecoration( 
+            image: DecorationImage(
+              image: AssetImage('assets/images/Scan.png'),
+            )
+          ),
+        ),
+        ),
+        ),
+        ]
       ),
     );
   }
