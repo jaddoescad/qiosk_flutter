@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       ],
         child: MaterialApp(
         title: 'Qiosk',
-        home: QRViewExample(),
+        home: Menu(),
         navigatorObservers: [routeObserver],
         routes: {
           ItemOverview.routeName: (ctx) => ItemOverview(),
