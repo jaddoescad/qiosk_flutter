@@ -41,7 +41,7 @@ class CartItemCard extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text(item.price.toString(), textAlign: TextAlign.right, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
+                    child: Text(item.price.toStringAsFixed(2), textAlign: TextAlign.right, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
                   ),
                 ],
               ),
@@ -52,7 +52,7 @@ class CartItemCard extends StatelessWidget {
           border: Border(
             bottom: BorderSide(
               color: Color(0xFF365e7a),
-              width: 1,
+              width: 0.5,
             ),
           ),
         ),

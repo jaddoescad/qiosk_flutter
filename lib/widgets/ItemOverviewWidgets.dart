@@ -127,7 +127,7 @@ class SelectionCartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     
     final item = Provider.of<Item>(context);
-    final buttonTextColor = !item.disableCart ? Colors.white : Colors.grey;
+    final buttonTextColor = !item.disableCart ? Colors.white : Color(0xFF879FB0);
 
 
     return Container(
