@@ -14,6 +14,7 @@ class ItemContainerList extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return CustomScrollView(
+            physics: ClampingScrollPhysics(),
             key: PageStorageKey<String>(section.title),
             slivers: <Widget>[
               SliverFixedExtentList(

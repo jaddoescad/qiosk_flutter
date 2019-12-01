@@ -55,6 +55,7 @@ class _MenuState extends State<Menu> {
         backgroundColor: Colors.white,
         bottomNavigationBar: CartButton(title: "View Your Cart", func: viewYourCart),
         body:NestedScrollView(
+          physics: ClampingScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               Header(restaurant: restaurant),
