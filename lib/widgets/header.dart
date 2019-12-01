@@ -57,7 +57,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(right: 20.0, top:5),
-                        child: IconButton(icon: Image.asset('assets/images/left.png', height: 28.0, width: 28.0,), onPressed: null),
+                        child: IconButton(icon: Image.asset('assets/images/left.png', height: 29.0, width: 29.0,), onPressed: null),
                       ),
                       Expanded(
                         child: Column(
@@ -71,7 +71,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20.0, top: 5),
-                        child: IconButton(icon: Image.asset('assets/images/right.png', height: 28.0, width: 28.0,), onPressed: null),
+                        child: IconButton(icon: Image.asset('assets/images/right.png', height: 29.0, width: 29.0,), onPressed: null),
                       ),
                     ],
                   ),

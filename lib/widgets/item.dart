@@ -19,28 +19,40 @@ class ItemContainer extends StatelessWidget {
           );
         },
         child: Container(
-        padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-        margin: EdgeInsets.only(left: 15.0, right: 15.0,),
+        padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0, bottom: 15.0),
+        // margin: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20, top: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Text(item.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(item.description, overflow: TextOverflow.ellipsis, maxLines: 3, style: TextStyle(fontSize: 12, color: Color(0xFF365e7a),),),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(item.price, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.bold),),
-                  ),
+          //         Expanded(
+          //           flex: 1,
+          //           child: Padding(
+          //             padding: const EdgeInsets.only(8.0),
+          //             child: 
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0 , bottom: 8.0),
+            child: Text(item.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a), fontWeight: FontWeight.w500, letterSpacing: 1),),
+          ),
+          //           ),
+          //         ),
+          //         Expanded(
+          //           flex: 2,
+          //           child: 
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(item.description, overflow: TextOverflow.ellipsis, maxLines: 2, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.w300, letterSpacing: 1),),
+          ),
+          //         ),
+          //         Expanded(
+          //           Rflex: 1,
+          //           child: 
+          Text('\$ ${item.price}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.w500),),
+          //         ),
                 ],
               ),
             ),
@@ -52,7 +64,7 @@ class ItemContainer extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              height: 95,
+              height:95,
               width: 95,
             ),
           ],
@@ -62,7 +74,7 @@ class ItemContainer extends StatelessWidget {
           border: Border(
             bottom: BorderSide(
               color: Color(0xFF365e7a),
-              width: 1,
+              width: 0.5,
             ),
           ),
         ),

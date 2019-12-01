@@ -18,7 +18,7 @@ class ItemContainerList extends StatelessWidget {
             key: PageStorageKey<String>(section.title),
             slivers: <Widget>[
               SliverFixedExtentList(
-                itemExtent: 125.0,
+                itemExtent: 150.0,
                 delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                     return ItemContainer(item: section.items[index]);
