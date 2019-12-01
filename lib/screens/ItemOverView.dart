@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:iamrich/models/cart.dart';
+import 'package:iamrich/models/restaurant.dart';
 import 'package:provider/provider.dart';
 import '../widgets/ItemOverviewWidgets.dart';
 import '../models/Item.dart';
 import '../main.dart';
 
-
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
+  ItemOverview({@required this.fromMenuItem});
+  final MenuItem fromMenuItem;
+
+
   @override
   _ItemOverviewState createState() => _ItemOverviewState();
 }
 
 class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver, RouteAware{
   Future itemFuture;
-  final menuItem = Item(id: "Mighty Hamburger",basePrice: 18.95, description: "Delicious Sauced hamburger with a hint of Khara", imgUrl: "https://assets.bonappetit.com/photos/5d1cb1880813410008e914fc/16:9/w_1200,c_limit/Print-Summer-Smash-Burger.jpg", title: "dfkefkmrke");
+
+  
 
   @override
   void initState() {
@@ -43,6 +47,8 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context, listen: false);
+    final menuItem = Item(id: widget.fromMenuItem.id,basePrice: widget.fromMenuItem.price, description: widget.fromMenuItem.description, imgUrl: widget.fromMenuItem.imgUrl, title: widget.fromMenuItem.title.toString());
+
     return FutureBuilder(
       future: itemFuture,
       builder: (context, snapshot) {

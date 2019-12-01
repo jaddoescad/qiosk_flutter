@@ -43,10 +43,10 @@ class Restaurant {
     return sectionArray;
   }
 
-  static List<Item> getItem(itemsJson) {
-    List<Item> itemArray = [];
+  static List<MenuItem> getItem(itemsJson) {
+    List<MenuItem> itemArray = [];
     itemsJson.forEach((final String id, final item) {
-      itemArray.add(Item(
+      itemArray.add(MenuItem(
           id: id.toString(),
           title: item['title'] ,
           description: item['description'],
@@ -74,18 +74,18 @@ class Section {
   final int order;
   final String id;
   final String title;
-  final List<Item> items;
+  final List<MenuItem> items;
 
   Section({this.order, @required this.id, @required this.title, this.items});
 }
 
-class Item {
+class MenuItem {
   final int order;
   final String id;
   final String title;
   final String description;
-  final String price;
+  final double price;
   final String imgUrl;
 
-  Item({this.order, @required this.id, @required this.title, this.description, @required this.price, this.imgUrl});
+  MenuItem({this.order, @required this.id, @required this.title, this.description, @required this.price, this.imgUrl});
 }

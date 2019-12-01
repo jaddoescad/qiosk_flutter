@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
+import 'package:iamrich/widgets/addCart.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 
@@ -124,11 +125,14 @@ class SelectionCartButton extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
+    
     final item = Provider.of<Item>(context);
     final buttonTextColor = !item.disableCart ? Colors.white : Colors.grey;
+
+
     return Container(
-      height: 65,
-      padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+      height: 70,
+      padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [BoxShadow(
@@ -139,8 +143,8 @@ class SelectionCartButton extends StatelessWidget {
       ),
       child: RaisedButton(
         disabledColor: kMainColor,
-        elevation: 10,
-        child: Text('Add To Cart \$ ${item.totalPrice.toStringAsFixed(2)}', style: TextStyle(fontSize: 15, color: buttonTextColor),),
+        child: CartButtonChildren(title: "Add To Cart", price: item.totalPrice.toStringAsFixed(2), color: buttonTextColor),
+        // Text('Add To Cart \$ ${item.totalPrice.toStringAsFixed(2)}', style: TextStyle(fontSize: 15, color: buttonTextColor),),
         color: Color(0xFF365e7a),
         onPressed: item.disableCart ? null : () => {addtocart(context)},
       ),

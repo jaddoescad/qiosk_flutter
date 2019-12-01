@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import '../screens/ItemOverview.dart';
+import 'package:iamrich/models/restaurant.dart';
+import '../screens/ItemOverView.dart';
 
 class ItemContainer extends StatelessWidget {
   ItemContainer({this.item});
-  final item;
+  final MenuItem item;
 
   @override
 
@@ -14,7 +15,7 @@ class ItemContainer extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-                builder: (ctx) => ItemOverview()
+                builder: (ctx) => ItemOverview(fromMenuItem: item)
             ),
           );
         },
@@ -51,7 +52,7 @@ class ItemContainer extends StatelessWidget {
           //         Expanded(
           //           Rflex: 1,
           //           child: 
-          Text('\$ ${item.price}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.w500),),
+          Text('\$ ${item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, color: Color(0xFF365e7a), fontWeight: FontWeight.w500),),
           //         ),
                 ],
               ),

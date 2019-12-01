@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/models/cart.dart';
+import 'package:provider/provider.dart';
 import '../models/restaurant.dart';
 import '../widgets/addCart.dart';
 import '../widgets/itemList.dart';
 import '../widgets/header.dart';
 import '../widgets/navbar.dart';
 import '../screens/cartPage.dart';
+
 
 class Menu extends StatefulWidget {
   static const routeName = '/Menu';
@@ -40,7 +43,7 @@ class _MenuState extends State<Menu> {
         future: restaurant,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return menuPage(snapshot.data);
+            return menuPage(snapshot.data, context);
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
@@ -48,12 +51,14 @@ class _MenuState extends State<Menu> {
         }
     );}
 
-  DefaultTabController menuPage(Restaurant restaurant) {
+  DefaultTabController menuPage(Restaurant restaurant, context) {
+    final cart = Provider.of<Cart>(context);
+
     return DefaultTabController(
       length: restaurant.sections.length,
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: CartButton(title: "View Your Cart", func: viewYourCart),
+        bottomNavigationBar: cart.totalAmount != 0.0 ? CartButton(title: "View Your Cart", func: viewYourCart): Container(width: 0,height: 0,),
         body:NestedScrollView(
           physics: ClampingScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
