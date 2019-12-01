@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         home: Menu(),
         navigatorObservers: [routeObserver],
         routes: {
-          ItemOverview.routeName: (ctx) => ItemOverview(),
+          ItemOverview.routeName: (ctx) => QRViewExample(),
           Menu.routeName: (ctx) => Menu(),
           CartPage.routeName: (ctx) => CartPage()
         },
