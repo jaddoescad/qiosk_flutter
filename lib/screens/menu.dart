@@ -58,7 +58,7 @@ class _MenuState extends State<Menu> {
       length: restaurant.sections.length,
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: cart.totalAmount != 0.0 ? CartButton(title: "View Your Cart", func: viewYourCart): Container(width: 0,height: 0,),
+        bottomNavigationBar: CartButton(title: "View Your Cart", func: viewYourCart),
         body:NestedScrollView(
           physics: ClampingScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {

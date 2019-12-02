@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> {
           ItemOverview.routeName: (ctx) => QRViewExample(),
           Menu.routeName: (ctx) => Menu(),
           CartPage.routeName: (ctx) => CartPage()
+          
         },
       ),
     );

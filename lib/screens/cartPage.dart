@@ -4,6 +4,8 @@ import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
 import 'package:iamrich/widgets/addCart.dart';
+import '../util/helper.dart';
+import '../screens/signUpPage.dart';
 
 class CartPage extends StatelessWidget {
 static const routeName = '/CartPage';
@@ -13,7 +15,7 @@ static const routeName = '/CartPage';
     final item = Provider.of<Cart>(context);
 
     return Scaffold(
-      bottomNavigationBar: CartButton(title: "Place Your Order"),
+      bottomNavigationBar: CartButton(title: "Place Your Order",),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55.0),
         child: AppBar(
