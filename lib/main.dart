@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
+import 'package:iamrich/screens/menu.dart';
 import 'package:provider/provider.dart';
 import './screens/ItemOverview.dart';
 import './screens/QRScanner.dart';
@@ -37,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       ],
         child: MaterialApp(
         title: 'Qiosk',
-        home: QRViewExample(),
+        home: Menu(),
         navigatorObservers: [routeObserver],
         routes: {
           ItemOverview.routeName: (ctx) => QRViewExample(),

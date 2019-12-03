@@ -73,7 +73,7 @@ class CartItemCard extends StatelessWidget {
                       backgroundColor: Color(0xFF365e7a),
                       content: Text("Deleted", textAlign: TextAlign.center,)));
 
-                    cart.removeItem(item.itemId);
+                    cart.removeItem(item.generatedId);
           }
         ),
       ],

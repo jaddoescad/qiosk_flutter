@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CartItem {
+  String generatedId;
   String itemId;
   String title;
   int quantity;
@@ -9,6 +10,7 @@ class CartItem {
   List selectionTitles;
 
   CartItem({
+    @required this.generatedId,
     @required this.itemId,
     this.title,
     this.quantity,
@@ -44,7 +46,9 @@ class Cart with ChangeNotifier {
     int quantity,
     List selectionTitles
   ) {
-      _items[DateTime.now().toString()] = CartItem(
+   final generatedID = DateTime.now().toString();
+      _items[generatedID] = CartItem(
+              generatedId: generatedID,
               itemId: itemId,
               title: title,
               price: price,
@@ -53,8 +57,8 @@ class Cart with ChangeNotifier {
             );
       notifyListeners();
     }
-    void removeItem(String itemId) {
-    _items.remove(itemId);
+    void removeItem(String generatedID) {
+    _items.remove(generatedID);
     notifyListeners();
   }
     void clear() {
