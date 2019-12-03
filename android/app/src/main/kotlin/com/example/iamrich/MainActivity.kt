@@ -1,4 +1,4 @@
-package com.example.iamrich
+package com.example.qiosk
 
 import android.os.Bundle
 
