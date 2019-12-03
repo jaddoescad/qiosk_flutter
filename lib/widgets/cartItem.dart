@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:iamrich/models/cart.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-
+import '../models/cart.dart';
 
 class CartItemCard extends StatelessWidget {
   CartItemCard({this.item});
   final item;
+  final SlidableController slidableController = SlidableController();
 
   @override
   Widget build(BuildContext context) {
-
-    return Container(
-      color: Colors.white,
+    final cart = Provider.of<Cart>(context);
+    return Slidable(
+      controller: slidableController,
+      actionPane: SlidableDrawerActionPane(),
+      actionExtentRatio: 0.25,
       child: Container(
+       color: Colors.white,
+       child: Container(
         padding: EdgeInsets.only(top: 15.0, bottom: 15.0, left: 10.0, right: 10.0),
-        margin: EdgeInsets.only(left: 15.0, right: 15.0,),
+        margin: EdgeInsets.only(left: 15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -57,6 +62,21 @@ class CartItemCard extends StatelessWidget {
           ),
         ),
       ),
-      );
+      ),
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {Scaffold.of(context)
+                    .showSnackBar(SnackBar(
+                      backgroundColor: Color(0xFF365e7a),
+                      content: Text("Deleted", textAlign: TextAlign.center,)));
+
+                    cart.removeItem(item.generatedId);
+          }
+        ),
+      ],
+    );
   }
 }

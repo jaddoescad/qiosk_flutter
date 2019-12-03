@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
-import '../screens/CartPage.dart';
-
 
 class CartButton extends StatelessWidget {
   CartButton({this.title, this.func});

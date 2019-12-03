@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iamrich/screens/menu.dart';
+import 'package:iamrich/screens/homePage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../main.dart';
 
@@ -81,7 +81,7 @@ class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
         if (!_isloading) {
         setState(() => _isloading = !_isloading);
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (ctx) => Menu()),
+          MaterialPageRoute(builder: (ctx) => HomePage()),
         );
         }
   });

@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/screens/QRScanner.dart';
+import 'package:iamrich/screens/cartPage.dart';
 
 class Header extends StatelessWidget {
 
-  Header({this.restaurant});
+  Header({this.restaurant, this.items});
   final restaurant;
+  final items;
 
   @override
 
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
-      delegate: MyDynamicHeader(restaurant: restaurant),
+      delegate: MyDynamicHeader(restaurant: restaurant, items: items),
     );
   }
 }
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {
 
-  MyDynamicHeader({this.restaurant});
+  MyDynamicHeader({this.restaurant, this.items});
   final restaurant;
+  final items;
 
   int opacity = 0;
 
@@ -57,7 +61,12 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(right: 20.0, top:5),
-                        child: IconButton(icon: Image.asset('assets/images/left.png', height: 29.0, width: 29.0,), onPressed: null),
+                        child: IconButton(icon: Icon(Icons.photo_camera, size: 30, color: Colors.white,), onPressed: () {
+                                      Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (ctx) => QRViewExample()),
+                                        );     
+                        }                   
+                      ),
                       ),
                       Expanded(
                         child: Column(
@@ -71,7 +80,31 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20.0, top: 5),
-                        child: IconButton(icon: Image.asset('assets/images/right.png', height: 29.0, width: 29.0,), onPressed: null),
+                        child: Stack(
+                          children: <Widget>[
+                            IconButton(icon: Icon(Icons.shopping_cart, size: 30, color: Colors.white,), onPressed: () {
+                                      Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (ctx) => CartPage()),
+                                        );
+                            }),
+                            items.values.length > 0 ? Positioned(
+                               right: 7,
+                               top: 3,
+                               child: new Container(
+                                  padding: EdgeInsets.all(2),
+                                  decoration: new BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(6),
+                                       ),
+                                  constraints: BoxConstraints(
+                                      minWidth: 15,
+                                      minHeight: 15,
+                                      ),
+                                  child: Text(items.values.length.toString(), style: TextStyle(color: Colors.white, fontSize: 12,), textAlign: TextAlign.center,),
+                               ),
+                            ) : Container()
+                              ],
+                        ),
                       ),
                     ],
                   ),

@@ -4,8 +4,6 @@ import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
 import 'package:iamrich/widgets/addCart.dart';
-import '../util/helper.dart';
-import '../screens/signUpPage.dart';
 
 class CartPage extends StatelessWidget {
 static const routeName = '/CartPage';
@@ -15,6 +13,7 @@ static const routeName = '/CartPage';
     final item = Provider.of<Cart>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: CartButton(title: "Place Your Order",),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55.0),
@@ -25,11 +24,7 @@ static const routeName = '/CartPage';
           leading: new IconButton(
              splashColor: Colors.transparent,
              highlightColor: Colors.transparent, // makes highlight invisible too
-             icon: Image.asset(
-                'assets/images/backButton.png',
-                 height: 35.0,
-                 width: 35.0,
-              ),
+             icon: Icon(Icons.arrow_back_ios, size: 30,),
              onPressed: () {
                //add to cart
                Navigator.of(context).pop();
