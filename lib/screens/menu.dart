@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import '../models/restaurant.dart';
-import '../widgets/addCart.dart';
 import '../widgets/itemList.dart';
 import '../widgets/header.dart';
 import '../widgets/navbar.dart';
-import '../screens/cartPage.dart';
-
 
 class Menu extends StatefulWidget {
-  static const routeName = '/Menu';
 
   @override
   _MenuState createState() => _MenuState();
@@ -27,14 +23,6 @@ class _MenuState extends State<Menu> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  void viewYourCart() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-         builder: (ctx) => CartPage()
-        ),
-    );
   }
 
   @override
@@ -58,12 +46,11 @@ class _MenuState extends State<Menu> {
       length: restaurant.sections.length,
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: CartButton(title: "View Your Cart", func: viewYourCart),
         body:NestedScrollView(
           physics: ClampingScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              Header(restaurant: restaurant),
+              Header(restaurant: restaurant, items: cart.items),
               NavBar(sections: restaurant.sections),
             ];
           },

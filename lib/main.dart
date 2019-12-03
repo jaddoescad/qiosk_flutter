@@ -3,15 +3,19 @@ import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import './screens/ItemOverview.dart';
-import './screens/menu.dart';
 import './screens/QRScanner.dart';
 import './screens/cartPage.dart';
+import './screens/homePage.dart';
+import 'package:flutter/services.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 void main() {
   // debugPaintSizeEnabled = true; //         <--- enable visual rendering
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+   .then((_) {
+     runApp(MyApp());
+   });
 } 
 
 class MyApp extends StatefulWidget {
@@ -33,13 +37,12 @@ class _MyAppState extends State<MyApp> {
       ],
         child: MaterialApp(
         title: 'Qiosk',
-        home: Menu(),
+        home: QRViewExample(),
         navigatorObservers: [routeObserver],
         routes: {
           ItemOverview.routeName: (ctx) => QRViewExample(),
-          Menu.routeName: (ctx) => Menu(),
+          HomePage.routeName: (ctx) => HomePage(),
           CartPage.routeName: (ctx) => CartPage()
-          
         },
       ),
     );

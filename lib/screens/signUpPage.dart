@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class SignUpPage extends StatelessWidget {
 static const routeName = '/Login';
   @override
