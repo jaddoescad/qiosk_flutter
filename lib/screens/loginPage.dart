@@ -5,9 +5,37 @@ import '../constants.dart';
 import '../widgets/socialButton.dart';
 import '../util/helper.dart';
 
+typedef void ChangeAuthPage(String pageString);
+
+class AuthPage extends StatefulWidget {
+  // AuthPage({this.pageState = "login"});
+  String pageState = "login";
+  AuthPage({this.pageState});
+
+  @override
+  _AuthPageState createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
+  void changePage(String pageString) {
+    setState(() {
+      widget.pageState = pageString;
+      //   widget.pageState = pageString;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return (widget.pageState == "login")
+        ? LoginPage(changePageCallback: changePage)
+        : SignUpPage(changePageCallback: changePage);
+  }
+}
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/Login';
+  final Function changePageCallback;
+  LoginPage({this.changePageCallback});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -29,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             icon: Icon(
-              Icons.close,
+              Icons.arrow_back_ios,
               color: Colors.white,
               size: 25,
             ),
@@ -46,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
             child: new ListView(
               shrinkWrap: true,
               children: <Widget>[
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 SocialButton(Color(0xff3C579E), "Sign in with Facebook",
                     "assets/images/facebook.png"),
                 SizedBox(height: 10),
@@ -127,10 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.w500),
                       ),
                       onTap: () {
-                        print("Sign Up");
-                        // Route route =  PageRouteBuilder(pageBuilder: (_, __, ___) => SignUpPage());
-                        // Navigator.pushReplacement(context, SlideUpRoute(enterWidget: SignUpPage()));
-                        Navigator.pushReplacement(context, CustomPageRoute(builder: _buildPage));
+                        widget.changePageCallback("signUp"); // function is called
                       },
                     ),
                   ],
@@ -144,6 +169,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
- Widget _buildPage(BuildContext context) {
-    return SignUpPage();
-  }
+Widget _buildPage(BuildContext context) {
+  return SignUpPage();
+}

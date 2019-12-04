@@ -13,31 +13,67 @@ Iterable<E> mapIndexed<E, T>(
 
 
 
-class SlideUpRoute extends PageRouteBuilder {
-  final Widget page;
-  SlideUpRoute({this.page})
-      : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, 1),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: child,
-              ),
-        );
-}
+// class SlideUpRoute extends PageRouteBuilder {
+//   final Widget page;
+//   SlideUpRoute({this.page})
+//       : super(
+//           pageBuilder: (
+//             BuildContext context,
+//             Animation<double> animation,
+//             Animation<double> secondaryAnimation,
+//           ) =>
+//               page,
+//           transitionsBuilder: (
+//             BuildContext context,
+//             Animation<double> animation,
+//             Animation<double> secondaryAnimation,
+//             Widget child,
+//           ) =>
+//               SlideTransition(
+//                 position: Tween<Offset>(
+//                   begin: const Offset(0, 1),
+//                   end: Offset.zero,
+//                 ).animate(animation),
+//                 child: child,
+//               ),
+//         );
+// }
+
+// class SlideUpRoute<T> extends MaterialPageRoute<T> {
+//   SlideUpRoute({
+//     @required WidgetBuilder builder,
+//     RouteSettings settings,
+//     bool fullscreenDialog = false,
+//   }) : super(builder: builder, settings: settings, fullscreenDialog: fullscreenDialog);
+
+//   @override
+//   Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+//     final PageTransitionsTheme theme = Theme.of(context).pageTransitionsTheme;
+//     Animation<double> onlyForwardAnimation;
+//     switch (animation.status) {
+//       case AnimationStatus.reverse:
+//         // onlyForwardAnimation = animation;
+//         break;
+//       case AnimationStatus.dismissed:
+//       case AnimationStatus.forward:
+//           // onlyForwardAnimation = animation;
+//           break;
+//       case AnimationStatus.completed:
+//         // onlyForwardAnimation = animation;
+//         break;
+//     }
+//     return SlideTransition(
+//                 position: Tween<Offset>(
+//                   begin: const Offset(1, 0),
+//                   end:const Offset(0, 0),
+//                 ).animate(animation),
+//                 child: child
+//     );
+//   }
+// }
+
+
+
 
 class CustomPageRoute<T> extends MaterialPageRoute<T> {
   CustomPageRoute({
@@ -50,17 +86,30 @@ class CustomPageRoute<T> extends MaterialPageRoute<T> {
   Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
     final PageTransitionsTheme theme = Theme.of(context).pageTransitionsTheme;
     Animation<double> onlyForwardAnimation;
-    
     switch (animation.status) {
       case AnimationStatus.reverse:
+      print("reverse");
+        onlyForwardAnimation = animation;
+        break;
       case AnimationStatus.dismissed:
+      print("dismissed");
+        onlyForwardAnimation = kAlwaysDismissedAnimation;
+        break;
       case AnimationStatus.forward:
-          onlyForwardAnimation = kAlwaysDismissedAnimation;
+      print("forward");
+          onlyForwardAnimation = kAlwaysCompleteAnimation;
           break;
       case AnimationStatus.completed:
+      print("complete");
         onlyForwardAnimation = animation;
         break;
     }
-    return theme.buildTransitions<T>(this, context, onlyForwardAnimation, secondaryAnimation, child);
+    return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1, 0),
+                  end: Offset.zero,
+                ).animate(onlyForwardAnimation),
+                child: child
+    );
   }
 }

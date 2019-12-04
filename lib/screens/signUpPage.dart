@@ -4,12 +4,16 @@ import '../widgets/socialButton.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
+  
+  final Function changePageCallback;
+  SignUpPage({this.changePageCallback});
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   /// Normally the signin buttons should be contained in the SignInPage
@@ -25,7 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             icon: Icon(
-              Icons.close,
+              Icons.arrow_back_ios,
               color: Colors.white,
               size: 25,
             ),
@@ -42,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: new ListView(
               shrinkWrap: true,
               children: <Widget>[
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 SocialButton(Color(0xff3C579E), "Sign in with Facebook",
                     "assets/images/facebook.png"),
                 SizedBox(height: 10),
@@ -52,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Divider(),
                 SizedBox(height: 10),
                 Text(
-                  "Sign Up with Email",
+                  "Sign Up With Email",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 17,
@@ -94,10 +98,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
                     child: new Text(
-                      'Login',
+                      'Sign Up',
                       style: new TextStyle(color: Colors.white, fontSize: 17),
                     ),
-                    onPressed: () => null,
+                    onPressed: () {
+                      // Navigator.popUntil(context, ModalRoute.withName('/screen2'));
+                        },
                     color: Color(0xff365e7a),
                   ),
                   margin: new EdgeInsets.only(top: 20.0),
@@ -107,6 +113,32 @@ class _SignUpPageState extends State<SignUpPage> {
                 Container(
                   padding: EdgeInsets.only(left:40, right: 40),
                   child: Text("By signing up, you agree with the Terms of Services & Privacy", textAlign: TextAlign.center, style: TextStyle(fontSize: 12),))
+              
+              ,
+              SizedBox(height: 20,),
+               Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Need to Login?  ",
+                        style: TextStyle(
+                            color: Color(0xff365e7a),
+                            fontWeight: FontWeight.w300)),
+                    InkWell(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Color(0xff365e7a),
+                            fontWeight: FontWeight.w500),
+                      ),
+                      onTap: () {
+                        widget.changePageCallback("login"); // function is called
+                      },
+                    ),
+                  ],
+                )
+              
               ],
             ),
           ),
