@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class SocialButton extends StatelessWidget {
 
-  SocialButton(this.color, this.text, this.image);
+  SocialButton(this.color, this.text, this.image, this.auth);
 
   final Color color;
   final String text;
   final String image;
+  final Function auth;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -26,7 +28,7 @@ class SocialButton extends StatelessWidget {
           ],),
             ),
       onTap: () {
-        print("hello");
+        auth();
       },
     );
   }

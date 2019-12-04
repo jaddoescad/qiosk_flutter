@@ -48,12 +48,12 @@ class _SignUpPageState extends State<SignUpPage> {
               shrinkWrap: true,
               children: <Widget>[
                 SizedBox(height: 30),
-                SocialButton(Color(0xff3C579E), "Sign in with Facebook",
-                    "assets/images/facebook.png"),
-                SizedBox(height: 5),
-                SocialButton(Color(0xffDD4B39), "Sign in with Google",
-                    "assets/images/google.png"),
-                    SizedBox(height: 20,),
+                // // SocialButton(Color(0xff3C579E), "Sign in with Facebook",
+                // //     "assets/images/facebook.png"),
+                // SizedBox(height: 5),
+                // // SocialButton(Color(0xffDD4B39), "Sign in with Google",
+                // //     "assets/images/google.png"),
+                //     SizedBox(height: 20,),
                 Row(children: <Widget>[
                   Expanded(child: Divider()),
                   Text(
@@ -131,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       style: TextStyle(fontSize: 12),
                     )),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -167,7 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String _validateName(String value) {
     bool nameValid = RegExp('[a-zA-Z]').hasMatch(value);
     if (!nameValid) {
-      return 'The E-mail Address must be a valid email address.';
+      return 'The name you entered is invalid';
     }
     return null;
   }
@@ -177,7 +177,7 @@ class _SignUpPageState extends State<SignUpPage> {
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(value);
     if (!emailValid) {
-      return 'The E-mail Address must be a valid email address.';
+      return 'The Email Address must be a valid email address.';
     }
     return null;
   }

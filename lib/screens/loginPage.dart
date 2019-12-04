@@ -4,7 +4,7 @@ import 'package:iamrich/screens/signUpPage.dart';
 import '../constants.dart';
 import '../widgets/socialButton.dart';
 import '../util/helper.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 typedef void ChangeAuthPage(String pageString);
 
@@ -78,12 +78,12 @@ class _LoginPageState extends State<LoginPage> {
               shrinkWrap: true,
               children: <Widget>[
                 SizedBox(height: 30),
-                SocialButton(Color(0xff3C579E), "Sign in with Facebook",
-                    "assets/images/facebook.png"),
-                SizedBox(height: 5),
-                SocialButton(Color(0xffDD4B39), "Sign in with Google",
-                    "assets/images/google.png"),
-                SizedBox(height: 20),
+                // // SocialButton(Color(0xff3C579E), "Sign in with Facebook",
+                // //     "assets/images/facebook.png"),
+                // SizedBox(height: 5),
+                // SocialButton(Color(0xffDD4B39), "Sign in with Google",
+                //     "assets/images/google.png", authWithGoogle),
+                // SizedBox(height: 20),
                  Row(children: <Widget>[
                   Expanded(child: Divider()),
                   Text(
@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: new InputDecoration(
                         hintText: '',
                         labelText: 'Enter your password')),
-                SizedBox(height: 10),
+                // SizedBox(height: 10),
                 new Container(
                   width: screenSize.width,
                   height: 50,
@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                     print("recover password");
                   },
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -181,10 +181,17 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+
+void authWithGoogle() {
+  print("authing");
+  // _LoginPageState.of(context).signInWithGoogle();
+}
+
     String _validateEmail(String value) {
     bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);   
     if (!emailValid) {
-      return 'The E-mail Address must be a valid email address.';
+      return 'The Email Address must be a valid email address.';
     }
     return null;
   }
