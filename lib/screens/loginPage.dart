@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         // color: Colors.red,
         height: double.infinity,
-        padding: new EdgeInsets.only(left: 30.0, right: 30.0),
+        padding: new EdgeInsets.only(left: 40.0, right: 40.0),
         child: Form(
           key: this._formKey,
           child: Theme(
@@ -77,24 +77,25 @@ class _LoginPageState extends State<LoginPage> {
             child: new ListView(
               shrinkWrap: true,
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 SocialButton(Color(0xff3C579E), "Sign in with Facebook",
                     "assets/images/facebook.png"),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 SocialButton(Color(0xffDD4B39), "Sign in with Google",
                     "assets/images/google.png"),
                 SizedBox(height: 20),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
-                  "Login with Email",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff365e7a)),
-                ),
-                SizedBox(height: 10),
+                 Row(children: <Widget>[
+                  Expanded(child: Divider()),
+                  Text(
+                    "Login With Email",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff365e7a)),
+                  ),
+                  Expanded(child: Divider()),
+                ]),
                 Container(
                   child: new TextFormField(
                     onSaved: (String value) {

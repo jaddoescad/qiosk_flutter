@@ -13,12 +13,12 @@ class SocialButton extends StatelessWidget {
           splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
           child: Container(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(14),
           color: color,
           width: double.infinity,
           // height: 100,
           child: Row(children: <Widget>[
-            Image.asset(image, width: 22, height: 22,),
+            Image.asset(image, width: 20, height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 15.0),
               child: Text(text, style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white),),

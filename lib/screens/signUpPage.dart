@@ -13,7 +13,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-    _SignUpData _data = new _SignUpData();
+  _SignUpData _data = new _SignUpData();
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
@@ -39,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: Container(
         // color: Colors.red,
         height: double.infinity,
-        padding: new EdgeInsets.only(left: 30.0, right: 30.0),
+        padding: new EdgeInsets.only(left: 40.0, right: 40.0),
         child: Form(
           key: this._formKey,
           child: Theme(
@@ -47,43 +47,45 @@ class _SignUpPageState extends State<SignUpPage> {
             child: new ListView(
               shrinkWrap: true,
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 SocialButton(Color(0xff3C579E), "Sign in with Facebook",
                     "assets/images/facebook.png"),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 SocialButton(Color(0xffDD4B39), "Sign in with Google",
                     "assets/images/google.png"),
-                SizedBox(height: 20),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
-                  "Sign Up With Email",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff365e7a)),
-                ),
-                SizedBox(height: 10),
+                    SizedBox(height: 20,),
+                Row(children: <Widget>[
+                  Expanded(child: Divider()),
+                  Text(
+                    "Sign Up With Email",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff365e7a)),
+                  ),
+                  Expanded(child: Divider()),
+                ]),
+
                 TextFormField(
-                         onSaved: (String value) {
-                  this._data.name = value;
-                },
-                  validator: this._validateName,
-                    keyboardType: TextInputType
-                        .text, // Use email input type for emails.
+                    onSaved: (String value) {
+                      this._data.name = value;
+                    },
+                    validator: this._validateName,
+                    keyboardType:
+                        TextInputType.text, // Use email input type for emails.
                     decoration: new InputDecoration(
                       fillColor: Colors.white,
                       // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
                       hintText: '',
                       labelText: 'Name',
                     )),
-                SizedBox(height: 10),
+
                 TextFormField(
-                   onSaved: (String value) {
-                  this._data.email = value;
-                },
-                  validator: this._validateEmail,
+                    onSaved: (String value) {
+                      this._data.email = value;
+                    },
+                    validator: this._validateEmail,
                     keyboardType: TextInputType
                         .emailAddress, // Use email input type for emails.
                     decoration: new InputDecoration(
@@ -92,17 +94,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: '',
                       labelText: 'E-mail Address',
                     )),
-                                    SizedBox(height: 10),
+
                 TextFormField(
-                         onSaved: (String value) {
-                  this._data.password = value;
-                },
-                  validator: this._validatePassword,
+                    onSaved: (String value) {
+                      this._data.password = value;
+                    },
+                    validator: this._validatePassword,
                     obscureText: true, // Use secure text for passwords.
                     decoration: new InputDecoration(
-                        hintText: '',
-                        labelText: 'Enter your password')),
-                SizedBox(height: 10),
+                        hintText: '', labelText: 'Enter your password')),
                 new Container(
                   width: screenSize.width,
                   height: 50,
@@ -117,20 +117,23 @@ class _SignUpPageState extends State<SignUpPage> {
                     onPressed: () {
                       this.submit();
                       // Navigator.popUntil(context, ModalRoute.withName('/screen2'));
-                        },
+                    },
                     color: Color(0xff365e7a),
                   ),
                   margin: new EdgeInsets.only(top: 20.0),
                 ),
-                SizedBox(height: 10),
 
                 Container(
-                  padding: EdgeInsets.only(left:40, right: 40),
-                  child: Text("By signing up, you agree with the Terms of Services & Privacy", textAlign: TextAlign.center, style: TextStyle(fontSize: 12),))
-              
-              ,
-              SizedBox(height: 20,),
-               Row(
+                    padding: EdgeInsets.only(left: 40, right: 40, top: 10),
+                    child: Text(
+                      "By signing up, you agree with the Terms of Services & Privacy",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
+                    )),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text("Need to Login?  ",
@@ -147,12 +150,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             fontWeight: FontWeight.w500),
                       ),
                       onTap: () {
-                        widget.changePageCallback("login"); // function is called
+                        widget
+                            .changePageCallback("login"); // function is called
                       },
                     ),
                   ],
                 )
-              
               ],
             ),
           ),
@@ -161,16 +164,18 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-      String _validateName(String value) {
-    bool nameValid = RegExp('[a-zA-Z]').hasMatch(value);   
+  String _validateName(String value) {
+    bool nameValid = RegExp('[a-zA-Z]').hasMatch(value);
     if (!nameValid) {
       return 'The E-mail Address must be a valid email address.';
     }
     return null;
   }
 
-      String _validateEmail(String value) {
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);   
+  String _validateEmail(String value) {
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(value);
     if (!emailValid) {
       return 'The E-mail Address must be a valid email address.';
     }
@@ -182,11 +187,12 @@ class _SignUpPageState extends State<SignUpPage> {
     if (value.length < 8) {
       return 'The Password must be at least 8 characters.';
     }
-    
+
     return null;
   }
-    void submit() {
-      print("hello");
+
+  void submit() {
+    print("hello");
     // First validate form.
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
@@ -197,7 +203,6 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 }
-
 
 class _SignUpData {
   String name = '';
