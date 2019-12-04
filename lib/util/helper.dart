@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 Iterable<E> mapIndexed<E, T>(
     Iterable<T> items, E Function(int index, T item) f) sync* {
   var index = 0;
@@ -11,7 +10,22 @@ Iterable<E> mapIndexed<E, T>(
   }
     }
 
+  // String _validateEmail(String value) {
+  //   if (Validate.isEmail(" ") == true) {
+  //     return 'The E-mail Address must be a valid email address.';
+  //   }
 
+  //   return null;
+  // }
+
+  // // Add validate password function.
+  // String _validatePassword(String value) {
+  //   if (value.length < 8) {
+  //     return 'The Password must be at least 8 characters.';
+  //   }
+    
+  //   return null;
+  // }
 
 // class SlideUpRoute extends PageRouteBuilder {
 //   final Widget page;

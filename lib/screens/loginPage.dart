@@ -5,6 +5,7 @@ import '../constants.dart';
 import '../widgets/socialButton.dart';
 import '../util/helper.dart';
 
+
 typedef void ChangeAuthPage(String pageString);
 
 class AuthPage extends StatefulWidget {
@@ -22,6 +23,22 @@ class _AuthPageState extends State<AuthPage> {
       widget.pageState = pageString;
       //   widget.pageState = pageString;
     });
+  }
+  String _validateEmail(String value) {
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);   
+    if (!emailValid) {
+      return 'The E-mail Address must be a valid email address.';
+    }
+    return null;
+  }
+
+  // Add validate password function.
+  String _validatePassword(String value) {
+    if (value.length < 8) {
+      return 'The Password must be at least 8 characters.';
+    }
+    
+    return null;
   }
 
   @override
