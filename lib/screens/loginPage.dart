@@ -24,22 +24,7 @@ class _AuthPageState extends State<AuthPage> {
       //   widget.pageState = pageString;
     });
   }
-  String _validateEmail(String value) {
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);   
-    if (!emailValid) {
-      return 'The E-mail Address must be a valid email address.';
-    }
-    return null;
-  }
 
-  // Add validate password function.
-  String _validatePassword(String value) {
-    if (value.length < 8) {
-      return 'The Password must be at least 8 characters.';
-    }
-    
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +45,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  _LoginData _data = new _LoginData();
 
   /// Normally the signin buttons should be contained in the SignInPage
   @override
@@ -111,19 +97,27 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 10),
                 Container(
                   child: new TextFormField(
+                    onSaved: (String value) {
+                  this._data.email = value;
+                },
+                    validator: this._validateEmail,
                       keyboardType: TextInputType
                           .emailAddress, // Use email input type for emails.
                       decoration: new InputDecoration(
                         fillColor: Colors.white,
                         // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
-                        hintText: 'you@example.com',
+                        hintText: '',
                         labelText: 'E-mail Address',
                       )),
                 ),
                 new TextFormField(
+                    onSaved: (String value) {
+                  this._data.password = value;
+                },
+                    validator: this._validatePassword,
                     obscureText: true, // Use secure text for passwords.
                     decoration: new InputDecoration(
-                        hintText: 'Password',
+                        hintText: '',
                         labelText: 'Enter your password')),
                 SizedBox(height: 10),
                 new Container(
@@ -137,7 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                       'Login',
                       style: new TextStyle(color: Colors.white, fontSize: 17),
                     ),
-                    onPressed: () => null,
+                    onPressed: () {
+                      submit();
+                    },
                     color: Color(0xff365e7a),
                   ),
                   margin: new EdgeInsets.only(top: 20.0),
@@ -184,8 +180,40 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+    String _validateEmail(String value) {
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);   
+    if (!emailValid) {
+      return 'The E-mail Address must be a valid email address.';
+    }
+    return null;
+  }
+
+  // Add validate password function.
+  String _validatePassword(String value) {
+    if (value.length < 8) {
+      return 'The Password must be at least 8 characters.';
+    }
+    
+    return null;
+  }
+    void submit() {
+      print("hello");
+    // First validate form.
+    if (this._formKey.currentState.validate()) {
+      _formKey.currentState.save(); // Save our form now.
+      print('Printing the login data.');
+      print('Email: ${_data.email}');
+      print('Password: ${_data.password}');
+    }
+  }
 }
 
 Widget _buildPage(BuildContext context) {
   return SignUpPage();
+}
+
+
+class _LoginData {
+  String email = '';
+  String password = '';
 }

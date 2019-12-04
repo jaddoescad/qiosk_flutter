@@ -62,16 +62,9 @@ static const routeName = '/CartPage';
 
   void checkout(context) {
 
-    //   Navigator.push(context, SlideUpRoute(builder: _buildPage));
-
-    // // Navigator.push(context, SlideUpRoute(page: LoginPage()));
-
       Navigator.of(context).push(
   MaterialPageRoute(builder: (ctx) => AuthPage()),
     );
   }
 
 }
-//  Widget _buildPage(BuildContext context) {
-//     return LoginPage();
-//   }

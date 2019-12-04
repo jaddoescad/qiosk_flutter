@@ -4,7 +4,7 @@ import '../widgets/socialButton.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
-  
+
   final Function changePageCallback;
   SignUpPage({this.changePageCallback});
 
@@ -13,7 +13,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  
+    _SignUpData _data = new _SignUpData();
+
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   /// Normally the signin buttons should be contained in the SignInPage
@@ -65,29 +66,41 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+                         onSaved: (String value) {
+                  this._data.name = value;
+                },
+                  validator: this._validateName,
                     keyboardType: TextInputType
                         .text, // Use email input type for emails.
                     decoration: new InputDecoration(
                       fillColor: Colors.white,
                       // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
-                      hintText: 'John Doe',
+                      hintText: '',
                       labelText: 'Name',
                     )),
                 SizedBox(height: 10),
                 TextFormField(
+                   onSaved: (String value) {
+                  this._data.email = value;
+                },
+                  validator: this._validateEmail,
                     keyboardType: TextInputType
                         .emailAddress, // Use email input type for emails.
                     decoration: new InputDecoration(
                       fillColor: Colors.white,
                       // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
-                      hintText: 'you@example.com',
+                      hintText: '',
                       labelText: 'E-mail Address',
                     )),
                                     SizedBox(height: 10),
                 TextFormField(
+                         onSaved: (String value) {
+                  this._data.password = value;
+                },
+                  validator: this._validatePassword,
                     obscureText: true, // Use secure text for passwords.
                     decoration: new InputDecoration(
-                        hintText: 'Password',
+                        hintText: '',
                         labelText: 'Enter your password')),
                 SizedBox(height: 10),
                 new Container(
@@ -102,6 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       style: new TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     onPressed: () {
+                      this.submit();
                       // Navigator.popUntil(context, ModalRoute.withName('/screen2'));
                         },
                     color: Color(0xff365e7a),
@@ -146,4 +160,47 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+
+      String _validateName(String value) {
+    bool nameValid = RegExp('[a-zA-Z]').hasMatch(value);   
+    if (!nameValid) {
+      return 'The E-mail Address must be a valid email address.';
+    }
+    return null;
+  }
+
+      String _validateEmail(String value) {
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);   
+    if (!emailValid) {
+      return 'The E-mail Address must be a valid email address.';
+    }
+    return null;
+  }
+
+  // Add validate password function.
+  String _validatePassword(String value) {
+    if (value.length < 8) {
+      return 'The Password must be at least 8 characters.';
+    }
+    
+    return null;
+  }
+    void submit() {
+      print("hello");
+    // First validate form.
+    if (this._formKey.currentState.validate()) {
+      _formKey.currentState.save(); // Save our form now.
+      print('Printing the login data.');
+      print('Email: ${_data.email}');
+      print('Password: ${_data.password}');
+      print('Name: ${_data.name}');
+    }
+  }
+}
+
+
+class _SignUpData {
+  String name = '';
+  String email = '';
+  String password = '';
 }
