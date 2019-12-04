@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Divider(),
                 SizedBox(height: 10),
                 Text(
-                  "Login with Email",
+                  "Sign Up with Email",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 17,
@@ -60,18 +60,27 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: Color(0xff365e7a)),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  child: new TextFormField(
-                      keyboardType: TextInputType
-                          .emailAddress, // Use email input type for emails.
-                      decoration: new InputDecoration(
-                        fillColor: Colors.white,
-                        // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
-                        hintText: 'you@example.com',
-                        labelText: 'E-mail Address',
-                      )),
-                ),
-                new TextFormField(
+                TextFormField(
+                    keyboardType: TextInputType
+                        .text, // Use email input type for emails.
+                    decoration: new InputDecoration(
+                      fillColor: Colors.white,
+                      // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
+                      hintText: 'John Doe',
+                      labelText: 'Name',
+                    )),
+                SizedBox(height: 10),
+                TextFormField(
+                    keyboardType: TextInputType
+                        .emailAddress, // Use email input type for emails.
+                    decoration: new InputDecoration(
+                      fillColor: Colors.white,
+                      // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
+                      hintText: 'you@example.com',
+                      labelText: 'E-mail Address',
+                    )),
+                                    SizedBox(height: 10),
+                TextFormField(
                     obscureText: true, // Use secure text for passwords.
                     decoration: new InputDecoration(
                         hintText: 'Password',
@@ -93,41 +102,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   margin: new EdgeInsets.only(top: 20.0),
                 ),
-                FlatButton(
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  color: Colors.transparent,
-                  child: Text("Forgot your password?",
-                      style: TextStyle(
-                          color: Color(0xff365e7a),
-                          fontWeight: FontWeight.w500)),
-                  onPressed: () {
-                    print("recover password");
-                  },
-                ),
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Need an Account?  ",
-                        style: TextStyle(
-                            color: Color(0xff365e7a),
-                            fontWeight: FontWeight.w300)),
-                    InkWell(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                            color: Color(0xff365e7a),
-                            fontWeight: FontWeight.w500),
-                      ),
-                      onTap: () {
-                        print("Sign Up");
-                      },
-                    ),
-                  ],
-                )
+                SizedBox(height: 10),
+
+                Container(
+                  padding: EdgeInsets.only(left:40, right: 40),
+                  child: Text("By signing up, you agree with the Terms of Services & Privacy", textAlign: TextAlign.center, style: TextStyle(fontSize: 12),))
               ],
             ),
           ),

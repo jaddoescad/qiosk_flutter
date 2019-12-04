@@ -27,7 +27,7 @@ static const routeName = '/CartPage';
           leading: new IconButton(
              splashColor: Colors.transparent,
              highlightColor: Colors.transparent, // makes highlight invisible too
-             icon: Icon(Icons.arrow_back_ios, size: 25,),
+             icon: Icon(Icons.arrow_back_ios, size: 24,),
              onPressed: () {
                //add to cart
                Navigator.of(context).pop();
