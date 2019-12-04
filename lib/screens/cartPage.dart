@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
 import 'package:iamrich/models/cart.dart';
+import 'package:iamrich/screens/loginPage.dart';
+import 'package:iamrich/screens/signUpPage.dart';
 import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
 import 'package:iamrich/widgets/addCart.dart';
+import '../util/helper.dart';
 
 class CartPage extends StatelessWidget {
 static const routeName = '/CartPage';
@@ -14,7 +17,7 @@ static const routeName = '/CartPage';
 
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: CartButton(title: "Place Your Order",),
+      bottomNavigationBar: CartButton(title: "Place Your Order", func: checkout),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55.0),
         child: AppBar(
@@ -24,7 +27,7 @@ static const routeName = '/CartPage';
           leading: new IconButton(
              splashColor: Colors.transparent,
              highlightColor: Colors.transparent, // makes highlight invisible too
-             icon: Icon(Icons.arrow_back_ios, size: 30,),
+             icon: Icon(Icons.arrow_back_ios, size: 25,),
              onPressed: () {
                //add to cart
                Navigator.of(context).pop();
@@ -41,7 +44,7 @@ static const routeName = '/CartPage';
                         padding: EdgeInsets.only(left: 20),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("Pure Kitchen", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color(0xFF365e7a),),)
+                          child: Text("Pure Kitchen", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20, color: Color(0xFF365e7a),),)
                           ),
                         ),
               ),
@@ -56,5 +59,16 @@ static const routeName = '/CartPage';
          ),
      );
   }
+
+  void checkout(context) {
+
+
+    Navigator.push(context, SlideUpRoute(page: LoginPage()));
+
+  //     Navigator.of(context).push(
+  // MaterialPageRoute(builder: (ctx) => SignUp()),
+  //   );
+  // }
 }
 
+}

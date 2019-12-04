@@ -13,9 +13,9 @@ Iterable<E> mapIndexed<E, T>(
 
 
 
-class SlideRightRoute extends PageRouteBuilder {
+class SlideUpRoute extends PageRouteBuilder {
   final Widget page;
-  SlideRightRoute({this.page})
+  SlideUpRoute({this.page})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -31,10 +31,36 @@ class SlideRightRoute extends PageRouteBuilder {
           ) =>
               SlideTransition(
                 position: Tween<Offset>(
-                  begin: const Offset(-1, 0),
+                  begin: const Offset(0, 1),
                   end: Offset.zero,
                 ).animate(animation),
                 child: child,
               ),
         );
+}
+
+class CustomPageRoute<T> extends MaterialPageRoute<T> {
+  CustomPageRoute({
+    @required WidgetBuilder builder,
+    RouteSettings settings,
+    bool fullscreenDialog = false,
+  }) : super(builder: builder, settings: settings, fullscreenDialog: fullscreenDialog);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    final PageTransitionsTheme theme = Theme.of(context).pageTransitionsTheme;
+    Animation<double> onlyForwardAnimation;
+    
+    switch (animation.status) {
+      case AnimationStatus.reverse:
+      case AnimationStatus.dismissed:
+      case AnimationStatus.forward:
+          onlyForwardAnimation = kAlwaysDismissedAnimation;
+          break;
+      case AnimationStatus.completed:
+        onlyForwardAnimation = animation;
+        break;
+    }
+    return theme.buildTransitions<T>(this, context, onlyForwardAnimation, secondaryAnimation, child);
+  }
 }

@@ -8,6 +8,8 @@ import './screens/QRScanner.dart';
 import './screens/cartPage.dart';
 import './screens/homePage.dart';
 import 'package:flutter/services.dart';
+import './screens/loginPage.dart';
+import './screens/signUpPage.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -38,12 +40,20 @@ class _MyAppState extends State<MyApp> {
       ],
         child: MaterialApp(
         title: 'Qiosk',
-        home: QRViewExample(),
+        theme: ThemeData(
+          fontFamily: 'Roboto',
+          primaryColor: Color(0xFF365E7a),
+          // accentColor: Color(0xFF365E7a)
+          ),
+        home: HomePage(),
         navigatorObservers: [routeObserver],
         routes: {
           ItemOverview.routeName: (ctx) => QRViewExample(),
           HomePage.routeName: (ctx) => HomePage(),
-          CartPage.routeName: (ctx) => CartPage()
+          CartPage.routeName: (ctx) => CartPage(),
+          LoginPage.routeName: (ctx) => LoginPage(),
+          SignUpPage.routeName: (ctx) => SignUpPage()
+
         },
       ),
     );

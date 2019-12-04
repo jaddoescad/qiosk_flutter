@@ -26,7 +26,7 @@ class CartButton extends StatelessWidget {
         elevation: 0,
         child: new CartButtonChildren(title: title, price: cart.totalAmount.toStringAsFixed(2)),
         color: Color(0xFF365e7a),
-        onPressed:  () {func();},
+        onPressed:  () {func(context);},
       ),
     );
   }
