@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/restaurant.dart';
 import '../screens/ItemOverView.dart';
+import 'package:flutter/cupertino.dart';
 
 class ItemContainer extends StatelessWidget {
   ItemContainer({this.item});
@@ -14,7 +15,7 @@ class ItemContainer extends StatelessWidget {
       body: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
-            MaterialPageRoute(
+            CupertinoPageRoute(
                 builder: (ctx) => ItemOverview(fromMenuItem: item)
             ),
           );

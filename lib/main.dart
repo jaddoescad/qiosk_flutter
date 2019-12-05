@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
-import 'package:iamrich/screens/menu.dart';
 import 'package:provider/provider.dart';
-import './screens/ItemOverview.dart';
 import './screens/QRScanner.dart';
 import './screens/cartPage.dart';
 import './screens/homePage.dart';
@@ -11,6 +9,8 @@ import 'package:flutter/services.dart';
 import './screens/loginPage.dart';
 import './screens/signUpPage.dart';
 import './models/user.dart';
+import './screens/ItemOverView.dart';
+import './screens/splashScreen.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -29,6 +29,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -50,10 +51,18 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color(0xFF365E7a),
           // accentColor: Color(0xFF365E7a)
           ),
+
+
+
+
         home: HomePage(),
+
+
+
         navigatorObservers: [routeObserver],
         routes: {
-          ItemOverview.routeName: (ctx) => QRViewExample(),
+          QRViewExample.routeName: (ctx) => QRViewExample(),
+          ItemOverview.routeName: (ctx) => ItemOverview(),
           HomePage.routeName: (ctx) => HomePage(),
           CartPage.routeName: (ctx) => CartPage(),
           LoginPage.routeName: (ctx) => LoginPage(),

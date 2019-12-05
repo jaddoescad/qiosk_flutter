@@ -7,6 +7,7 @@ import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
 
+
 class HomePage extends StatelessWidget {
 static const routeName = '/HomePage';
 
@@ -37,9 +38,9 @@ static const routeName = '/HomePage';
                   child: TabBar(
                   indicatorColor: Colors.transparent,
                   tabs: <Widget>[
-                  Tab(icon: Icon(Icons.home, size: 30,)),
-                  Tab(icon: Icon(Icons.receipt , size: 30,)),
-                  Tab(icon: Icon(Icons.account_circle, size: 30,)),
+                  Tab(icon: ImageIcon(AssetImage("assets/images/home.png"), size: 30,)),
+                  Tab(icon: ImageIcon(AssetImage("assets/images/invoice.png"), size: 30,)),
+                  Tab(icon: ImageIcon(AssetImage("assets/images/user.png"), size: 30,)),
                 ],
                 ),
                 ),

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/screens/homePage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../main.dart';
+import 'package:flutter/cupertino.dart';
 
 class QRViewExample extends StatefulWidget {
+    static const routeName = '/QRView';
   @override
   _QRViewExampleState createState() => _QRViewExampleState();
 }
@@ -81,7 +83,7 @@ class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
         if (!_isloading) {
         setState(() => _isloading = !_isloading);
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (ctx) => HomePage()),
+          CupertinoPageRoute(builder: (ctx) => HomePage()),
         );
         }
   });

@@ -37,7 +37,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
          onTap: () {
 
                  Navigator.of(context).push(
-  MaterialPageRoute(builder: (ctx) => AuthPage(pageState: "login",)),
+  CupertinoPageRoute(builder: (ctx) => AuthPage(pageState: "login",)),
     );
          },
                 child: Container(
@@ -57,7 +57,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
              mainAxisAlignment: MainAxisAlignment.start,
              children: <Widget>[
                 Container(
-                  child: Icon(CupertinoIcons.padlock_solid, size: 35, color: Color(0xFF365e7a),),
+                  child: Icon(CupertinoIcons.padlock, size: 35, color: Color(0xFF365e7a),),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 25),
@@ -70,7 +70,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
        InkWell(
          onTap: () {
                 Navigator.of(context).push(
-  MaterialPageRoute(builder: (ctx) => AuthPage(pageState: "signUp",)),
+  CupertinoPageRoute(builder: (ctx) => AuthPage(pageState: "signUp",)),
     );
          },
                 child: Container(
@@ -90,7 +90,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
              mainAxisAlignment: MainAxisAlignment.start,
              children: <Widget>[
                 Container(
-                  child: Icon(CupertinoIcons.person_add_solid, size: 35, color: Color(0xFF365e7a),),
+                  child: Icon(CupertinoIcons.person_add, size: 35, color: Color(0xFF365e7a),),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 25),
@@ -117,7 +117,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
            mainAxisAlignment: MainAxisAlignment.start,
            children: <Widget>[
               Container(
-                child: Icon(CupertinoIcons.mail_solid, size: 35, color: Color(0xFF365e7a),),
+                child: Icon(CupertinoIcons.mail, size: 35, color: Color(0xFF365e7a),),
               ),
               Container(
                 padding: EdgeInsets.only(left: 25),

@@ -10,6 +10,10 @@ Iterable<E> mapIndexed<E, T>(
   }
     }
 
+
+
+
+
   // String _validateEmail(String value) {
   //   if (Validate.isEmail(" ") == true) {
   //     return 'The E-mail Address must be a valid email address.';
@@ -86,44 +90,65 @@ Iterable<E> mapIndexed<E, T>(
 //   }
 // }
 
-
-
-
-class CustomPageRoute<T> extends MaterialPageRoute<T> {
-  CustomPageRoute({
-    @required WidgetBuilder builder,
-    RouteSettings settings,
-    bool fullscreenDialog = false,
-  }) : super(builder: builder, settings: settings, fullscreenDialog: fullscreenDialog);
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-    final PageTransitionsTheme theme = Theme.of(context).pageTransitionsTheme;
-    Animation<double> onlyForwardAnimation;
-    switch (animation.status) {
-      case AnimationStatus.reverse:
-      print("reverse");
-        onlyForwardAnimation = animation;
-        break;
-      case AnimationStatus.dismissed:
-      print("dismissed");
-        onlyForwardAnimation = kAlwaysDismissedAnimation;
-        break;
-      case AnimationStatus.forward:
-      print("forward");
-          onlyForwardAnimation = kAlwaysCompleteAnimation;
-          break;
-      case AnimationStatus.completed:
-      print("complete");
-        onlyForwardAnimation = animation;
-        break;
-    }
-    return SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(1, 0),
-                  end: Offset.zero,
-                ).animate(onlyForwardAnimation),
-                child: child
-    );
-  }
+class FadeRoute extends PageRouteBuilder {
+  final Widget page;
+  FadeRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+        );
 }
+
+
+// class CustomPageRoute<T> extends MaterialPageRoute<T> {
+//   CustomPageRoute({
+//     @required WidgetBuilder builder,
+//     RouteSettings settings,
+//     bool fullscreenDialog = false,
+//   }) : super(builder: builder, settings: settings, fullscreenDialog: fullscreenDialog);
+
+//   @override
+//   Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+//     final PageTransitionsTheme theme = Theme.of(context).pageTransitionsTheme;
+//     Animation<double> onlyForwardAnimation;
+//     switch (animation.status) {
+//       case AnimationStatus.reverse:
+//       print("reverse");
+//         onlyForwardAnimation = animation;
+//         break;
+//       case AnimationStatus.dismissed:
+//       print("dismissed");
+//         onlyForwardAnimation = kAlwaysDismissedAnimation;
+//         break;
+//       case AnimationStatus.forward:
+//       print("forward");
+//           onlyForwardAnimation = kAlwaysCompleteAnimation;
+//           break;
+//       case AnimationStatus.completed:
+//       print("complete");
+//         onlyForwardAnimation = animation;
+//         break;
+//     }
+//     return SlideTransition(
+//                 position: Tween<Offset>(
+//                   begin: const Offset(1, 0),
+//                   end: Offset.zero,
+//                 ).animate(onlyForwardAnimation),
+//                 child: child
+//     );
+//   }
+// }

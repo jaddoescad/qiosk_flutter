@@ -62,10 +62,10 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(right: 20.0, top:5),
-                        child: IconButton(icon: Icon(CupertinoIcons.photo_camera, size: 35, color: Colors.white,), onPressed: () {
-                                      Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (ctx) => QRViewExample()),
-                                        );     
+                        child: IconButton(icon: ImageIcon(AssetImage("assets/images/photo-camera.png"), size: 35, color: Colors.white,), onPressed: () {
+                                      // Navigator.of(context).push(
+                                      // CupertinoPageRoute(builder: (ctx) => QRViewExample()),
+                                      //   );     
                         }                   
                       ),
                       ),
@@ -83,9 +83,9 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                         margin: EdgeInsets.only(left: 20.0, top: 5),
                         child: Stack(
                           children: <Widget>[
-                            IconButton(icon: Icon(CupertinoIcons.shopping_cart, size: 35, color: Colors.white,), onPressed: () {
+                            IconButton(icon: ImageIcon(AssetImage("assets/images/cart.png"), size: 35, color: Colors.white,), onPressed: () {
                                       Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (ctx) => CartPage()),
+                                      CupertinoPageRoute(builder: (ctx) => CartPage()),
                                         );
                             }),
                             items.values.length > 0 ? Positioned(

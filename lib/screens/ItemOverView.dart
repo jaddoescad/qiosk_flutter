@@ -4,10 +4,12 @@ import 'package:provider/provider.dart';
 import '../widgets/ItemOverviewWidgets.dart';
 import '../models/Item.dart';
 import '../main.dart';
+import 'package:splashscreen/splashscreen.dart';
+
 
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
-  ItemOverview({@required this.fromMenuItem});
+  ItemOverview({this.fromMenuItem});
   final MenuItem fromMenuItem;
 
 
