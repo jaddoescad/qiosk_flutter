@@ -56,6 +56,7 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           item.fromSelectionJson(snapshot.data, menuItem);
+          item.checkIfItemMeetsAllConditions();
           return SelectionPage();
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
