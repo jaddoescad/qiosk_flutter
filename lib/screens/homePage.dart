@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../screens/menu.dart';
 import '../screens/Profile.dart';
@@ -13,10 +14,7 @@ static const routeName = '/HomePage';
       length: 3,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body:CustomScrollView(
-          slivers: <Widget>[
-            SliverFillRemaining(
-              child: Scaffold(
+        body: Scaffold(
                 bottomNavigationBar: Container(
                   decoration: new BoxDecoration(
                       color: Color(0xFF365e7a),
@@ -31,7 +29,7 @@ static const routeName = '/HomePage';
                   indicatorColor: Colors.transparent,
                   tabs: <Widget>[
                   Tab(icon: Icon(Icons.home, size: 30,)),
-                  Tab(icon: Icon(Icons.receipt, size: 30,)),
+                  Tab(icon: Icon(Icons.receipt , size: 30,)),
                   Tab(icon: Icon(Icons.account_circle, size: 30,)),
                 ],
                 ),
@@ -45,9 +43,6 @@ static const routeName = '/HomePage';
           ),
         ),
       ),
-          ],
-        ),
-        ),
     );
   }
 }

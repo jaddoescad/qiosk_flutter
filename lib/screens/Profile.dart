@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../screens/loginPage.dart';
 import '../screens/signUpPage.dart';
@@ -14,7 +15,7 @@ class Profile extends StatelessWidget {
         child: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Color(0xFF365e7a),
-          title: Text("Profile"),
+          title: Text("Profile", overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: Colors.white,),),
           centerTitle: true,
          ),
        ),
@@ -57,7 +58,7 @@ class Profile extends StatelessWidget {
              mainAxisAlignment: MainAxisAlignment.start,
              children: <Widget>[
                 Container(
-                  child: Icon(Icons.lock, size: 30, color: Color(0xFF365e7a),),
+                  child: Icon(CupertinoIcons.padlock_solid, size: 35, color: Color(0xFF365e7a),),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 25),
@@ -90,7 +91,7 @@ class Profile extends StatelessWidget {
              mainAxisAlignment: MainAxisAlignment.start,
              children: <Widget>[
                 Container(
-                  child: Icon(Icons.person_add, size: 30, color: Color(0xFF365e7a),),
+                  child: Icon(CupertinoIcons.person_add_solid, size: 35, color: Color(0xFF365e7a),),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 25),
@@ -117,13 +118,13 @@ class Profile extends StatelessWidget {
            mainAxisAlignment: MainAxisAlignment.start,
            children: <Widget>[
               Container(
-                child: Icon(Icons.mail, size: 30, color: Color(0xFF365e7a),),
+                child: Icon(CupertinoIcons.mail_solid, size: 35, color: Color(0xFF365e7a),),
               ),
               Container(
                 padding: EdgeInsets.only(left: 25),
                 child: Text("Contact Us", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a),),),
               ),
-            ],
+             ],
             ),
         ),
          ],
