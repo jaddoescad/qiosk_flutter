@@ -8,8 +8,8 @@ import '../models/user.dart';
 typedef void ChangeAuthPage(String pageString);
 
 class AuthPage extends StatefulWidget {
-  // AuthPage({this.pageState = "login"});
-  String pageState = "login";
+
+  final String pageState;
   AuthPage({this.pageState});
 
   @override
@@ -17,16 +17,25 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  
+  String pageState;
+
+  @override
+  void initState() {
+    super.initState();
+        pageState = widget.pageState;
+    }
+  
   void changePage(String pageString) {
+    print("changing auth");
     setState(() {
-      widget.pageState = pageString;
-      //   widget.pageState = pageString;
+      pageState = pageString;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return (widget.pageState == "login")
+    return (pageState == "login")
         ? LoginPage(changePageCallback: changePage)
         : SignUpPage(changePageCallback: changePage);
   }
