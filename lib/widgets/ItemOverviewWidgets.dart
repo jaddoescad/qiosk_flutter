@@ -41,9 +41,11 @@ class ItemImage extends StatelessWidget {
       return Container(
       height: 250,
       width: double.infinity,
-      child: Image.network(
-        imgUrl,
-        fit: BoxFit.cover,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage(imgUrl),
+      ),
       ),
     );
   }

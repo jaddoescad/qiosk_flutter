@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/screens/QRScanner.dart';
-// import 'package:splashscreen/splashscreen.dart';
-// import '../screens/QRScanner.dart';
 import '../util/helper.dart';
 
 

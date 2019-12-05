@@ -1,144 +1,353 @@
 {
   "1234": {
-    "title": "Pure Kitchen",
-    "imgUrl": "https://tastet.ca/wp-content/uploads/2018/09/capture-d%E2%80%99e%CC%81cran-2018-09-12-a%CC%80-10.15.51-1022x1024.png",
+    "title": "Les Moulins La Fayette",
+    "imgUrl": "assets/images/header.jpg",
     "sections": {
       "12341": {
-        "title": "Recommended",
+        "title": "Single Pastries",
         "order": 1,
         "items": {
           "123411": {
             "order": 1,
-            "title": "Fantastic",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "title": "Opera",
+            "description": "The Opera cake is made with multiple layers of coffee butter cream and chocolat genoese.",
             "price": 16.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+            "imgUrl": "assets/images/11.jpg"
           },
           "123412": {
             "order": 2,
-            "title": "Liberty Buffalo Cauliflower",
-            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "title": "Moka Chocolat",
+            "description": "The Moka Chocolat cake will satisfy all your expectations. The successive coats of dark chocolat ganache and chocolate genoese will make you go wild! So good it’s a sin!",
             "price": 16.50,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+            "imgUrl": "assets/images/12.jpg"
           },
           "123413": {
             "order": 3,
-            "title": "Radical Cauliflower Wings",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "title": "Mille-Feuille",
+            "description": "The Mille-Feuille is a French pastry classic. It’s with many layers of flaky pastry with pastry cream in between. It’s topped with icing sugar.",
             "price": 15.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+            "imgUrl": "assets/images/13.jpg"
           },
           "123414": {
             "order": 4,
-            "title": "Royale With Cheese",
-            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "title": "Palais Royal",
+            "description": "The Palais Royal cake is made with chocolat mousse, praline crumble, almond meringue and a dark icing. This cake is a favorite for all the chocolat amateurs. You’ll enjoy the delicious taste of chocolat without the excessive sugary taste.",
             "price": 18.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+            "imgUrl": "assets/images/14.jpg"
+          },
+          "123415": {
+            "order": 5,
+            "title": "Paris-Brest",
+            "description": "The French pastry classic, the Paris-Brest cake is shaped as a crown made of puff pastry cream, praline butter cream and hazelnuts, and also flaked almonds.",
+            "price": 16.00,
+            "imgUrl": "assets/images/15.jpg"
+          },
+          "123416": {
+            "order": 6,
+            "title": "Raspberry Praline Alize",
+            "description": "Be original and serve the Raspberry Praline Alize cake to your guests. In fact, this cake, made from a hazelnut Genoese mixture, a praline butter cream, and a raspberry jam, is fresh and delicious and takes you away from the traditional chocolat vanilla.",
+            "price": 16.50,
+            "imgUrl": "assets/images/16.jpg"
+          },
+          "123417": {
+            "order": 7,
+            "title": "Coffee Éclair",
+            "description": "One of our classics, the Coffee Éclair is made with a cream puff pastry filled with pastry cream and coffee flavor fondant.",
+            "price": 15.00,
+            "imgUrl": "assets/images/17.jpg"
+          },
+          "123418": {
+            "order": 8,
+            "title": "Crème Brûlée",
+            "description": "The Crème Brûlée is a classic dessert made with egg yolk, sugar, cream and vanilla. A blowpipe is used to caramelise the top of the cream by adding a touch of sugar and then burn it.",
+            "price": 18.00,
+            "imgUrl": "assets/images/18.jpg"
           }
         }
       },
       "12342": {
-        "title": "Appetizers",
+        "title": "Pies",
         "order": 2,
         "items": {
           "123421": {
             "order": 1,
-            "title": "Fantastic",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "title": "Chocolat Praline Pie",
+            "description": "The Chocolat Praline Pie is a fine pastry. In fact, the biterness of the dark chocolat and the crunch of the praline are perfectly balanced with the sweet pastry. The fine chocolat disk topping the tart gives it the sweetest visual effect.",
             "price": 16.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+            "imgUrl": "assets/images/21.png"
           },
           "123422": {
             "order": 2,
-            "title": "Liberty Buffalo Cauliflower",
-            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "title": "Chocolat Praline Tart",
+            "description": "The Chocolat Praline Tart is a fine pastry. In fact, the biterness of the dark chocolat and the crunch of the praline are perfectly balanced with the sweet pastry. The small chocolat disk topping the tart gives it the sweetest visual effect.",
             "price": 16.50,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+            "imgUrl": "assets/images/22.png"
           },
           "123423": {
             "order": 3,
-            "title": "Radical Cauliflower Wings",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "title": "Lemon Tart",
+            "description": "The Lemon Tart is a single pastry made with lemon pastry cream topped with an Italian meringue. The smoothness and bitterness of the lemon pastry cream is wonderfully blended with the sweet pastry.",
             "price": 15.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+            "imgUrl": "assets/images/23.png"
           },
           "123424": {
             "order": 4,
-            "title": "Royale With Cheese",
-            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "title": "Pear Tart",
+            "description": "The Pear Tart will fulfill every amateur of this fruit. The blend of almond and pear is beautifull! In fact, the caramelised almonds bring an interesting crunch to the tender juicy pear in the tart.",
             "price": 18.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+            "imgUrl": "assets/images/24.png"
+          },
+          "123425": {
+            "order": 5,
+            "title": "Red Berry",
+            "description": "The Red Berry Pie is made with a basic shortcrust pastry. It’s filled with a clafouti mixture and red berries.",
+            "price": 16.00,
+            "imgUrl": "assets/images/25.jpg"
           }
         }
       },
       "12343": {
-        "title": "Sandwiches",
+        "title": "Cakes",
         "order": 3,
         "items": {
           "123431": {
             "order": 1,
-            "title": "Fantastic",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
-            "price": 6.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+            "title": "Cheesecake",
+            "description": "The Moulins La Fayette Cheesecake is made from a tasty blend of cheese mousse and small fruits. The sweet biscuit at the bottom of the cake gives a perfect balance between the fruits acidity and the cheese.",
+            "price": 16.00,
+            "imgUrl": "assets/images/31.jpg"
           },
           "123432": {
             "order": 2,
-            "title": "Liberty Buffalo Cauliflower",
-            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "title": "Moka Chocolat",
+            "description": "Looking for the greates chocolat cake ever? The Moka Chocolat cake with satisfy all your expectations. Its generous chocolat taste will seduce every cocoa lover. The successive coats of ganache and genoese, bring out the richness of the chocolat.",
             "price": 16.50,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+            "imgUrl": "assets/images/32.png"
           },
           "123433": {
             "order": 3,
-            "title": "Radical Cauliflower Wings",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "title": "Opera",
+            "description": "The Opera cake is a French pastry classic. This cake blends perfectly the flavors of the coffe and the chocolat.",
             "price": 15.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+            "imgUrl": "assets/images/33.png"
           },
           "123434": {
             "order": 4,
-            "title": "Royale With Cheese",
-            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "title": "Palais Royal",
+            "description": "The Palais Royal cake is made with chocolat mousse, praline crumble, almond meringue and a dark icing. This cake is a favorite for all the chocolat amateurs. You’ll enjoy the delicious taste of chocolat without the excessive sugary taste.",
             "price": 18.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+            "imgUrl": "assets/images/34.jpg"
+          },
+          "123435": {
+            "order": 5,
+            "title": "Paris-Brest",
+            "description": "The French pastry classic, the Paris-Brest cake is shaped as a crown made of puff pastry cream, praline butter cream and hazelnuts and also flaked almonds.",
+            "price": 16.00,
+            "imgUrl": "assets/images/35.png"
+          },
+          "123436": {
+            "order": 6,
+            "title": "Raspberry Praline Alize",
+            "description": "Be original and serve the Raspberry Praline Alize cake to your guests. In fact, this cake, made from a hazelnut Genoese mixture, a praline butter cream, and a raspberry jam, is fresh and delicious and takes you away from the traditional chocolat vanilla.",
+            "price": 16.50,
+            "imgUrl": "assets/images/36.png"
+          },
+          "123437": {
+            "order": 7,
+            "title": "Trilogie au Chocolat",
+            "description": "This pastry will leave every chocolat amateurs fulfilled. The mousse, very light, is sumptuous and fluffy.",
+            "price": 15.00,
+            "imgUrl": "assets/images/37.png"
+          },
+          "123438": {
+            "order": 8,
+            "title": "Tropézienne",
+            "description": "The Tropézienne is a Southern France classic dessert. It’s made with a brioche dough at the bottom, and on top, there is a mix of pastry and Chantilly cream. In the summer, the French enjoy this dessert with a smooth rosé wine.",
+            "price": 18.00,
+            "imgUrl": "assets/images/38.png"
           }
         }
       },
       "12344": {
-        "title": "Hot Bowls",
+        "title": "Special Breads",
         "order": 4,
         "items": {
           "123441": {
             "order": 1,
-            "title": "Fantastic",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "title": "Country",
+            "description": "The Country bread is made with a mix of rye and wheat flour. This special mix gives a light brown colored crumb. The thick crust of the Country bread helps to keep a fresh crumb for a longer period!",
             "price": 16.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/586ffae5-5428-4c0c-8129-35d36ce07202.jpeg"
+            "imgUrl": "assets/images/41.png"
           },
           "123442": {
             "order": 2,
-            "title": "Liberty Buffalo Cauliflower",
-            "description": "Fried cauliflower, buffalo sauce, ranch, pickles, tomatoes, carrots, greens, and flour tortilla.",
+            "title": "Flax & Mustard",
+            "description": "The Flax & Mustard bread is rich in Omega 3. Indeed, the presence of flax and mustard grains in the bread will certainly seduce the people looking for the goodness of Omega 3.",
             "price": 16.50,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/b88fc3f1-20f8-45aa-8b8b-1d74c3052866.jpeg"
+            "imgUrl": "assets/images/42.png"
           },
           "123443": {
             "order": 3,
-            "title": "Radical Cauliflower Wings",
-            "description": "Ginger lime tofu, broccoli, red peppers, kale, scallions, cilantro, roasted peanuts, peanut sauce, and rice noodles.",
+            "title": "Grains for Winners",
+            "description": "The Grains for Winners bread is THE bread to have for a high source of fiber and Omega 3! This bread is made grains from sunflower, millet sesame, corn, bran, poppy, oat, and barley.",
             "price": 15.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/86308fd5-714f-4c20-a9d9-8a297dc3b583.jpeg"
+            "imgUrl": "assets/images/43.png"
           },
           "123444": {
             "order": 4,
-            "title": "Royale With Cheese",
-            "description": "Double mushroom walnut patty, pickles, onion, iceberg, russian dressing, and cashew cheese or cheddar.",
+            "title": "Old Cheddar",
+            "description": "The Old Cheddar bread is delicious with fresh pasta meals. It’s also very tasty with just a touch of butter. The Old Cheddar flavor gives a lightly salted taste to the bread.",
             "price": 18.00,
-            "imgUrl": "https://d1ralsognjng37.cloudfront.net/5a215b80-efc9-485f-8e9e-27e891c4d6f6.jpeg"
+            "imgUrl": "assets/images/44.png"
+          },
+          "123445": {
+            "order": 5,
+            "title": "Olive Snail",
+            "description": "Enjoy your cocktail with an original bread. The Olive Snail bread is delicious just plain… but then, even more when dipped in a mix of olive oil and balsamic vinegar. This bread is also excellent with every pasta meals.",
+            "price": 16.00,
+            "imgUrl": "assets/images/45.png"
+          },
+          "123446": {
+            "order": 6,
+            "title": "Pumpernickel",
+            "description": "The Pumpernickel bread gets its color because of the molasses added to the flour in the mix. This bread, with a taste of anise, is perfect with deli meats or smoked salmon. In fact, our popular Smoked Salmon panini, served in our stores, is made with Pumpernickel bread.",
+            "price": 15.00,
+            "imgUrl": "assets/images/46.png"
+          },
+          "123447": {
+            "order": 7,
+            "title": "Regular Rye",
+            "description": "The Regular Rye bread is made with rye flour. This darker color bread comes from Danemark.",
+            "price": 18.00,
+            "imgUrl": "assets/images/47.png"
+          },
+          "123448": {
+            "order": 8,
+            "title": "Sportif",
+            "description": "The Sportif bread, one of the most appreciated by our customers, gives energy to start the day. Its crumb is moist and crisp at the same time. Indeed, it contains nuts and dried cranberries, dryed raisins, flax, sunflower and bran grains.",
+            "price": 18.00,
+            "imgUrl": "assets/images/48.png"
+          }
+        }
+      },
+      "12345": {
+        "title": "Muffins",
+        "order": 4,
+        "items": {
+          "123451": {
+            "order": 1,
+            "title": "Blueberry Bran",
+            "description": "The Blueberry Bran muffin is full of nutritious blueberries and healthy fibre in each bite.",
+            "price": 16.00,
+            "imgUrl": "assets/images/51.jpg"
+          },
+          "123452": {
+            "order": 2,
+            "title": "Chocolat Cranberry",
+            "description": "The Chocolat Cranberry muffin is full of nutritious cranberries and delicious chocolat in each bite.",
+            "price": 16.50,
+            "imgUrl": "assets/images/52.png"
+          },
+          "123453": {
+            "order": 3,
+            "title": "Double Chocolat",
+            "description": "The Double Chocolat muffin will satisfy your sweet tooth with a double dose of delicious chocolat.",
+            "price": 15.00,
+            "imgUrl": "assets/images/53.png"
+          },
+          "123454": {
+            "order": 4,
+            "title": "Lemon Poppy Seed",
+            "description": "The Lemon Poppy Seed muffin brings together a unique blend of lemon and poppy seeds for an exciting flavour.",
+            "price": 18.00,
+            "imgUrl": "assets/images/54.png"
+          },
+          "123455": {
+            "order": 5,
+            "title": "Muesli and Date",
+            "description": "The Muesli and Data muffin is delicious and packs a health punch full of fibre.",
+            "price": 16.00,
+            "imgUrl": "assets/images/55.png"
+          },
+          "123456": {
+            "order": 6,
+            "title": "Pear and Chocolate",
+            "description": "The Pear and Chocolate muffin is full of nutritious pears and delicious chocolat in each bite.",
+            "price": 16.50,
+            "imgUrl": "assets/images/56.jpg"
+          },
+          "123457": {
+            "order": 7,
+            "title": "Raspberry Banana",
+            "description": "The Raspberry Banana muffin is full of a nutritious combination of raspberries and bananas in each bite.",
+            "price": 15.00,
+            "imgUrl": "assets/images/57.png"
+          }
+        }
+      },
+      "12346": {
+        "title": "Viennoiserie",
+        "order": 4,
+        "items": {
+          "123461": {
+            "order": 1,
+            "title": "Apricot Delight",
+            "description": "The Apricot Delight (Apricotine) is perfect for every morning sweet tooth. This viennoiserie is made with a croissant dough and pastry cream, and is topped with delicious apricots.",
+            "price": 16.00,
+            "imgUrl": "assets/images/61.jpg"
+          },
+          "123462": {
+            "order": 2,
+            "title": "Chocolate Croissant",
+            "description": "The Chocolate Croissant (or Chocolat Bread) is a classic french viennoiserie. The Chocolat croissant is made with a puff pastry in a rectangular shape rolled up on two chocolat sticks. The dough is the same as the croissant.",
+            "price": 16.50,
+            "imgUrl": "assets/images/62.png"
+          },
+          "123463": {
+            "order": 3,
+            "title": "Cinnamon Danish",
+            "description": "The Cinnamon Danish is a typical American sweetness. The Cinnamon Danish is excellent served in a brunch or for a snack.",
+            "price": 15.00,
+            "imgUrl": "assets/images/63.png"
+          },
+          "123464": {
+            "order": 4,
+            "title": "Date Square",
+            "description": "The Date Square is a very nurishing and delicious snack. The dates lovers will be seduced by the flavors promoting the dates oriental perfume!",
+            "price": 18.00,
+            "imgUrl": "assets/images/64.png"
+          },
+          "123465": {
+            "order": 5,
+            "title": "Grand Cru Shortbread Cookies",
+            "description": "A classic from the French biscuit industry, the Grand Cru Shortbread Cookies are made from a sablé pastry. Meaning that the dough is made with flour, butter, milk, eggs, sugar and sea salt. The texture of the sablé cookie is crumbly. It melts in the mouth very quickly.",
+            "price": 16.00,
+            "imgUrl": "assets/images/65.jpg"
+          },
+          "123466": {
+            "order": 6,
+            "title": "Palmier",
+            "description": "The Palmier is a traditional French viennoiserie made from a puff pastry. The Palmier is generously coated with caramelised sugar.",
+            "price": 16.50,
+            "imgUrl": "assets/images/66.png"
+          },
+          "123467": {
+            "order": 7,
+            "title": "Raisin Danish",
+            "description": "The Raisin Danish is ideal for a refreshing touch to your brunch or simply for a snack.",
+            "price": 15.00,
+            "imgUrl": "assets/images/67.png"
+          },
+          "123468": {
+            "order": 8,
+            "title": "Walnut Brownie",
+            "description": "The Walnut Brownie form the Moulins La Fayette is a very popular snack for the chocolat amateurs! The thin crust on top and the tenderness of the brownie make this snack an explosion of tastes!",
+            "price": 18.00,
+            "imgUrl": "assets/images/68.png"
           }
         }
       }
     }
   }
 }
+
