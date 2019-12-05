@@ -11,7 +11,7 @@ class Orders extends StatelessWidget {
         child: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Color(0xFF365e7a),
-          title: Text("Orders"),
+          title: Text("Orders", overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: Colors.white,),),
           centerTitle: true,
          ),
        ),

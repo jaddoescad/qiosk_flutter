@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iamrich/screens/QRScanner.dart';
 import 'package:iamrich/screens/cartPage.dart';
@@ -45,7 +46,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
+                  color: Colors.black.withOpacity(0.5),
                 ),
                 height: constraints.maxHeight,
               ),
@@ -61,7 +62,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(right: 20.0, top:5),
-                        child: IconButton(icon: Icon(Icons.photo_camera, size: 30, color: Colors.white,), onPressed: () {
+                        child: IconButton(icon: Icon(CupertinoIcons.photo_camera, size: 35, color: Colors.white,), onPressed: () {
                                       Navigator.of(context).push(
                                       MaterialPageRoute(builder: (ctx) => QRViewExample()),
                                         );     
@@ -73,8 +74,8 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: Colors.white,),),
-                            Text('', overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 5, color: Colors.white,),),
-                            Text('Table 10', overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w300),),
+                            // Text('', overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 5, color: Colors.white,),),
+                            // Text('', overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w300),),
                           ],
                         ),
                       ),
@@ -82,7 +83,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                         margin: EdgeInsets.only(left: 20.0, top: 5),
                         child: Stack(
                           children: <Widget>[
-                            IconButton(icon: Icon(Icons.shopping_cart, size: 30, color: Colors.white,), onPressed: () {
+                            IconButton(icon: Icon(CupertinoIcons.shopping_cart, size: 35, color: Colors.white,), onPressed: () {
                                       Navigator.of(context).push(
                                       MaterialPageRoute(builder: (ctx) => CartPage()),
                                         );

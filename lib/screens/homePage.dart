@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../screens/menu.dart';
@@ -37,7 +38,7 @@ static const routeName = '/HomePage';
                   indicatorColor: Colors.transparent,
                   tabs: <Widget>[
                   Tab(icon: Icon(Icons.home, size: 30,)),
-                  Tab(icon: Icon(Icons.receipt, size: 30,)),
+                  Tab(icon: Icon(Icons.receipt , size: 30,)),
                   Tab(icon: Icon(Icons.account_circle, size: 30,)),
                 ],
                 ),
@@ -50,7 +51,7 @@ static const routeName = '/HomePage';
                 ]
           ),
         ),
-        ),
+      ),
     );
   }
 }

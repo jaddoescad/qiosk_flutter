@@ -53,11 +53,11 @@ class _QRViewExampleState extends State<QRViewExample>  with RouteAware {
         Container(
           height: double.infinity,
           width: double.infinity,
-          color: Color(0xFF365e7a).withOpacity(0.4),
+          color: Color(0xFF365e7a).withOpacity(0.3),
         ),
         Center(
           child: Opacity(
-          opacity: 0.5,
+          opacity: 0.7,
           child: Container(
           height: 200,
           width: 200,
