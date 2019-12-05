@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../screens/loginPage.dart';
-import '../screens/signUpPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../models/user.dart';
 
-class Profile extends StatelessWidget {
+class ProfileNotLoggedIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +127,38 @@ class Profile extends StatelessWidget {
             ],
             ),
         ),
+          // FlatButton(child: Text("sign out"), onPressed: () async {
+
+        //     try {
+        //       FirebaseAuth.instance.signOut();
+        //     } catch(e) {
+        //          print(e);
+        // showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return AlertDialog(
+        //         title: new Text("Error"),
+        //         content: new Text(e.toString()),
+        //         actions: <Widget>[
+        //           // usually buttons at the bottom of the dialog
+        //           new FlatButton(
+        //             child: new Text("Close"),
+        //             onPressed: () {
+        //               Navigator.of(context).pop();
+        //             },
+        //           ),
+        //         ],
+        //       );
+        //     });
+
+        //     } finally {
+        //       User(uid: null);
+        //     }
+          // },
+          // )
          ],
        ),
+       
      );
   }
 }

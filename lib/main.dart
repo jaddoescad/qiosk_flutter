@@ -10,11 +10,13 @@ import './screens/homePage.dart';
 import 'package:flutter/services.dart';
 import './screens/loginPage.dart';
 import './screens/signUpPage.dart';
+import './models/user.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 void main() {
   // debugPaintSizeEnabled = true; //         <--- enable visual rendering
+  
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
    .then((_) {
      runApp(MyApp());
@@ -31,6 +33,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+         ChangeNotifierProvider.value(
+          value: User(),
+        ),
         ChangeNotifierProvider.value(
           value: Item(),
         ),

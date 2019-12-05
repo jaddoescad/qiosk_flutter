@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:iamrich/screens/loginPage.dart';
-import 'package:iamrich/screens/signUpPage.dart';
 import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
 import 'package:iamrich/widgets/addCart.dart';
 import '../util/helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../screens/checkout.dart';
 
 class CartPage extends StatelessWidget {
 static const routeName = '/CartPage';
@@ -60,11 +61,23 @@ static const routeName = '/CartPage';
      );
   }
 
-  void checkout(context) {
+  void checkout(context) async {
 
-      Navigator.of(context).push(
-  MaterialPageRoute(builder: (ctx) => AuthPage()),
-    );
+
+
+FirebaseAuth.instance.currentUser().then((firebaseUser){
+  if(firebaseUser == null)
+   {
+          Navigator.of(context).push(
+  MaterialPageRoute(builder: (ctx) => AuthPage()));
+     //signed out
+   }
+   else{
+    //signed in
+    print(firebaseUser.email);
+           Navigator.of(context).push(
+  MaterialPageRoute(builder: (ctx) => Checkout()));
   }
-
+});
+  }
 }

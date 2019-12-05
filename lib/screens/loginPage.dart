@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iamrich/screens/cartPage.dart';
 import 'package:iamrich/screens/signUpPage.dart';
+import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../widgets/socialButton.dart';
-import '../util/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../models/user.dart';
 
 typedef void ChangeAuthPage(String pageString);
 
@@ -24,7 +23,6 @@ class _AuthPageState extends State<AuthPage> {
       //   widget.pageState = pageString;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +44,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   _LoginData _data = new _LoginData();
+  final _auth = FirebaseAuth.instance;
 
   /// Normally the signin buttons should be contained in the SignInPage
   @override
@@ -78,30 +77,12 @@ class _LoginPageState extends State<LoginPage> {
               shrinkWrap: true,
               children: <Widget>[
                 SizedBox(height: 30),
-                // // SocialButton(Color(0xff3C579E), "Sign in with Facebook",
-                // //     "assets/images/facebook.png"),
-                // SizedBox(height: 5),
-                // SocialButton(Color(0xffDD4B39), "Sign in with Google",
-                //     "assets/images/google.png", authWithGoogle),
-                // SizedBox(height: 20),
-                 Row(children: <Widget>[
-                  Expanded(child: Divider()),
-                  Text(
-                    "Login With Email",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff365e7a)),
-                  ),
-                  Expanded(child: Divider()),
-                ]),
                 Container(
                   child: new TextFormField(
-                    onSaved: (String value) {
-                  this._data.email = value;
-                },
-                    validator: this._validateEmail,
+                      onSaved: (String value) {
+                        this._data.email = value;
+                      },
+                      validator: this._validateEmail,
                       keyboardType: TextInputType
                           .emailAddress, // Use email input type for emails.
                       decoration: new InputDecoration(
@@ -113,13 +94,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 new TextFormField(
                     onSaved: (String value) {
-                  this._data.password = value;
-                },
+                      this._data.password = value;
+                    },
                     validator: this._validatePassword,
                     obscureText: true, // Use secure text for passwords.
                     decoration: new InputDecoration(
-                        hintText: '',
-                        labelText: 'Enter your password')),
+                        hintText: '', labelText: 'Enter your password')),
                 // SizedBox(height: 10),
                 new Container(
                   width: screenSize.width,
@@ -169,7 +149,8 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.w500),
                       ),
                       onTap: () {
-                        widget.changePageCallback("signUp"); // function is called
+                        widget
+                            .changePageCallback("signUp"); // function is called
                       },
                     ),
                   ],
@@ -182,14 +163,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void authWithGoogle() {
+    print("authing");
+    // _LoginPageState.of(context).signInWithGoogle();
+  }
 
-void authWithGoogle() {
-  print("authing");
-  // _LoginPageState.of(context).signInWithGoogle();
-}
-
-    String _validateEmail(String value) {
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);   
+  String _validateEmail(String value) {
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(value);
     if (!emailValid) {
       return 'The Email Address must be a valid email address.';
     }
@@ -201,25 +183,51 @@ void authWithGoogle() {
     if (value.length < 8) {
       return 'The Password must be at least 8 characters.';
     }
-    
+
     return null;
   }
-    void submit() {
-      print("hello");
-    // First validate form.
+
+  void submit() async {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
       print('Printing the login data.');
       print('Email: ${_data.email}');
       print('Password: ${_data.password}');
+
+      try {
+        await _auth.signInWithEmailAndPassword(
+            email: _data.email, password: _data.password);
+      } catch (e) {
+        print(e);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Error"),
+                content: new Text(e.toString()),
+                actions: <Widget>[
+                  // usually buttons at the bottom of the dialog
+                  new FlatButton(
+                    child: new Text("Close"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            });
+      } finally {
+        final user = Provider.of<User>(context);
+        FirebaseAuth.instance.currentUser().then((firebaseUser) {
+          if (firebaseUser != null) {
+            user.changeUID(firebaseUser.uid);
+            Navigator.of(context).pop();
+          }
+        });
+      }
     }
   }
 }
-
-Widget _buildPage(BuildContext context) {
-  return SignUpPage();
-}
-
 
 class _LoginData {
   String email = '';

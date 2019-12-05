@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../widgets/socialButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
@@ -14,7 +15,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   _SignUpData _data = new _SignUpData();
-
+  final _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   /// Normally the signin buttons should be contained in the SignInPage
@@ -48,25 +49,6 @@ class _SignUpPageState extends State<SignUpPage> {
               shrinkWrap: true,
               children: <Widget>[
                 SizedBox(height: 30),
-                // // SocialButton(Color(0xff3C579E), "Sign in with Facebook",
-                // //     "assets/images/facebook.png"),
-                // SizedBox(height: 5),
-                // // SocialButton(Color(0xffDD4B39), "Sign in with Google",
-                // //     "assets/images/google.png"),
-                //     SizedBox(height: 20,),
-                Row(children: <Widget>[
-                  Expanded(child: Divider()),
-                  Text(
-                    "Sign Up With Email",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff365e7a)),
-                  ),
-                  Expanded(child: Divider()),
-                ]),
-
                 TextFormField(
                     onSaved: (String value) {
                       this._data.name = value;
@@ -80,7 +62,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: '',
                       labelText: 'Name',
                     )),
-
                 TextFormField(
                     onSaved: (String value) {
                       this._data.email = value;
@@ -94,7 +75,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: '',
                       labelText: 'E-mail Address',
                     )),
-
                 TextFormField(
                     onSaved: (String value) {
                       this._data.password = value;
@@ -122,7 +102,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   margin: new EdgeInsets.only(top: 20.0),
                 ),
-
                 Container(
                     padding: EdgeInsets.only(left: 40, right: 40, top: 10),
                     child: Text(
@@ -191,8 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return null;
   }
 
-  void submit() {
-    print("hello");
+  void submit() async {
     // First validate form.
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
@@ -200,6 +178,35 @@ class _SignUpPageState extends State<SignUpPage> {
       print('Email: ${_data.email}');
       print('Password: ${_data.password}');
       print('Name: ${_data.name}');
+
+      try {
+        await _auth.createUserWithEmailAndPassword(
+            email: _data.email, password: _data.password);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Error"),
+          content: new Text(e.toString()),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+          });
+      } finally {
+        FirebaseAuth.instance.currentUser().then((firebaseUser) {
+          if (firebaseUser != null) {
+            Navigator.of(context).pop();
+          }
+        });
+      }
     }
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../screens/menu.dart';
 import '../screens/Profile.dart';
 import '../screens/Orders.dart';
+import '../models/user.dart';
+import '../screens/ProfileLoggedIn.dart';
 
 class HomePage extends StatelessWidget {
 static const routeName = '/HomePage';
@@ -9,14 +12,17 @@ static const routeName = '/HomePage';
   @override
   Widget build(BuildContext context) {
 
+    final user = Provider.of<User>(context);
+
+    print("hello");
+    print(user.uid);
+    print("hello");
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body:CustomScrollView(
-          slivers: <Widget>[
-            SliverFillRemaining(
-              child: Scaffold(
+        body: Scaffold(
                 bottomNavigationBar: Container(
                   decoration: new BoxDecoration(
                       color: Color(0xFF365e7a),
@@ -40,12 +46,9 @@ static const routeName = '/HomePage';
                 children: <Widget>[
                   Tab(child: Menu()),
                   Tab(child: Orders()),
-                  Tab(child: Profile())
+                  Tab(child: (user.uid == null) ? ProfileNotLoggedIn() : ProfileLoggedIn())
                 ]
           ),
-        ),
-      ),
-          ],
         ),
         ),
     );
