@@ -17,12 +17,6 @@ class _Splash extends State<Splash> {
         () => 
         
         Navigator.push(context, FadeRoute(page: QRViewExample()))
-
-        // Navigator.push(
-        //       context,
-        //       MaterialPageRoute(builder: (context) => QRViewExample()),
-        //     )
-            
             
             );
   }

@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
 
 
 
-        home: Splash(),
+        home: HomePage(),
 
 
 
