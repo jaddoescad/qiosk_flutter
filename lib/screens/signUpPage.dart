@@ -187,10 +187,10 @@ class _SignUpPageState extends State<SignUpPage> {
       _formKey.currentState.save(); // Save our form now.
        authHandler.handleSignUp(_data.email, _data.password, context, _data.name)
     .then((FirebaseUser user) async {
+          await Future.delayed(const Duration(milliseconds: 500), (){});
           setState(() {
               loader = false;
            });
-          await Future.delayed(const Duration(milliseconds: 100), (){});
            Navigator.of(context).pop();
     }).catchError((e) { 
         setState(() {

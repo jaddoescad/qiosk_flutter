@@ -6,6 +6,8 @@ import '../models/user.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Auth.dart';
 import '../widgets/errorMessage.dart';
+import 'package:flutter/cupertino.dart';
+import '../screens/resetPassword.dart';
 
 typedef void ChangeAuthPage(String pageString);
 
@@ -108,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Color(0xff365e7a),
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      print("recover password");
+                              Navigator.of(context).push(CupertinoPageRoute(builder: (ctx) => ResetPasswordPage()));
                     },
                   ),
                   SizedBox(height: 20),
@@ -179,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
       await authHandler
           .handleSignInEmail(_data.email, _data.password, context)
           .then((FirebaseUser user) async {
-        await Future.delayed(const Duration(milliseconds: 100), (){});
+        await Future.delayed(const Duration(milliseconds: 500), (){});
         setState(() {
           loader = false;
         });

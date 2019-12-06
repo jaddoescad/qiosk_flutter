@@ -25,6 +25,10 @@ Future<FirebaseUser> handleSignInEmail(String email, String password, context) a
     return user;
   }
 
+  Future<void> sendPasswordResetEmail(String email) async {
+    return auth.sendPasswordResetEmail(email: email);
+  }
+
 Future<FirebaseUser> handleSignUp(email, password,context, name) async {
 
     AuthResult result = await auth.createUserWithEmailAndPassword(email: email, password: password);
