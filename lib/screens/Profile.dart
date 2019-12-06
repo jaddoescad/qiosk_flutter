@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../screens/loginPage.dart';
+import '../screens/authScreen.dart';
 
 class ProfileNotLoggedIn extends StatelessWidget {
 

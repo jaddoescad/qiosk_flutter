@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
-import '../widgets/socialButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../widgets/errorMessage.dart';
+import '../Networking/Auth.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
@@ -16,126 +19,130 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   _SignUpData _data = new _SignUpData();
   final _auth = FirebaseAuth.instance;
+  var authHandler = Auth();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-
+  bool loader = false;
   /// Normally the signin buttons should be contained in the SignInPage
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: new AppBar(
-          backgroundColor: kMainColor,
-          title: new Text('Sign Up'),
-          centerTitle: true,
-          leading: IconButton(
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-              size: 25,
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-          )),
-      body: Container(
-        // color: Colors.red,
-        height: double.infinity,
-        padding: new EdgeInsets.only(left: 40.0, right: 40.0),
-        child: Form(
-          key: this._formKey,
-          child: Theme(
-            data: Theme.of(context).copyWith(splashColor: Colors.transparent),
-            child: new ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                SizedBox(height: 30),
-                TextFormField(
-                    onSaved: (String value) {
-                      this._data.name = value;
-                    },
-                    validator: this._validateName,
-                    keyboardType:
-                        TextInputType.text, // Use email input type for emails.
-                    decoration: new InputDecoration(
-                      fillColor: Colors.white,
-                      // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
-                      hintText: '',
-                      labelText: 'Name',
-                    )),
-                TextFormField(
-                    onSaved: (String value) {
-                      this._data.email = value;
-                    },
-                    validator: this._validateEmail,
-                    keyboardType: TextInputType
-                        .emailAddress, // Use email input type for emails.
-                    decoration: new InputDecoration(
-                      fillColor: Colors.white,
-                      // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
-                      hintText: '',
-                      labelText: 'E-mail Address',
-                    )),
-                TextFormField(
-                    onSaved: (String value) {
-                      this._data.password = value;
-                    },
-                    validator: this._validatePassword,
-                    obscureText: true, // Use secure text for passwords.
-                    decoration: new InputDecoration(
-                        hintText: '', labelText: 'Enter your password')),
-                new Container(
-                  width: screenSize.width,
-                  height: 50,
-                  // color: Color(0xff365e7a),
-                  child: new FlatButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    child: new Text(
-                      'Sign Up',
-                      style: new TextStyle(color: Colors.white, fontSize: 17),
-                    ),
-                    onPressed: () {
-                      this.submit();
-                      // Navigator.popUntil(context, ModalRoute.withName('/screen2'));
-                    },
-                    color: Color(0xff365e7a),
-                  ),
-                  margin: new EdgeInsets.only(top: 20.0),
-                ),
-                Container(
-                    padding: EdgeInsets.only(left: 40, right: 40, top: 10),
-                    child: Text(
-                      "By signing up, you agree with the Terms of Services & Privacy",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12),
-                    )),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Need to Login?  ",
-                        style: TextStyle(
-                            color: Color(0xff365e7a),
-                            fontWeight: FontWeight.w300)),
-                    InkWell(
+    return ModalProgressHUD(
+      inAsyncCall: loader,
+          child: Scaffold(
+        appBar: new AppBar(
+            backgroundColor: kMainColor,
+            title: new Text('Sign Up'),
+            centerTitle: true,
+            leading: IconButton(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+                size: 25,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            )),
+        body: Container(
+          // color: Colors.red,
+          height: double.infinity,
+          padding: new EdgeInsets.only(left: 40.0, right: 40.0),
+          child: Form(
+            key: this._formKey,
+            child: Theme(
+              data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+              child: new ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  SizedBox(height: 30),
+                  TextFormField(
+                      onSaved: (String value) {
+                        this._data.name = value;
+                      },
+                      validator: this._validateName,
+                      keyboardType:
+                          TextInputType.text, // Use email input type for emails.
+                      decoration: new InputDecoration(
+                        fillColor: Colors.white,
+                        // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
+                        hintText: '',
+                        labelText: 'Name',
+                      )),
+                  TextFormField(
+                      onSaved: (String value) {
+                        this._data.email = value;
+                      },
+                      validator: this._validateEmail,
+                      keyboardType: TextInputType
+                          .emailAddress, // Use email input type for emails.
+                      decoration: new InputDecoration(
+                        fillColor: Colors.white,
+                        // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
+                        hintText: '',
+                        labelText: 'E-mail Address',
+                      )),
+                  TextFormField(
+                      onSaved: (String value) {
+                        this._data.password = value;
+                      },
+                      validator: this._validatePassword,
+                      obscureText: true, // Use secure text for passwords.
+                      decoration: new InputDecoration(
+                          hintText: '', labelText: 'Enter your password')),
+                  new Container(
+                    width: screenSize.width,
+                    height: 50,
+                    // color: Color(0xff365e7a),
+                    child: new FlatButton(
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Color(0xff365e7a),
-                            fontWeight: FontWeight.w500),
+                      child: new Text(
+                        'Sign Up',
+                        style: new TextStyle(color: Colors.white, fontSize: 17),
                       ),
-                      onTap: () {
-                        widget
-                            .changePageCallback("login"); // function is called
+                      onPressed: () {
+                        this.submit();
+                        // Navigator.popUntil(context, ModalRoute.withName('/screen2'));
                       },
+                      color: Color(0xff365e7a),
                     ),
-                  ],
-                )
-              ],
+                    margin: new EdgeInsets.only(top: 20.0),
+                  ),
+                  Container(
+                      padding: EdgeInsets.only(left: 40, right: 40, top: 10),
+                      child: Text(
+                        "By signing up, you agree with the Terms of Services & Privacy",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 12),
+                      )),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Need to Login?  ",
+                          style: TextStyle(
+                              color: Color(0xff365e7a),
+                              fontWeight: FontWeight.w300)),
+                      InkWell(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                              color: Color(0xff365e7a),
+                              fontWeight: FontWeight.w500),
+                        ),
+                        onTap: () {
+                          widget
+                              .changePageCallback("login"); // function is called
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -171,45 +178,29 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void submit() async {
+
     // First validate form.
     if (this._formKey.currentState.validate()) {
+      setState(() {
+        loader = true;
+      });
       _formKey.currentState.save(); // Save our form now.
-      print('Printing the login data.');
-      print('Email: ${_data.email}');
-      print('Password: ${_data.password}');
-      print('Name: ${_data.name}');
-
-      try {
-        await _auth.createUserWithEmailAndPassword(
-            email: _data.email, password: _data.password);
-      } catch (e) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Error"),
-          content: new Text(e.toString()),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-          });
-      } finally {
-        FirebaseAuth.instance.currentUser().then((firebaseUser) {
-          if (firebaseUser != null) {
-            Navigator.of(context).pop();
-          }
+       authHandler.handleSignUp(_data.email, _data.password, context, _data.name)
+    .then((FirebaseUser user) {
+          setState(() {
+              loader = false;
+           });
+           Navigator.of(context).pop();
+    }).catchError((e) { 
+        setState(() {
+          loader = false;
         });
-      }
+      showError(context, e);
+    });
+    }
+     
     }
   }
-}
 
 class _SignUpData {
   String name = '';

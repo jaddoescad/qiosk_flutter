@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
 import 'package:iamrich/models/cart.dart';
-import 'package:iamrich/screens/loginPage.dart';
+import '../screens/authScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
 import 'package:iamrich/widgets/addCart.dart';
-import '../util/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../screens/checkout.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/Networking/Auth.dart';
 import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
@@ -12,11 +13,11 @@ import './models/user.dart';
 import './screens/ItemOverView.dart';
 import './screens/splashScreen.dart';
 
+
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 void main() {
   // debugPaintSizeEnabled = true; //         <--- enable visual rendering
-  
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
    .then((_) {
      runApp(MyApp());
@@ -32,6 +33,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+ 
+ 
     return MultiProvider(
       providers: [
          ChangeNotifierProvider.value(
@@ -53,7 +56,7 @@ class _MyAppState extends State<MyApp> {
           ),
 
 
-
+      
 
         home: HomePage(),
 
@@ -61,7 +64,7 @@ class _MyAppState extends State<MyApp> {
 
         navigatorObservers: [routeObserver],
         routes: {
-          QRViewExample.routeName: (ctx) => QRViewExample(),
+          // QRViewExample.routeName: (ctx) => QRViewExample(),
           ItemOverview.routeName: (ctx) => ItemOverview(),
           HomePage.routeName: (ctx) => HomePage(),
           CartPage.routeName: (ctx) => CartPage(),

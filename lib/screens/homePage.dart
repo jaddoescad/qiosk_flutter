@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iamrich/Networking/Auth.dart';
 import 'package:provider/provider.dart';
 import '../screens/menu.dart';
 import '../screens/Profile.dart';
@@ -7,18 +8,14 @@ import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
 
-
 class HomePage extends StatelessWidget {
+  
 static const routeName = '/HomePage';
 
   @override
   Widget build(BuildContext context) {
-
+    Auth().checkIfUserExists(context);
     final user = Provider.of<User>(context);
-
-    print("hello");
-    print(user.uid);
-    print("hello");
 
     return DefaultTabController(
       length: 3,

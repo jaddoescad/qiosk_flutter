@@ -63,9 +63,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                       Container(
                         margin: EdgeInsets.only(right: 20.0, top:5),
                         child: IconButton(icon: ImageIcon(AssetImage("assets/images/photo-camera.png"), size: 35, color: Colors.white,), onPressed: () {
-                                      // Navigator.of(context).push(
-                                      // CupertinoPageRoute(builder: (ctx) => QRViewExample()),
-                                      //   );     
+                           Navigator.of(context).pop();
                         }                   
                       ),
                       ),
