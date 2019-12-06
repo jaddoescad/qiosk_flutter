@@ -1,4 +1,4 @@
-# iamrich
+# QIOSK
 
 A new Flutter application.
 
