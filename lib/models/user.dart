@@ -11,8 +11,10 @@ class User extends ChangeNotifier{
   User({this.email, this.name, this.uid});
 
 
-  void changeUID(String _uid) {
+  void changeUID(String _uid, String _name, String _email) {
     uid = _uid;
+    email = _email;
+    name = _name;
     notifyListeners();
   }
 }

@@ -8,14 +8,14 @@ import '../models/user.dart';
 class ProfileLoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<User>(context, listen: false);
     return Scaffold(
       body: FlatButton(child: Text("sign out"), onPressed: () async {
 
             try {
-              FirebaseAuth.instance.signOut();
+              await FirebaseAuth.instance.signOut();
             } catch(e) {
-                 print(e);
+        print(e);
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -35,9 +35,8 @@ class ProfileLoggedIn extends StatelessWidget {
             });
 
             } finally {
-              user.changeUID(null);
-              // 
-              // User(uid: null);
+              user.changeUID(null, null, null);
+              print(user.uid);
             }
           },),
     );

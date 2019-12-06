@@ -14,7 +14,7 @@ static const routeName = '/HomePage';
 
   @override
   Widget build(BuildContext context) {
-    Auth().checkIfUserExists(context);
+    // Auth().checkIfUserExists(context);
     final user = Provider.of<User>(context);
 
     return DefaultTabController(

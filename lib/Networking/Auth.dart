@@ -21,15 +21,9 @@ Future<FirebaseUser> handleSignInEmail(String email, String password, context) a
 
     final FirebaseUser currentUser = await auth.currentUser();
     assert(user.uid == currentUser.uid);
-
-    
     print('signInEmail succeeded: $user');
-
-    final userProvider = Provider.of<User>(context);
-    userProvider.changeUID(user.uid);
-
+    checkIfUserExists(context);
     return user;
-
   }
 
 Future<FirebaseUser> handleSignUp(email, password,context, name) async {
@@ -41,21 +35,22 @@ Future<FirebaseUser> handleSignUp(email, password,context, name) async {
     assert (await user.getIdToken() != null);
 
     updateUserData(user, name);
-    final userProvider = Provider.of<User>(context);
-    userProvider.changeUID(user.uid);
+    // final userProvider = Provider.of<User>(context);
+    // userProvider.changeUID(user.uid);
     return user;
 
   } 
 
 void checkIfUserExists(context) async {
-  await FirebaseAuth.instance.currentUser().then((firebaseUser){
+  await FirebaseAuth.instance.currentUser().then((firebaseUser) async {
   if(firebaseUser != null)
    {
+    var document = await Firestore.instance.collection('users').document(firebaseUser.uid.toString()).get();
+
     final userProvider = Provider.of<User>(context);
-    userProvider.changeUID(firebaseUser.uid);
+    userProvider.changeUID(document['uid'], document['displayNane'], document['email']);
    }
 });
-
 }
 
   void updateUserData(FirebaseUser user, name) async {
@@ -66,5 +61,4 @@ void checkIfUserExists(context) async {
       'displayName': name,
     }, merge: true);
   }
-
 }
