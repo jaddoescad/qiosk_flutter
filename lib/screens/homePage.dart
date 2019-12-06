@@ -8,13 +8,24 @@ import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   
 static const routeName = '/HomePage';
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() { 
+    super.initState();
+       Auth().checkIfUserExists(context);
+    
+  }
+  @override
   Widget build(BuildContext context) {
-    // Auth().checkIfUserExists(context);
     final user = Provider.of<User>(context);
 
     return DefaultTabController(

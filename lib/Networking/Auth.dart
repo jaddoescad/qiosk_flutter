@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +34,7 @@ Future<FirebaseUser> handleSignUp(email, password,context, name) async {
     assert (await user.getIdToken() != null);
 
     updateUserData(user, name);
-    // final userProvider = Provider.of<User>(context);
-    // userProvider.changeUID(user.uid);
+    checkIfUserExists(context);
     return user;
 
   } 
@@ -45,8 +43,7 @@ void checkIfUserExists(context) async {
   await FirebaseAuth.instance.currentUser().then((firebaseUser) async {
   if(firebaseUser != null)
    {
-    var document = await Firestore.instance.collection('users').document(firebaseUser.uid.toString()).get();
-
+    var document = await Firestore.instance.collection('Users').document(firebaseUser.uid.toString()).get();
     final userProvider = Provider.of<User>(context);
     userProvider.changeUID(document['uid'], document['displayNane'], document['email']);
    }
@@ -54,7 +51,7 @@ void checkIfUserExists(context) async {
 }
 
   void updateUserData(FirebaseUser user, name) async {
-    DocumentReference ref = _db.collection('users').document(user.uid);
+    DocumentReference ref = _db.collection('Users').document(user.uid);
     return await ref.setData({
       'uid': user.uid,
       'email': user.email,

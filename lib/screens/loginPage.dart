@@ -176,13 +176,16 @@ class _LoginPageState extends State<LoginPage> {
         loader = true;
       });
       _formKey.currentState.save(); // Save our form now.
-      authHandler
+      await authHandler
           .handleSignInEmail(_data.email, _data.password, context)
-          .then((FirebaseUser user) {
+          .then((FirebaseUser user) async {
+        await Future.delayed(const Duration(milliseconds: 100), (){});
         setState(() {
           loader = false;
         });
+
         Navigator.of(context).pop();
+
       }).catchError((e) {
         setState(() {
           loader = false;
