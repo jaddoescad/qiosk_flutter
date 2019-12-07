@@ -6,7 +6,10 @@ import '../screens/loginPage.dart';
 class AuthPage extends StatefulWidget {
 
   final String pageState;
-  AuthPage({this.pageState});
+  final String cameFrom;
+  AuthPage({this.pageState, this.cameFrom});
+
+
 
   @override
   _AuthPageState createState() => _AuthPageState();
@@ -32,7 +35,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return (pageState == "login")
-        ? LoginPage(changePageCallback: changePage)
-        : SignUpPage(changePageCallback: changePage);
+        ? LoginPage(changePageCallback: changePage, cameFrom: widget.cameFrom,)
+        : SignUpPage(changePageCallback: changePage, cameFrom: widget.cameFrom,);
   }
 }

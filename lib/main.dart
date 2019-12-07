@@ -12,6 +12,7 @@ import './screens/signUpPage.dart';
 import './models/user.dart';
 import './screens/ItemOverView.dart';
 import './screens/splashScreen.dart';
+import './models/goToCheckout.dart';
 
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -45,6 +46,9 @@ class _MyAppState extends State<MyApp> {
         ),
          ChangeNotifierProvider.value(
           value: Cart(),
+        ),
+        ChangeNotifierProvider.value(
+          value: GoToCheckout(),
         )
       ],
         child: MaterialApp(

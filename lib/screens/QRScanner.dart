@@ -5,7 +5,6 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
   @override
@@ -17,14 +16,12 @@ class _QRViewExampleState extends State<QRViewExample> with RouteAware {
   var qrText = "";
   bool _isloading = false;
   QRViewController controller;
-  
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-  Auth().checkIfUserExists(context);
+    Auth().checkIfUserExists(context);
   }
-
 
   @override
   void didChangeDependencies() {

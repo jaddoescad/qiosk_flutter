@@ -10,7 +10,8 @@ class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
 
   final Function changePageCallback;
-  SignUpPage({this.changePageCallback});
+  final String cameFrom;
+  SignUpPage({this.changePageCallback, this.cameFrom});
 
   @override
   _SignUpPageState createState() => _SignUpPageState();

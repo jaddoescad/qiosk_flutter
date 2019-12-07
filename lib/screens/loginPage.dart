@@ -8,13 +8,15 @@ import '../Networking/Auth.dart';
 import '../widgets/errorMessage.dart';
 import 'package:flutter/cupertino.dart';
 import '../screens/resetPassword.dart';
+import '../models/goToCheckout.dart';
 
 typedef void ChangeAuthPage(String pageString);
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/Login';
   final Function changePageCallback;
-  LoginPage({this.changePageCallback});
+  final String cameFrom;
+  LoginPage({this.changePageCallback, this.cameFrom});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -24,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   _LoginData _data = new _LoginData();
   bool loader = false;
-  var authHandler = Auth();
+  var authHandler = Auth(); 
 
   /// Normally the signin buttons should be contained in the SignInPage
   @override
@@ -185,6 +187,10 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           loader = false;
         });
+        if (widget.cameFrom == "cart") {
+          final goToCheckout = Provider.of<GoToCheckout>(context);
+          goToCheckout.setGoToCheckout(true);
+        }
 
         Navigator.of(context).pop();
 
