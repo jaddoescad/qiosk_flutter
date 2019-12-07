@@ -31,27 +31,31 @@ class _CartPageState extends State<CartPage> with RouteAware {
 
   @override
   void didPopNext() {
-    FirebaseAuth.instance.currentUser().then((firebaseUser) async {
-      setState(() {
-        loader = true;
-      });
-      if (firebaseUser == null) {
-        //signed out
-        setState(() {
-          loader = false;
-        });
-      } else {
-        final goToCheckout = Provider.of<GoToCheckout>(context);
+    final goToCheckout = Provider.of<GoToCheckout>(context);
 
+
+    FirebaseAuth.instance.currentUser().then((firebaseUser) async {
+   
+      if (firebaseUser == null) {
+      // goToCheckout.setGoToCheckout(false);
+      } else {
+        setState(() {
+              loader = true;
+            });
         if (goToCheckout.goToCheckout) {
           goToCheckout.setGoToCheckout(false);
           await Future.delayed(const Duration(milliseconds: 500), () {});
-          Navigator.of(context)
-              .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
-
           setState(() {
             loader = false;
           });
+          Navigator.of(context)
+              .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
+
+
+        } else {
+            setState(() {
+              loader = false;
+            });
         }
       }
     });
