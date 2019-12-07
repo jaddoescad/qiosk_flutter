@@ -26,6 +26,7 @@ class _ItemOverviewState extends State<ItemOverview> with WidgetsBindingObserver
     super.initState();
     itemFuture = fetchSelection();
   }
+  
   @override
   void dispose() {
     routeObserver.unsubscribe(this);

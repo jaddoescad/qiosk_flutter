@@ -124,7 +124,6 @@ class Item extends ChangeNotifier {
 
   
   fromSelectionJson(Map<String,dynamic> json, Item itemFromMenu) {
-
       id= itemFromMenu.id;
       basePrice = itemFromMenu.basePrice;
       title= itemFromMenu.title;

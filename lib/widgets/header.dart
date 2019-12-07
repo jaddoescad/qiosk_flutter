@@ -38,7 +38,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
               Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(restaurant.imgUrl),
+                      image: NetworkImage(restaurant.imgUrl),
                       fit: BoxFit.cover,
                     )
                 ),

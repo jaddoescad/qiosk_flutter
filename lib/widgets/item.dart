@@ -62,7 +62,7 @@ class ItemContainer extends StatelessWidget {
               margin: EdgeInsets.only(left: 25.0),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(item.imgUrl),
+                  image: NetworkImage(item.imgUrl),
                   fit: BoxFit.cover,
                 ),
               ),

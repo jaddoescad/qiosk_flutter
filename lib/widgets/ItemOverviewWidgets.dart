@@ -44,7 +44,7 @@ class ItemImage extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage(imgUrl),
+          image: NetworkImage(imgUrl),
       ),
       ),
     );
