@@ -148,10 +148,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void authWithGoogle() {
-    print("authing");
-    // _LoginPageState.of(context).signInWithGoogle();
-  }
 
   String _validateEmail(String value) {
     bool emailValid = RegExp(

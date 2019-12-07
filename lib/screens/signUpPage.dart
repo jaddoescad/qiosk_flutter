@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/errorMessage.dart';
 import '../Networking/Auth.dart';
+import '../models/goToCheckout.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
-
+   
   final Function changePageCallback;
   final String cameFrom;
   SignUpPage({this.changePageCallback, this.cameFrom});
@@ -18,6 +20,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+ 
   _SignUpData _data = new _SignUpData();
   final _auth = FirebaseAuth.instance;
   var authHandler = Auth();
@@ -26,6 +29,8 @@ class _SignUpPageState extends State<SignUpPage> {
   /// Normally the signin buttons should be contained in the SignInPage
   @override
   Widget build(BuildContext context) {
+  print(widget.cameFrom);
+  
     final Size screenSize = MediaQuery.of(context).size;
     return ModalProgressHUD(
       inAsyncCall: loader,
@@ -192,6 +197,12 @@ class _SignUpPageState extends State<SignUpPage> {
           setState(() {
               loader = false;
            });
+
+        if (widget.cameFrom == "cart") {
+
+          final goToCheckout = Provider.of<GoToCheckout>(context);
+          goToCheckout.setGoToCheckout(true);
+        }
            Navigator.of(context).pop();
     }).catchError((e) { 
         setState(() {

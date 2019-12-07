@@ -36,7 +36,6 @@ class ProfileLoggedIn extends StatelessWidget {
 
             } finally {
               user.changeUID(null, null, null);
-              print(user.uid);
             }
           },),
     );

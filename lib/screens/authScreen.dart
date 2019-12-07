@@ -26,7 +26,6 @@ class _AuthPageState extends State<AuthPage> {
     }
   
   void changePage(String pageString) {
-    print("changing auth");
     setState(() {
       pageState = pageString;
     });

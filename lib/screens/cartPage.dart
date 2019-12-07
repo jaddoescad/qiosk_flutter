@@ -20,28 +20,25 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> with RouteAware {
-
   bool loader = false;
 
   @override
   void didPush() {
     // Route was pushed onto navigator and is now topmost route.
-    print("pushed");
+
   }
 
   @override
   void didPopNext() {
     final goToCheckout = Provider.of<GoToCheckout>(context);
 
-
     FirebaseAuth.instance.currentUser().then((firebaseUser) async {
-   
       if (firebaseUser == null) {
-      // goToCheckout.setGoToCheckout(false);
+        // goToCheckout.setGoToCheckout(false);
       } else {
         setState(() {
-              loader = true;
-            });
+          loader = true;
+        });
         if (goToCheckout.goToCheckout) {
           goToCheckout.setGoToCheckout(false);
           await Future.delayed(const Duration(milliseconds: 500), () {});
@@ -50,12 +47,10 @@ class _CartPageState extends State<CartPage> with RouteAware {
           });
           Navigator.of(context)
               .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
-
-
         } else {
-            setState(() {
-              loader = false;
-            });
+          setState(() {
+            loader = false;
+          });
         }
       }
     });
@@ -72,7 +67,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
     final item = Provider.of<Cart>(context);
     return ModalProgressHUD(
       inAsyncCall: loader,
-          child: Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.white,
         bottomNavigationBar: item.items.values.toList().length > 0
             ? CartButton(title: "Place Your Order", func: checkout)
@@ -95,7 +90,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
             centerTitle: true,
             leading: new IconButton(
               splashColor: Colors.transparent,
-              highlightColor: Colors.transparent, // makes highlight invisible too
+              highlightColor:
+                  Colors.transparent, // makes highlight invisible too
               icon: Icon(
                 Icons.arrow_back_ios,
                 size: 24,
@@ -181,7 +177,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
         //signed out
       } else {
         //signed in
-        print(firebaseUser.email);
         Navigator.of(context)
             .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
       }
