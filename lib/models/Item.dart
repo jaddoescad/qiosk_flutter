@@ -1,15 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future fetchSelection() async {
-    final response = await rootBundle.loadString('assets/mock/Item.json').then((itemData) {
-    return itemData;
-  });
-
-  return json.decode(response);
+      var document =  await Firestore.instance.collection('Restaurants').document('KYnIcMxo6RaLMeIlhh9u').collection('Selections').document('oyFRgATUnXIfR5o7dqbH').get();
+      return document.data;
 }
 
 
@@ -123,7 +119,7 @@ class Item extends ChangeNotifier {
   }
 
   
-  fromSelectionJson(Map<String,dynamic> json, Item itemFromMenu) {
+  fromSelectionJson(Map<dynamic,dynamic> json, Item itemFromMenu) {
       id= itemFromMenu.id;
       basePrice = itemFromMenu.basePrice;
       title= itemFromMenu.title;
@@ -132,9 +128,9 @@ class Item extends ChangeNotifier {
       sections= getSection(json['sections']);
   }
 
-  static List<Section> getSection(sectionsJson) {
+  static List<Section> getSection(Map<dynamic,dynamic> sectionsJson) {
     List<Section> sectionArray = [];
-    sectionsJson.forEach((final String id, final section) {
+    sectionsJson.forEach((final id, final section) {
       sectionArray.add(Section(
         id: id.toString(), 
         max: section['max'] ,
@@ -148,7 +144,7 @@ class Item extends ChangeNotifier {
     sectionArray = sortArray(sectionArray);
     return sectionArray;
   }
-    static List<Selection> getSelection(selectionsJson)  {
+    static List<Selection> getSelection(Map<dynamic,dynamic> selectionsJson)  {
     List<Selection> selectionArray = [];
     selectionsJson.forEach((id, selection) {
       selectionArray.add(
