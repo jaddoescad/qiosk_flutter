@@ -47,7 +47,7 @@ static const routeName = '/HomePage';
                 body: TabBarView(
                 children: <Widget>[
                   Tab(child: Menu()),
-                  Tab(child: Orders()),
+                  Tab(child: OrderPage()),
                   Tab(child: (user.uid == null) ? ProfileNotLoggedIn() : ProfileLoggedIn())
                 ]
           ),
