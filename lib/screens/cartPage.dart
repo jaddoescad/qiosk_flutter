@@ -7,10 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
 import 'package:iamrich/widgets/addCart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../screens/checkout.dart';
 import '../main.dart';
 import '../models/goToCheckout.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../Networking/Payments.dart';
+import '../models/user.dart';
+import '../models/restaurant.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
@@ -25,7 +27,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
   @override
   void didPush() {
     // Route was pushed onto navigator and is now topmost route.
-
   }
 
   @override
@@ -45,8 +46,9 @@ class _CartPageState extends State<CartPage> with RouteAware {
           setState(() {
             loader = false;
           });
-          Navigator.of(context)
-              .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
+          checkout(context);
+          // Navigator.of(context)
+          //     .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
         } else {
           setState(() {
             loader = false;
@@ -168,19 +170,39 @@ class _CartPageState extends State<CartPage> with RouteAware {
   }
 
   void checkout(context) async {
-    FirebaseAuth.instance.currentUser().then((firebaseUser) {
-      if (firebaseUser == null) {
+    Payments().goToPage().then((page) async {
+      if (page == PageToGo.Auth) {
         Navigator.of(context).push(CupertinoPageRoute(
             builder: (ctx) => AuthPage(
                   cameFrom: "cart",
                 )));
-        //signed out
-      } else {
-        //signed in
-        Navigator.of(context)
-            .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
+      } else if (page == PageToGo.AddCard) {
+        await Payments().showPaymentCard(context).then((value) {
+          pay();
+          // Navigator.of(context)
+          //     .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
+        }, onError: (error) {
+          throw (error);
+        });
+      } else if (page == PageToGo.Checkout) {
+        pay();
+        // Navigator.of(context)
+        //     .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
       }
     });
+  }
+
+  void pay() {
+    final user = Provider.of<User>(context);
+    final cart = Provider.of<Cart>(context);
+    final restaurantid = Provider.of<Restaurant>(context);
+
+    try {
+    Payments().pay(user.uid, DateTime.now().millisecondsSinceEpoch.toString() ,10.99, "CAD",cart, restaurantid.id, context);
+    print("done");
+    } catch(error) {
+      throw(error);
+    }
   }
 
   @override

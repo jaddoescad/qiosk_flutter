@@ -1,43 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../screens/loginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
+import '../Networking/Payments.dart';
 
 
-class ProfileLoggedIn extends StatelessWidget {
+GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+
+class ProfileLoggedIn extends StatefulWidget {
+  @override
+  _ProfileLoggedInState createState() => _ProfileLoggedInState();
+}
+
+class _ProfileLoggedInState extends State<ProfileLoggedIn> {
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
     return Scaffold(
-      body: FlatButton(child: Text("sign out"), onPressed: () async {
+      key: _scaffoldKey,
+      body: Row(
+        children: <Widget>[
+          Divider(),
+RaisedButton(
+  child: Text("Create Token with Card Form"),
+  onPressed: () async {
 
-            try {
-              await FirebaseAuth.instance.signOut();
-            } catch(e) {
-        print(e);
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: new Text("Error"),
-                content: new Text(e.toString()),
-                actions: <Widget>[
-                  // usually buttons at the bottom of the dialog
-                  new FlatButton(
-                    child: new Text("Close"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            });
+    try {
+    var paymentCard = await Payments().showPaymentCard(context);
 
-            } finally {
-              user.changeUID(null, null, null);
-            }
-          },),
+    } catch(e) {
+      print(e);
+      
+    }
+  },
+),
+          new SignOutButton(user: user),
+        ],
+      ),
     );
+  }
+}
+
+class SignOutButton extends StatelessWidget {
+  const SignOutButton({
+    Key key,
+    @required this.user,
+  }) : super(key: key);
+
+  final User user;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(child: Text("sign out"), onPressed: () async {
+
+          try {
+            await FirebaseAuth.instance.signOut();
+          } catch(e) {
+      print(e);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: new Text("Error"),
+              content: new Text(e.toString()),
+              actions: <Widget>[
+                // usually buttons at the bottom of the dialog
+                new FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
+
+          } finally {
+            user.changeUID(null, null, null);
+          }
+        },);
   }
 }

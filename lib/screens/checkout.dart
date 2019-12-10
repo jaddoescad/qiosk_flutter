@@ -6,7 +6,7 @@ class Checkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(body: Text("Checkout"),)
+      child: Scaffold(body: Center(child: Text("Checkout")),)
     );
   }
 }

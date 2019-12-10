@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/Networking/Auth.dart';
 import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
+import 'package:iamrich/models/restaurant.dart';
 import 'package:provider/provider.dart';
 import './screens/QRScanner.dart';
 import './screens/cartPage.dart';
@@ -13,17 +14,24 @@ import './models/user.dart';
 import './screens/ItemOverView.dart';
 import './screens/splashScreen.dart';
 import './models/goToCheckout.dart';
+import './models/restaurant.dart';
+import './models/orders.dart';
 
+// import 'package:stripe_payment/stripe_payment.dart';
+import 'dart:async';
+import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
+
+// const publishableKey = "pk_test_3pnCHeZmNkaGk0lwKa9FRKln";
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 void main() {
   // debugPaintSizeEnabled = true; //         <--- enable visual rendering
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-   .then((_) {
-     runApp(MyApp());
-   });
-} 
+      .then((_) {
+    runApp(MyApp());
+  });
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -31,41 +39,44 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    // FlutterStripePayment.setStripeSettings(publishableKey);
+    FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
+  }
 
   @override
   Widget build(BuildContext context) {
- 
- 
     return MultiProvider(
       providers: [
-         ChangeNotifierProvider.value(
-          value: User(),
+        ChangeNotifierProvider(
+          create: (_) => Restaurant(),
         ),
-        ChangeNotifierProvider.value(
-          value: Item(),
+        ChangeNotifierProvider(
+          create: (_) => User(),
         ),
-         ChangeNotifierProvider.value(
-          value: Cart(),
+        ChangeNotifierProvider(
+          create: (_) => Item(),
         ),
-        ChangeNotifierProvider.value(
-          value: GoToCheckout(),
+        ChangeNotifierProvider(
+          create: (_) => Cart(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => GoToCheckout(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RestaurantOrders(),
         )
       ],
-        child: MaterialApp(
+      child: MaterialApp(
         title: 'Qiosk',
         theme: ThemeData(
           fontFamily: 'Roboto',
           primaryColor: Color(0xFF365E7a),
           // accentColor: Color(0xFF365E7a)
-          ),
-
-
-      
-
+        ),
         home: HomePage(),
-
-
-
         navigatorObservers: [routeObserver],
         routes: {
           // QRViewExample.routeName: (ctx) => QRViewExample(),
@@ -74,7 +85,6 @@ class _MyAppState extends State<MyApp> {
           CartPage.routeName: (ctx) => CartPage(),
           LoginPage.routeName: (ctx) => LoginPage(),
           SignUpPage.routeName: (ctx) => SignUpPage()
-
         },
       ),
     );

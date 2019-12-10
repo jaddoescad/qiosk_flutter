@@ -243,6 +243,9 @@ PODS:
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
   - Flutter (1.0.0)
+  - flutter_stripe_payment (0.0.7):
+    - Flutter
+    - Stripe (= 18.2.0)
   - GoogleAppMeasurement (6.1.6):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -298,12 +301,7 @@ PODS:
   - qr_code_scanner (0.0.2):
     - Flutter
     - MTBBarcodeScanner
-  - square_in_app_payments (1.3.0):
-    - Flutter
-    - SquareBuyerVerificationSDK (= 1.3.0)
-    - SquareInAppPaymentsSDK (= 1.3.0)
-  - SquareBuyerVerificationSDK (1.3.0)
-  - SquareInAppPaymentsSDK (1.3.0)
+  - Stripe (18.2.0)
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -311,8 +309,8 @@ DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_stripe_payment (from `.symlinks/plugins/flutter_stripe_payment/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
-  - square_in_app_payments (from `.symlinks/plugins/square_in_app_payments/ios`)
 
 SPEC REPOS:
   trunk:
@@ -338,8 +336,7 @@ SPEC REPOS:
     - leveldb-library
     - MTBBarcodeScanner
     - nanopb
-    - SquareBuyerVerificationSDK
-    - SquareInAppPaymentsSDK
+    - Stripe
 
 EXTERNAL SOURCES:
   cloud_firestore:
@@ -352,10 +349,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
+  flutter_stripe_payment:
+    :path: ".symlinks/plugins/flutter_stripe_payment/ios"
   qr_code_scanner:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
-  square_in_app_payments:
-    :path: ".symlinks/plugins/square_in_app_payments/ios"
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -375,6 +372,7 @@ SPEC CHECKSUMS:
   FirebaseFunctions: 5af7c35d1c5e41608fecbb667eb6c4e672e318d0
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_stripe_payment: c9cb03de12168a179e43310819856f121c4d1ba9
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
   GoogleDataTransportCCTSupport: ef79a4728b864946a8aafdbab770d5294faf3b5f
@@ -386,10 +384,8 @@ SPEC CHECKSUMS:
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   qr_code_scanner: 16107718bdad7d708cdf6a5eacdca24b56cdf471
-  square_in_app_payments: 7dbbc686b925573005257c7a3a22642269b2c04d
-  SquareBuyerVerificationSDK: 6a73cc3b073d8e613cb1fe8643600ff9ac4d6373
-  SquareInAppPaymentsSDK: 0cc9fd96e99710a3158362dabb2577416cf8e379
+  Stripe: a468d5f39703807e840fdfed39572ffad0aaf053
 
-PODFILE CHECKSUM: d6dc542d74fe43280e46745d843ee5c531f97f19
+PODFILE CHECKSUM: 097b64e1c00903a097fa4231dd174c10dfb3b629
 
 COCOAPODS: 1.8.4

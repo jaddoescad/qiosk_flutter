@@ -11,14 +11,14 @@ Future<Restaurant> fetchRestaurant() async {
   return Restaurant.fromSelectionJson(json.decode(response));
 }
 
-class Restaurant {
+class Restaurant extends ChangeNotifier{
   final String id;
   final String title;
   final String imgUrl;
   final String tableNumber;
   final List<Section> sections;
 
-  Restaurant({@required this.id, @required this.title, this.imgUrl, this.tableNumber = "10", this.sections});
+  Restaurant({this.id, this.title, this.imgUrl, this.tableNumber = "10", this.sections});
 
   factory Restaurant.fromSelectionJson(Map<String,dynamic> json) {
     final String _id = json.keys.toList()[0].toString();

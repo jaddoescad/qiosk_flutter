@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/Networking/Auth.dart';
+import 'package:iamrich/models/restaurant.dart';
 import 'package:iamrich/screens/homePage.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
+
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -86,6 +89,7 @@ class _QRViewExampleState extends State<QRViewExample> with RouteAware {
       controller.pauseCamera();
       if (!_isloading) {
         setState(() => _isloading = !_isloading);
+
         Navigator.of(context).push(
           CupertinoPageRoute(
               builder: (ctx) => WillPopScope(

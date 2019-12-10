@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 
 class Auth with ChangeNotifier {
@@ -33,12 +34,28 @@ Future<FirebaseUser> handleSignUp(email, password,context, name) async {
 
     AuthResult result = await auth.createUserWithEmailAndPassword(email: email, password: password);
     final FirebaseUser user = result.user;
-
     assert (user != null);
     assert (await user.getIdToken() != null);
 
     updateUserData(user, name);
     checkIfUserExists(context);
+
+
+    CloudFunctions cf = CloudFunctions();
+      try {
+        HttpsCallable callable = cf.getHttpsCallable(
+          functionName: 'createUserAccount',
+        );
+        var resp = await callable.call(<String, dynamic>{"uid": user.uid.toString(),"email": email,"name": name});
+        print(resp.data);
+      } on CloudFunctionsException catch (e) {
+        print(e.details);
+        print(e.message);
+        throw(e);
+      } catch (e) {
+        throw(e);
+      }
+
     return user;
 
   } 
@@ -54,7 +71,7 @@ void checkIfUserExists(context) async {
 });
 }
 
-  void updateUserData(FirebaseUser user, name) async {
+void updateUserData(FirebaseUser user, name) async {
     DocumentReference ref = _db.collection('Users').document(user.uid);
     return await ref.setData({
       'uid': user.uid,
