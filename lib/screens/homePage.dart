@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
   void initState() { 
     super.initState();
        Auth().checkIfUserExists(context);
-    
   }
   @override
   Widget build(BuildContext context) {

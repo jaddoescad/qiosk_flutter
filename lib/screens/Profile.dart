@@ -126,6 +126,15 @@ class ProfileNotLoggedIn extends StatelessWidget {
              ],
             ),
         ),
+
+        IconButton(
+          icon: Icon(Icons.backspace), onPressed: () {
+            
+          },
+        )
+
+
+
          ],
        ),
        

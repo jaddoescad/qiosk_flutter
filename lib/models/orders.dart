@@ -27,10 +27,11 @@ class Order {
   String orderId;
   String status;
   double amount;
+  int date;
 
   Map<String, OrderItem> _orderItems = {};
 
-  Order({this.orderId, this.status, this.amount});
+  Order({this.orderId, this.status, this.amount, this.date});
 
   void addOrderItem(item) {
     final orderItem = OrderItem(
@@ -51,8 +52,8 @@ class RestaurantOrders with ChangeNotifier {
     return {..._orders};
   }
 
-  void addOrder(String orderId, orderJson, status, amount) {
-    final order = Order(orderId: orderId, status: status, amount: amount);
+  void addOrder(String orderId, orderJson, status, amount, date) {
+    final order = Order(orderId: orderId, status: status, amount: amount, date: date);
 
     orderJson['items'].forEach((final key, final orderItem) {
       order.addOrderItem(orderItem);

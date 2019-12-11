@@ -8,6 +8,7 @@ Future CreateOrder(orderId, cart, amount, uid, restaurantid, context) async {
 
   final _items = {};
   final status = 'preparing';
+  final date = DateTime.now().millisecondsSinceEpoch;
 
   cart.items.forEach((final String key, final cartItem) {
     final _selections = {};
@@ -39,6 +40,7 @@ Future CreateOrder(orderId, cart, amount, uid, restaurantid, context) async {
     'amount': amount,
     'r_id': restaurantid,
     'items' : _items,
+    'date': date,
     'status': status
   };
 
@@ -54,7 +56,7 @@ try {
 
     final orderModel = Provider.of<RestaurantOrders>(context);
 
-    orderModel.addOrder(orderId, order, status, amount);
+    orderModel.addOrder(orderId, order, status, amount, date);
 
 } catch(e) {
   throw(e);

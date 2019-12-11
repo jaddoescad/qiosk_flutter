@@ -9,6 +9,7 @@ class Orders extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final orders = Provider.of<RestaurantOrders>(context);
+    var orderKeys = orders.orders.keys.toList();
 
     
     return Scaffold(
@@ -32,8 +33,24 @@ class Orders extends StatelessWidget {
                     Text("", style: TextStyle(fontSize: 10),),
                     Text("No Orders", style: TextStyle(color: Color(0xFF365e7a).withOpacity(0.4), fontSize: 20),),
                     IconButton(icon: Icon(Icons.camera), onPressed: () {
-                      print(orders.orders);
-                    },)
+                      // print(orders.orders);
+
+
+
+               
+
+
+
+
+                    },),
+                    // orders.orders.forEach((f,r) {
+                    //   return Container();
+                    // })
+                    ...orderKeys.map((order) {
+                      return Text(orders.orders[order].date.toString());
+                    })
+
+
                   ],
                 ),
                 ),
