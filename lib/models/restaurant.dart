@@ -1,38 +1,35 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future<Restaurant> fetchRestaurant() async {
-  final response = await rootBundle.loadString('assets/mock/Menu.json').then((restaurantData) {
-    return restaurantData;
-  });
-  return Restaurant.fromSelectionJson(json.decode(response));
-}
+Future fetchRestaurant() async {
+      var document =  await Firestore.instance.collection('Restaurants').document('KYnIcMxo6RaLMeIlhh9u').get();
+      return Restaurant.fromRestaurantJson(document.data, 'KYnIcMxo6RaLMeIlhh9u');
+  }
+
 
 class Restaurant extends ChangeNotifier{
-  final String id;
-  final String title;
-  final String imgUrl;
-  final String tableNumber;
-  final List<Section> sections;
+  String id;
+  String title;
+  String imgUrl;
+  String tableNumber;
+  List<Section> sections;
 
-  Restaurant({this.id, this.title, this.imgUrl, this.tableNumber = "10", this.sections});
+  Restaurant({this.id, this.title, this.imgUrl, this.tableNumber, this.sections});
 
-  factory Restaurant.fromSelectionJson(Map<String,dynamic> json) {
-    final String _id = json.keys.toList()[0].toString();
+  factory Restaurant.fromRestaurantJson(Map<String,dynamic> json, String _id) {
     return Restaurant(
         id: _id,
-        title: json[_id]['title'],
-        imgUrl: json[_id]['imgUrl'],
-        sections: getSection(json[_id]['sections'])
+        title: json['title'],
+        imgUrl: json['imgUrl'],
+        sections: getSection(json['sections'])
     );
   }
 
-  static List<Section> getSection(sectionsJson) {
+  static List<Section> getSection(Map<dynamic, dynamic> sectionsJson) {
     List<Section> sectionArray = [];
-    sectionsJson.forEach((final String id, final section) {
+    sectionsJson.forEach((final id, final section) {
       sectionArray.add(Section(
           id: id.toString(),
           title: section['title'] ,
@@ -43,14 +40,14 @@ class Restaurant extends ChangeNotifier{
     return sectionArray;
   }
 
-  static List<MenuItem> getItem(itemsJson) {
+  static List<MenuItem> getItem(Map<dynamic, dynamic> itemsJson) {
     List<MenuItem> itemArray = [];
-    itemsJson.forEach((final String id, final item) {
+    itemsJson.forEach((final id, final item) {
       itemArray.add(MenuItem(
           id: id.toString(),
           title: item['title'] ,
           description: item['description'],
-          price: item['price'],
+          price: item['price'].toDouble(),
           imgUrl: item['imgUrl'],
       ));
     });

@@ -1,9 +1,29 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/orders.dart';
+import '../Networking/Restaurant.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
+class OrderPage extends StatefulWidget {
 
-class Orders extends StatelessWidget {
+  @override
+  _OrderPageState createState() => _OrderPageState();
+}
+
+class _OrderPageState extends State<OrderPage> with WidgetsBindingObserver, RouteAware{
+  Future ordersFuture;
+  final restaurantNetworking = RestaurantNetworking();
+
+  @override
+  void initState() {
+    super.initState();
+    // ordersFuture = fetchOrders();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +52,18 @@ class Orders extends StatelessWidget {
                     ImageIcon(AssetImage("assets/images/invoice.png"), size: 110, color: Color(0xFF365e7a).withOpacity(0.4),),
                     Text("", style: TextStyle(fontSize: 10),),
                     Text("No Orders", style: TextStyle(color: Color(0xFF365e7a).withOpacity(0.4), fontSize: 20),),
-                    IconButton(icon: Icon(Icons.camera), onPressed: () {
+                    IconButton(icon: Icon(Icons.camera), onPressed: () async {
                       // print(orders.orders);
-
-
-
-               
+                    try {
+                    await restaurantNetworking.fetchMenuandOrders("effeef");
+                    } on CloudFunctionsException catch (e){
+                      print("error");
+                      print(e.message);
+                      
+                    } catch (e) {
+                      print("error");
+                      print(e);
+                    }
 
 
 

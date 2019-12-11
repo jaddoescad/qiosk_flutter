@@ -85,7 +85,7 @@ class HomePageState extends State<HomePage>
           body: TabBarView(controller: tabController, children: <Widget>[
             
             Tab(child: Menu()),
-            Tab(child: Orders()),
+            Tab(child: OrderPage()),
             Tab(
                 child: (user.uid == null)
                     ? ProfileNotLoggedIn()

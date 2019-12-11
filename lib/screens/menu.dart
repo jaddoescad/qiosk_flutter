@@ -12,13 +12,13 @@ class Menu extends StatefulWidget {
   _MenuState createState() => _MenuState();
 }
 
-class _MenuState extends State<Menu> {
-  Future<Restaurant> restaurant;
+class _MenuState extends State<Menu> with WidgetsBindingObserver, RouteAware{
+  Future restaurantFuture;
 
   @override
   void initState() {
     super.initState();
-    restaurant = fetchRestaurant();
+    restaurantFuture = fetchRestaurant();
   }
   @override
   void dispose() {
@@ -27,8 +27,9 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Restaurant>(
-        future: restaurant,
+
+    return FutureBuilder(
+        future: restaurantFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return menuPage(snapshot.data, context);
@@ -37,12 +38,14 @@ class _MenuState extends State<Menu> {
           }
           return CircularProgressIndicator();
         }
-    );}
+    );
+  }
 
-  DefaultTabController menuPage(Restaurant restaurant, context) {
-    final cart = Provider.of<Cart>(context);
 
-    return DefaultTabController(
+DefaultTabController menuPage(Restaurant restaurant, context) {
+  final cart = Provider.of<Cart>(context);  
+
+  return DefaultTabController(
       length: restaurant.sections.length,
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -62,5 +65,6 @@ class _MenuState extends State<Menu> {
         ),
       ),
     );
-  }
+}
+
 }
