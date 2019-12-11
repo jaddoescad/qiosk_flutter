@@ -26,6 +26,7 @@ import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   // debugPaintSizeEnabled = true; //         <--- enable visual rendering
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
