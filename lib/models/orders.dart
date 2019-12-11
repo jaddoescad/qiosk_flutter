@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../main.dart';
 import 'package:flutter/material.dart';
 
 //fetch all orders
@@ -60,7 +61,7 @@ class RestaurantOrders with ChangeNotifier {
     });
 
     _orders[orderId.toString()] = order;
-
+    MyAppState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
     notifyListeners();
   }
 }

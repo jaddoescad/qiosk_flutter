@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/orders.dart';
 
@@ -57,6 +58,10 @@ try {
     final orderModel = Provider.of<RestaurantOrders>(context);
 
     orderModel.addOrder(orderId, order, status, amount, date);
+    Future.delayed(const Duration(milliseconds: 1000), () {
+          Navigator.of(context).pop();
+
+});
 
 } catch(e) {
   throw(e);

@@ -9,20 +9,40 @@ import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
 
 class HomePage extends StatefulWidget {
-  
-static const routeName = '/HomePage';
+  const HomePage({Key key}) : super(key: key);
+  static const routeName = '/HomePage';
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  TabController tabController;
+
+
+
+
+  changeMyTab(){
+    setState(() {
+      tabController.index = 2;
+    });
+  }
+
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-       Auth().checkIfUserExists(context);
+    Auth().checkIfUserExists(context);
+    tabController = new TabController(vsync: this, length: 3);
   }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -32,32 +52,45 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Scaffold(
-                bottomNavigationBar: Container(
-                  decoration: new BoxDecoration(
-                      color: Color(0xFF365e7a),
-                      boxShadow: [new BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 4.0,
-                      ),
-                      ]
-                      ),
-                  height: 49,
-                  child: TabBar(
-                  indicatorColor: Colors.transparent,
-                  tabs: <Widget>[
-                  Tab(icon: ImageIcon(AssetImage("assets/images/home.png"), size: 30,)),
-                  Tab(icon: ImageIcon(AssetImage("assets/images/invoice.png"), size: 30,)),
-                  Tab(icon: ImageIcon(AssetImage("assets/images/user.png"), size: 30,)),
-                ],
-                ),
-                ),
-                body: TabBarView(
-                children: <Widget>[
-                  Tab(child: Menu()),
-                  Tab(child: Orders()),
-                  Tab(child: (user.uid == null) ? ProfileNotLoggedIn() : ProfileLoggedIn())
-                ]
+          bottomNavigationBar: Container(
+            decoration: new BoxDecoration(color: Color(0xFF365e7a), boxShadow: [
+              new BoxShadow(
+                color: Colors.grey,
+                blurRadius: 4.0,
+              ),
+            ]),
+            height: 49,
+            child: TabBar(
+              controller: tabController,
+              indicatorColor: Colors.transparent,
+              tabs: <Widget>[
+                Tab(
+                    icon: ImageIcon(
+                  AssetImage("assets/images/home.png"),
+                  size: 30,
+                )),
+                Tab(
+                    icon: ImageIcon(
+                  AssetImage("assets/images/invoice.png"),
+                  size: 30,
+                )),
+                Tab(
+                    icon: ImageIcon(
+                  AssetImage("assets/images/user.png"),
+                  size: 30,
+                )),
+              ],
+            ),
           ),
+          body: TabBarView(controller: tabController, children: <Widget>[
+            
+            Tab(child: Menu()),
+            Tab(child: Orders()),
+            Tab(
+                child: (user.uid == null)
+                    ? ProfileNotLoggedIn()
+                    : ProfileLoggedIn())
+          ])
         ),
       ),
     );

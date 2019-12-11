@@ -35,10 +35,11 @@ void main() {
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
+  static final myTabbedPageKey = new GlobalKey<HomePageState>();
   @override
   void initState() {
     super.initState();
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color(0xFF365E7a),
           // accentColor: Color(0xFF365E7a)
         ),
-        home: HomePage(),
+        home: HomePage(key: myTabbedPageKey),
         navigatorObservers: [routeObserver],
         routes: {
           // QRViewExample.routeName: (ctx) => QRViewExample(),
