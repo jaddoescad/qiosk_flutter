@@ -12,15 +12,14 @@ enum PageToGo { Checkout, AddCard, Auth }
 
 class Payments {
   Future showPaymentCard(context) async {
-    PaymentResponse paymentResponse =
-        await FlutterStripePayment.addPaymentMethod();
+    PaymentResponse paymentResponse = await FlutterStripePayment.addPaymentMethod();
 
     if (paymentResponse.status == PaymentResponseStatus.succeeded) {
-      addPaymentSource(paymentResponse.paymentMethodId, context);
+      await addPaymentSource(paymentResponse.paymentMethodId, context);
     }
   }
 
-  void addPaymentSource(token, context) async {
+  Future addPaymentSource(token, context) async {
     final user = Provider.of<User>(context);
     await Firestore.instance
         .collection('Users')
@@ -46,14 +45,20 @@ class Payments {
 
         if (document.data != null) {
           if (document.data.containsKey('id')) {
+            goToPage = PageToGo.Checkout;
+          } else {
             goToPage = PageToGo.AddCard;
           }
-          //go to checkout
-          goToPage = PageToGo.Checkout;
         } else {
           //go to add card
           goToPage = PageToGo.AddCard;
         }
+
+
+
+
+
+
       } else {
         //go to sign in
         goToPage = PageToGo.Auth;

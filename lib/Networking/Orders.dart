@@ -57,7 +57,7 @@ try {
 
     final orderModel = Provider.of<RestaurantOrders>(context);
 
-    orderModel.addOrder(orderId, order, status, amount, date);
+    orderModel.addOrder(orderId, order, status, amount, date, true);
     Future.delayed(const Duration(milliseconds: 1000), () {
           Navigator.of(context).pop();
 

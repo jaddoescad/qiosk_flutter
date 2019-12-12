@@ -29,10 +29,10 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
           Divider(),
 RaisedButton(
   child: Text("Create Token with Card Form"),
-  onPressed: () async {
+  onPressed: () {
 
     try {
-    var paymentCard = await Payments().showPaymentCard(context);
+    Payments().showPaymentCard(context);
 
     } catch(e) {
       print(e);

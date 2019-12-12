@@ -177,17 +177,17 @@ class _CartPageState extends State<CartPage> with RouteAware {
                   cameFrom: "cart",
                 )));
       } else if (page == PageToGo.AddCard) {
-        await Payments().showPaymentCard(context).then((value) {
+        print("adding card");
+        await Payments().showPaymentCard(context);
+        print("added card");
+
+        Future.delayed(const Duration(milliseconds: 3000), () {
+// Here you can write your code
           pay();
-          // Navigator.of(context)
-          //     .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
-        }, onError: (error) {
-          throw (error);
         });
+        print('payed');
       } else if (page == PageToGo.Checkout) {
         pay();
-        // Navigator.of(context)
-        //     .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
       }
     });
   }
@@ -198,10 +198,11 @@ class _CartPageState extends State<CartPage> with RouteAware {
     final restaurantid = Provider.of<Restaurant>(context);
 
     try {
-    Payments().pay(user.uid, DateTime.now().millisecondsSinceEpoch.toString() ,10.99, "CAD",cart, restaurantid.id, context);
-    print("done");
-    } catch(error) {
-      throw(error);
+      Payments().pay(user.uid, DateTime.now().millisecondsSinceEpoch.toString(),
+          10.99, "CAD", cart, restaurantid.id, context);
+      print("done");
+    } catch (error) {
+      throw (error);
     }
   }
 

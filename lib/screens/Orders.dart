@@ -14,7 +14,6 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage>
     with WidgetsBindingObserver, RouteAware {
   Future ordersFuture;
-  final restaurantNetworking = RestaurantNetworking();
 
   @override
   void initState() {
@@ -29,8 +28,8 @@ class _OrderPageState extends State<OrderPage>
 
   @override
   Widget build(BuildContext context) {
-    final orders = Provider.of<RestaurantOrders>(context).orders.asMap();
-    final user = Provider.of<User>(context);
+  final orders = Provider.of<RestaurantOrders>(context).orders.asMap();
+
 
     return Scaffold(
       appBar: PreferredSize(
@@ -76,46 +75,15 @@ class _OrderPageState extends State<OrderPage>
             IconButton(
               icon: Icon(Icons.camera),
               onPressed: () async {
-                // print(orders.orders);
-                try {
-                  final data = await restaurantNetworking.fetchMenuandOrders(
-                      "effeef", user.uid);
-                  final restaurantOrders =
-                      Provider.of<RestaurantOrders>(context);
-
-                  final menu = data[0];
-                  final _orders = data[1];
-
-                  restaurantOrders.addOrders(_orders);
-
-                  // //create orders
-                  // print(data[0]);
-                  // print(data[1]); //
-                } on CloudFunctionsException catch (e) {
-                  print("error");
-                  print(e.message);
-                } catch (e) {
-                  print("error");
-                  print(e);
-                }
+                print(orders.length);
               },
             ),
-            // orders.orders.forEach((f,r) {
-            //   return Container();
-            // })
-            // ...orderKeys.map((i, order) {
-            //   return Text(orders.orders[order].date.toString());
-            // })
-
             ...orders
                 .map((i, order) => MapEntry(i, Text(
                     order.date.toString()
                     )))
                 .values
                 .toList()
-            // ...orders.map((i, order) {
-            //   return Container();
-            // }).toList()
           ],
         ),
       ),

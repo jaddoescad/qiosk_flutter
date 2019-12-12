@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../main.dart';
 import 'package:flutter/material.dart';
-
+import '../screens/QRScanner.dart';
 //fetch all orders
 //create order
 //listen to change in orders
@@ -58,11 +58,11 @@ class RestaurantOrders with ChangeNotifier {
 
   void addOrders(orders) {
     orders.forEach((id, order) {
-      addOrder(order['orderId'], order, order['status'], order['amount'].toDouble(), order['date']);
+      addOrder(order['orderId'], order, order['status'], order['amount'].toDouble(), order['date'], false);
     });
   }
 
-  void addOrder(String orderId, orderJson, status, amount, date) {
+  void addOrder(String orderId, orderJson, status, amount, date, dismiss) {
     final order = Order(orderId: orderId, status: status, amount: amount, date: date);
 
     orderJson['items'].forEach((final key, final orderItem) {
@@ -72,7 +72,9 @@ class RestaurantOrders with ChangeNotifier {
     // _orders[orderId.toString()] = order;
     _orders.add(order);
     //sort orders here
-    MyAppState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
+    if (dismiss == true) {
+    QRViewExampleState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
+    }
     notifyListeners();
   }
 }

@@ -6,16 +6,22 @@ import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
-
+import '../models/orders.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import '../models/user.dart';
+import '../Networking/Restaurant.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
   @override
-  _QRViewExampleState createState() => _QRViewExampleState();
+  QRViewExampleState createState() => QRViewExampleState();
 }
 
-class _QRViewExampleState extends State<QRViewExample> with RouteAware {
+class QRViewExampleState extends State<QRViewExample> with RouteAware {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final restaurantNetworking = RestaurantNetworking();
+  static final myTabbedPageKey = new GlobalKey<HomePageState>();
+
   var qrText = "";
   bool _isloading = false;
   QRViewController controller;
@@ -85,12 +91,44 @@ class _QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
       controller.pauseCamera();
       if (!_isloading) {
         setState(() => _isloading = !_isloading);
+        final user = Provider.of<User>(context);
+        
+          try {
+            if (user.uid != null) {
+            final data = await restaurantNetworking.fetchMenuandOrders(
+                "effeef", user.uid);
+            final restaurantOrders = Provider.of<RestaurantOrders>(context);
 
-        Navigator.of(context).push(
+            final menu = data[0];
+
+            print(menu);
+            final _orders = data[1];
+
+            restaurantOrders.addOrders(_orders);
+            goToHomePage();
+            } else {
+              goToHomePage();
+            }
+          } on CloudFunctionsException catch (e) {
+            print("object");
+            print("error");
+            print(e.message);
+          } catch (e) {
+            print("object2");
+            print("error");
+            print(e.toString());
+          }
+        }
+      
+    });
+   
+    }
+     void goToHomePage() {
+      Navigator.of(context).push(
           CupertinoPageRoute(
               builder: (ctx) => WillPopScope(
                   onWillPop: () async {
@@ -99,10 +137,8 @@ class _QRViewExampleState extends State<QRViewExample> with RouteAware {
                     else
                       return true;
                   },
-                  child: HomePage())),
+                  child: HomePage(key: myTabbedPageKey))),
         );
-      }
-    });
   }
 
   @override
