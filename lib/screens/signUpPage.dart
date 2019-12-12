@@ -188,26 +188,29 @@ class _SignUpPageState extends State<SignUpPage> {
       setState(() {
         loader = true;
       });
-      _formKey.currentState.save(); // Save our form now.
-       authHandler.handleSignUp(_data.email, _data.password, context, _data.name)
-    .then((FirebaseUser user) async {
-          await Future.delayed(const Duration(milliseconds: 500), (){});
-          setState(() {
-              loader = false;
-           });
 
+      try {
+        _formKey.currentState.save();
+        await authHandler.handleSignUp(_data.email, _data.password, context, _data.name);
+        await Future.delayed(const Duration(milliseconds: 500), (){});
+        setState(() {
+            loader = false;
+          });
         if (widget.cameFrom == "cart") {
 
           final goToCheckout = Provider.of<GoToCheckout>(context);
           goToCheckout.setGoToCheckout(true);
         }
            Navigator.of(context).pop();
-    }).catchError((error) { 
+        setState(() {
+          loader = false;
+        });
+      } catch(error) {
         setState(() {
           loader = false;
         });
       print(error);
-    });
+      }
     }
      
     }

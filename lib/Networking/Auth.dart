@@ -5,16 +5,17 @@ import 'package:provider/provider.dart';
 import '../models/user.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../models/payment.dart';
-
+import '../Networking/Restaurant.dart';
+import '../models/restaurant.dart';
+import '../models/orders.dart';
 
 class Auth with ChangeNotifier {
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
-final FirebaseAuth auth = FirebaseAuth.instance;
-final Firestore _db = Firestore.instance;
-
-Future<FirebaseUser> handleSignInEmail(String email, String password, context) async {
-
-    AuthResult result = await auth.signInWithEmailAndPassword(email: email, password: password);
+  Future<FirebaseUser> handleSignInEmail(
+      String email, String password, context) async {
+    AuthResult result =
+        await auth.signInWithEmailAndPassword(email: email, password: password);
     final FirebaseUser user = result.user;
 
     assert(user != null);
@@ -23,67 +24,75 @@ Future<FirebaseUser> handleSignInEmail(String email, String password, context) a
     final FirebaseUser currentUser = await auth.currentUser();
     assert(user.uid == currentUser.uid);
     print('signInEmail succeeded: $user');
-    checkIfUserExists(context);
+    await checkIfUserExists(context);
+    await getOrders(context);
+    //download orders
+
     return user;
+  }
+
+  Future<void> getOrders(context) async {
+    final user = Provider.of<User>(context);
+    final restaurant = Provider.of<Restaurant>(context);
+    final data = await RestaurantNetworking.fetchOrders(restaurant.id, user.uid);
+    final restaurantOrders = Provider.of<RestaurantOrders>(context);
+    restaurantOrders.addOrders(data);
   }
 
   Future<void> sendPasswordResetEmail(String email) async {
     return auth.sendPasswordResetEmail(email: email);
   }
 
-Future<FirebaseUser> handleSignUp(email, password,context, name) async {
-
-    AuthResult result = await auth.createUserWithEmailAndPassword(email: email, password: password);
-    final FirebaseUser user = result.user;
-    assert (user != null);
-    assert (await user.getIdToken() != null);
-
-    updateUserData(user, name);
-    checkIfUserExists(context);
-
-
-    CloudFunctions cf = CloudFunctions();
-      try {
-        HttpsCallable callable = cf.getHttpsCallable(
-          functionName: 'createUserAccount',
-        );
-        var resp = await callable.call(<String, dynamic>{"uid": user.uid.toString(),"email": email,"name": name});
-        print(resp.data);
-      } on CloudFunctionsException catch (e) {
-        print(e.details);
-        print(e.message);
-        throw(e);
-      } catch (e) {
-        throw(e);
-      }
-
-    return user;
-
-  } 
-
-void checkIfUserExists(context) async {
-  await FirebaseAuth.instance.currentUser().then((firebaseUser) async {
-  if(firebaseUser != null)
-   {
-    var document = await Firestore.instance.collection('Users').document(firebaseUser.uid.toString()).get();
+  Future handleSignUp(email, password, context, name) async {
+    AuthResult result = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
     final userProvider = Provider.of<User>(context);
-    final payment = Provider.of<PaymentModel>(context);
+    final FirebaseUser user = result.user;
+    assert(user != null);
+    assert(await user.getIdToken() != null);
+    CloudFunctions cf = CloudFunctions();
+    HttpsCallable callable = cf.getHttpsCallable(
+      functionName: 'createUserAccount',
+    );
+    var resp = await callable.call(<String, dynamic>{
+      "uid": user.uid.toString(),
+      "email": email,
+      "name": name
+    });
 
-    userProvider.changeUID(document['uid'], document['displayNane'], document['email']);
+    if (resp.data.containsKey('error')) {
+      print("error");
 
-    if (document.data.containsKey('source') ){
-      payment.setToken(document['source']['id']);
+      throw (resp.data['error']);
+    } else {
+      print('here');
+      print(resp.data['user']['uid']);
+      userProvider.changeUID(
+          resp.data['user']['uid'],
+          resp.data['user']['name'],
+          resp.data['user']['email'],
+          resp.data['user']['stripeId']);
     }
-   }
-});
-}
+  }
 
-void updateUserData(FirebaseUser user, name) async {
-    DocumentReference ref = _db.collection('Users').document(user.uid);
-    return await ref.setData({
-      'uid': user.uid,
-      'email': user.email,
-      'displayName': name,
-    }, merge: true);
+  Future checkIfUserExists(context) async {
+    await FirebaseAuth.instance.currentUser().then((firebaseUser) async {
+      if (firebaseUser != null) {
+        var document = await Firestore.instance
+            .collection('Users')
+            .document(firebaseUser.uid.toString())
+            .get();
+        final userProvider = Provider.of<User>(context);
+        final payment = Provider.of<PaymentModel>(context);
+        userProvider.changeUID(document['uid'], document['displayNane'],
+            document['email'], document['stripe_id']);
+        if (document.data.containsKey('source')) {
+          final source = document['source'];
+          payment.setCard(
+              source['id'], source['card']['brand'], source['card']['last4']);
+          //get orders
+        }
+      }
+    });
   }
 }

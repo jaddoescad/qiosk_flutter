@@ -75,7 +75,9 @@ class _OrderPageState extends State<OrderPage>
             IconButton(
               icon: Icon(Icons.camera),
               onPressed: () async {
-                print(orders.length);
+                final userProvider = Provider.of<User>(context);
+                print(userProvider.uid);
+                // print(orders.length);
               },
             ),
             ...orders

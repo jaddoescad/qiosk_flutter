@@ -80,5 +80,6 @@ class Payments {
           throw ('failed to confirm payment');
         }
       }
+
   }
 }

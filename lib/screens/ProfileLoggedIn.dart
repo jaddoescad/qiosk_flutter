@@ -55,7 +55,7 @@ class SignOutButton extends StatelessWidget {
           await FirebaseAuth.instance.signOut();
           final payment = Provider.of<PaymentModel>(context);
           payment.clear();
-          user.changeUID(null, null, null);
+          user.changeUID(null, null, null, null);
         } catch (e) {
           print(e);
         }
