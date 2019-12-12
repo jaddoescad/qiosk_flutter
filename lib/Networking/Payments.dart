@@ -53,12 +53,6 @@ class Payments {
           //go to add card
           goToPage = PageToGo.AddCard;
         }
-
-
-
-
-
-
       } else {
         //go to sign in
         goToPage = PageToGo.Auth;

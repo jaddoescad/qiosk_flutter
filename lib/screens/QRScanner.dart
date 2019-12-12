@@ -19,7 +19,6 @@ class QRViewExample extends StatefulWidget {
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  final restaurantNetworking = RestaurantNetworking();
   static final myTabbedPageKey = new GlobalKey<HomePageState>();
 
   var qrText = "";
@@ -96,49 +95,47 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
       if (!_isloading) {
         setState(() => _isloading = !_isloading);
         final user = Provider.of<User>(context);
-        
-          try {
-            if (user.uid != null) {
-            final data = await restaurantNetworking.fetchMenuandOrders(
-                "effeef", user.uid);
-            final restaurantOrders = Provider.of<RestaurantOrders>(context);
 
-            final menu = data[0];
-
-            print(menu);
-            final _orders = data[1];
-
-            restaurantOrders.addOrders(_orders);
+        try {
+          if (user.uid != null) {
+            getMenuandOrders(user);
             goToHomePage();
-            } else {
-              goToHomePage();
-            }
-          } on CloudFunctionsException catch (e) {
-            print("object");
-            print("error");
-            print(e.message);
-          } catch (e) {
-            print("object2");
-            print("error");
-            print(e.toString());
+          } else {
+            goToHomePage();
           }
+        } on CloudFunctionsException catch (e) {
+          print("object");
+          print("error");
+          print(e.message);
+        } catch (e) {
+          print("object2");
+          print("error");
+          print(e.toString());
         }
-      
+      }
     });
-   
-    }
-     void goToHomePage() {
-      Navigator.of(context).push(
-          CupertinoPageRoute(
-              builder: (ctx) => WillPopScope(
-                  onWillPop: () async {
-                    if (Navigator.of(context).userGestureInProgress)
-                      return false;
-                    else
-                      return true;
-                  },
-                  child: HomePage(key: myTabbedPageKey))),
-        );
+  }
+
+  void getMenuandOrders(user) async {
+    final data = await RestaurantNetworking.fetchMenuandOrders("effeef", user.uid);
+    final restaurantOrders = Provider.of<RestaurantOrders>(context);
+    final menu = data[0];
+    final _orders = data[1];
+    restaurantOrders.addOrders(_orders);
+  }
+
+  void goToHomePage() {
+    Navigator.of(context).push(
+      CupertinoPageRoute(
+          builder: (ctx) => WillPopScope(
+              onWillPop: () async {
+                if (Navigator.of(context).userGestureInProgress)
+                  return false;
+                else
+                  return true;
+              },
+              child: HomePage(key: myTabbedPageKey))),
+    );
   }
 
   @override

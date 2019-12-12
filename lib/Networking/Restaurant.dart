@@ -1,7 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 
 class RestaurantNetworking {
-Future fetchMenuandOrders(rid, uid) async {
+static Future fetchMenuandOrders(rid, uid) async {
 
     rid = "KYnIcMxo6RaLMeIlhh9u";
 
