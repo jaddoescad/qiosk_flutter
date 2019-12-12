@@ -97,12 +97,8 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         final user = Provider.of<User>(context);
 
         try {
-          if (user.uid != null) {
             await getMenuandOrders(user);
             goToHomePage();
-          } else {
-            goToHomePage();
-          }
         } on CloudFunctionsException catch (e) {
           print("object");
           print("error");

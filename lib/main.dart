@@ -16,6 +16,7 @@ import './screens/splashScreen.dart';
 import './models/goToCheckout.dart';
 import './models/restaurant.dart';
 import './models/orders.dart';
+import './models/payment.dart';
 
 // import 'package:stripe_payment/stripe_payment.dart';
 import 'dart:async';
@@ -62,6 +63,9 @@ class MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (_) => Cart(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PaymentModel(),
         ),
         ChangeNotifierProvider(
           create: (_) => GoToCheckout(),

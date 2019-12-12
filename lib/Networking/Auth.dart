@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import '../models/payment.dart';
 
 
 class Auth with ChangeNotifier {
@@ -66,7 +67,13 @@ void checkIfUserExists(context) async {
    {
     var document = await Firestore.instance.collection('Users').document(firebaseUser.uid.toString()).get();
     final userProvider = Provider.of<User>(context);
+    final payment = Provider.of<PaymentModel>(context);
+
     userProvider.changeUID(document['uid'], document['displayNane'], document['email']);
+
+    if (document.data.containsKey('source') ){
+      payment.setToken(document['source']['id']);
+    }
    }
 });
 }

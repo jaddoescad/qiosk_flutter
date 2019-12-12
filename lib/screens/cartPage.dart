@@ -170,7 +170,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
   }
 
   void checkout(context) async {
-    Payments().goToPage().then((page) async {
+    Payments().goToPage(context).then((page) async {
       if (page == PageToGo.Auth) {
         Navigator.of(context).push(CupertinoPageRoute(
             builder: (ctx) => AuthPage(

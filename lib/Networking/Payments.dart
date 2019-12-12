@@ -1,3 +1,4 @@
+import 'package:iamrich/models/payment.dart';
 import 'package:provider/provider.dart';
 // import 'package:stripe_payment/stripe_payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,10 +8,12 @@ import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../Networking/Orders.dart';
 import '../models/restaurant.dart';
+import '../models/payment.dart';
 
 enum PageToGo { Checkout, AddCard, Auth }
 
 class Payments {
+
   Future showPaymentCard(context) async {
     PaymentResponse paymentResponse = await FlutterStripePayment.addPaymentMethod();
 
@@ -20,35 +23,32 @@ class Payments {
   }
 
   Future addPaymentSource(token, context) async {
+    final payment = Provider.of<PaymentModel>(context);
     final user = Provider.of<User>(context);
-    await Firestore.instance
+    try {
+await Firestore.instance
         .collection('Users')
         .document(user.uid)
         .collection('tokens')
         .document()
-        .setData({'tokenId': token}).catchError((error) {
+        .setData({'tokenId': token});
+        payment.setToken(token);
+        print(payment.token);
+    } catch (error) {
       print(error);
-      throw (error.toString());
-    });
+    }
+  
   }
 
-  Future<PageToGo> goToPage() async {
+  Future<PageToGo> goToPage(context) async {
     PageToGo goToPage;
+    final payment = Provider.of<PaymentModel>(context);
     await FirebaseAuth.instance.currentUser().then((firebaseUser) async {
       if (firebaseUser != null) {
-        var document = await Firestore.instance
-            .collection('Users')
-            .document(firebaseUser.uid)
-            .collection('source')
-            .document('default')
-            .get();
-
-        if (document.data != null) {
-          if (document.data.containsKey('id')) {
+        
+        //check provider
+        if (payment.token != null) {
             goToPage = PageToGo.Checkout;
-          } else {
-            goToPage = PageToGo.AddCard;
-          }
         } else {
           //go to add card
           goToPage = PageToGo.AddCard;
@@ -62,6 +62,8 @@ class Payments {
   }
 
   void pay(uid, orderId, amount, currency, cart, r_id, context) async {
+    final token = Provider.of<PaymentModel>(context).token;
+
     CloudFunctions cf = CloudFunctions();
     try {
       HttpsCallable callable = cf.getHttpsCallable(
@@ -70,6 +72,7 @@ class Payments {
       var resp = await callable.call(<String, dynamic>{
         "uid": uid.toString(),
         "orderId": orderId,
+        "token": token,
         "amount": amount
       });
 
@@ -83,7 +86,7 @@ class Payments {
         if (intentResponse.status == PaymentResponseStatus.succeeded) {
           print("success");
           //create order
-          OrdersNetworking().CreateOrder(orderId, cart, amount, uid, "KYnIcMxo6RaLMeIlhh9u", context);
+          OrdersNetworking().createOrder(orderId, cart, amount, uid, "KYnIcMxo6RaLMeIlhh9u", context, token);
         } else if (intentResponse.status == PaymentResponseStatus.failed) {
           throw('internal error');
         } else {
