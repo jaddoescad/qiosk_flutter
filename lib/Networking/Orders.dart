@@ -9,7 +9,7 @@ Future CreateOrder(orderId, cart, amount, uid, restaurantid, context) async {
 
   final _items = {};
   final status = 'preparing';
-  final date = DateTime.now().millisecondsSinceEpoch;
+  final date = DateTime.now().toUtc().millisecondsSinceEpoch;
 
   cart.items.forEach((final String key, final cartItem) {
     final _selections = {};

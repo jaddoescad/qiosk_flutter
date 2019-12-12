@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/orders.dart';
 import '../Networking/Restaurant.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import '../models/user.dart';
 
 class OrderPage extends StatefulWidget {
 
@@ -30,6 +31,7 @@ class _OrderPageState extends State<OrderPage> with WidgetsBindingObserver, Rout
 
     final orders = Provider.of<RestaurantOrders>(context);
     var orderKeys = orders.orders.keys.toList();
+    final user = Provider.of<User>(context);
 
     
     return Scaffold(
@@ -55,19 +57,27 @@ class _OrderPageState extends State<OrderPage> with WidgetsBindingObserver, Rout
                     IconButton(icon: Icon(Icons.camera), onPressed: () async {
                       // print(orders.orders);
                     try {
-                    await restaurantNetworking.fetchMenuandOrders("effeef");
+                    
+                    final data = await restaurantNetworking.fetchMenuandOrders("effeef", user.uid);
+                    final restaurantOrders = Provider.of<RestaurantOrders>(context);
+                    
+                    final menu = data[0];
+                    final orders = data[1];
+
+
+                    restaurantOrders.addOrders(orders);
+
+
+                    // //create orders
+                    // print(data[0]);
+                    // print(data[1]); //
                     } on CloudFunctionsException catch (e){
                       print("error");
                       print(e.message);
-                      
                     } catch (e) {
                       print("error");
                       print(e);
                     }
-
-
-
-
                     },),
                     // orders.orders.forEach((f,r) {
                     //   return Container();

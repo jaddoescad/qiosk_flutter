@@ -34,14 +34,18 @@ class Order {
 
   Order({this.orderId, this.status, this.amount, this.date});
 
+
+
+
   void addOrderItem(item) {
     final orderItem = OrderItem(
         generatedId: item['generatedId'],
         itemId: item['itemId'],
         title: item['title'],
         quantity: item['quantity'],
-        price: item['price'],
+        price: item['price'].toDouble(),
         selectionTitles: item['selections']);
+        
     _orderItems[item['generatedId']] = orderItem;
   }
 }
@@ -51,6 +55,12 @@ class RestaurantOrders with ChangeNotifier {
 
   Map<String, Order> get orders {
     return {..._orders};
+  }
+
+  void addOrders(orders) {
+    orders.forEach((id, order) {
+      addOrder(order['orderId'], order, order['status'], order['amount'].toDouble(), order['date']);
+    });
   }
 
   void addOrder(String orderId, orderJson, status, amount, date) {
