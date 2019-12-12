@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 
 class Restaurant extends ChangeNotifier{
@@ -61,7 +59,7 @@ class Restaurant extends ChangeNotifier{
     return map;
   }
 
-  void fetchRestaurant(_id, json)  {
+  void loadRestaurant(_id, json)  {
       // var document =  await Firestore.instance.collection('Restaurants').document('KYnIcMxo6RaLMeIlhh9u').get();
       // return fromRestaurantJson(id, data);
         id = _id;
@@ -70,6 +68,8 @@ class Restaurant extends ChangeNotifier{
         sections = getSection(json['sections']);
 
   }
+
+
 
 }
 

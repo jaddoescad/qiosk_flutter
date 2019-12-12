@@ -3,8 +3,6 @@ import 'package:cloud_functions/cloud_functions.dart';
 class RestaurantNetworking {
 static Future fetchMenuandOrders(rid, uid) async {
 
-    rid = "KYnIcMxo6RaLMeIlhh9u";
-
     CloudFunctions cf = CloudFunctions();
         HttpsCallable callable = cf.getHttpsCallable(
           functionName: 'getMenuAndOrders',

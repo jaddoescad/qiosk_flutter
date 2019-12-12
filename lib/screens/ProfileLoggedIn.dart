@@ -5,9 +5,7 @@ import '../models/user.dart';
 import '../Networking/Payments.dart';
 import '../models/payment.dart';
 
-
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
 
 class ProfileLoggedIn extends StatefulWidget {
   @override
@@ -15,11 +13,6 @@ class ProfileLoggedIn extends StatefulWidget {
 }
 
 class _ProfileLoggedInState extends State<ProfileLoggedIn> {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
@@ -28,19 +21,16 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
       body: Row(
         children: <Widget>[
           Divider(),
-RaisedButton(
-  child: Text("Create Token with Card Form"),
-  onPressed: () {
-
-    try {
-    Payments().showPaymentCard(context);
-
-    } catch(e) {
-      print(e);
-      
-    }
-  },
-),
+          RaisedButton(
+            child: Text("Create Token with Card Form"),
+            onPressed: () {
+              try {
+                Payments().showPaymentCard(context);
+              } catch (e) {
+                print(e);
+              }
+            },
+          ),
           new SignOutButton(user: user),
         ],
       ),
@@ -58,35 +48,18 @@ class SignOutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(child: Text("sign out"), onPressed: () async {
-
-          try {
-            await FirebaseAuth.instance.signOut();
-            final payment = Provider.of<PaymentModel>(context);
-            payment.clear();
-          } catch(e) {
-      print(e);
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: new Text("Error"),
-              content: new Text(e.toString()),
-              actions: <Widget>[
-                // usually buttons at the bottom of the dialog
-                new FlatButton(
-                  child: new Text("Close"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          });
-
-          } finally {
-            user.changeUID(null, null, null);
-          }
-        },);
+    return FlatButton(
+      child: Text("sign out"),
+      onPressed: () async {
+        try {
+          await FirebaseAuth.instance.signOut();
+          final payment = Provider.of<PaymentModel>(context);
+          payment.clear();
+          user.changeUID(null, null, null);
+        } catch (e) {
+          print(e);
+        }
+      },
+    );
   }
 }

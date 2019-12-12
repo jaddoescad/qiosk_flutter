@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Auth.dart';
-import '../widgets/errorMessage.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   static const routeName = '/resetPassword';
@@ -106,9 +105,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   }
 
   String _validateEmail(String value) {
-    bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value);
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
     if (!emailValid) {
       return 'The Email Address must be a valid email address.';
     }
@@ -130,9 +127,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           loader = false;
           pageState = "resetting";
         });
-      } catch (e) {
-        // print(e);
-        showError(context, e);
+      } catch (error) {
+        print(error);
         setState(() {
           loader = false;
         });

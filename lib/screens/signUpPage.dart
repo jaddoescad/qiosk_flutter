@@ -184,8 +184,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void submit() async {
-
-    // First validate form.
     if (this._formKey.currentState.validate()) {
       setState(() {
         loader = true;
@@ -204,11 +202,11 @@ class _SignUpPageState extends State<SignUpPage> {
           goToCheckout.setGoToCheckout(true);
         }
            Navigator.of(context).pop();
-    }).catchError((e) { 
+    }).catchError((error) { 
         setState(() {
           loader = false;
         });
-      showError(context, e);
+      print(error);
     });
     }
      

@@ -1,21 +1,19 @@
 import 'package:iamrich/models/payment.dart';
 import 'package:provider/provider.dart';
-// import 'package:stripe_payment/stripe_payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../Networking/Orders.dart';
-import '../models/restaurant.dart';
 import '../models/payment.dart';
 
 enum PageToGo { Checkout, AddCard, Auth }
 
 class Payments {
-
   Future showPaymentCard(context) async {
-    PaymentResponse paymentResponse = await FlutterStripePayment.addPaymentMethod();
+    PaymentResponse paymentResponse =
+        await FlutterStripePayment.addPaymentMethod();
 
     if (paymentResponse.status == PaymentResponseStatus.succeeded) {
       await addPaymentSource(paymentResponse.paymentMethodId, context);
@@ -25,19 +23,13 @@ class Payments {
   Future addPaymentSource(token, context) async {
     final payment = Provider.of<PaymentModel>(context);
     final user = Provider.of<User>(context);
-    try {
-await Firestore.instance
+    await Firestore.instance
         .collection('Users')
         .document(user.uid)
         .collection('tokens')
         .document()
         .setData({'tokenId': token});
-        payment.setToken(token);
-        print(payment.token);
-    } catch (error) {
-      print(error);
-    }
-  
+    payment.setToken(token);
   }
 
   Future<PageToGo> goToPage(context) async {
@@ -45,70 +37,48 @@ await Firestore.instance
     final payment = Provider.of<PaymentModel>(context);
     await FirebaseAuth.instance.currentUser().then((firebaseUser) async {
       if (firebaseUser != null) {
-        
-        //check provider
         if (payment.token != null) {
-            goToPage = PageToGo.Checkout;
+          goToPage = PageToGo.Checkout;
         } else {
-          //go to add card
           goToPage = PageToGo.AddCard;
         }
       } else {
-        //go to sign in
         goToPage = PageToGo.Auth;
       }
     });
     return goToPage;
   }
 
-  void pay(uid, orderId, amount, currency, cart, r_id, context) async {
+  static Future pay(uid, orderId, amount, currency, cart, r_id, context) async {
     final token = Provider.of<PaymentModel>(context).token;
 
     CloudFunctions cf = CloudFunctions();
-    try {
-      HttpsCallable callable = cf.getHttpsCallable(
-        functionName: 'createPaymentIntent',
-      );
+    HttpsCallable callable = cf.getHttpsCallable(
+      functionName: 'createPaymentIntent',
+    );
       var resp = await callable.call(<String, dynamic>{
-        "uid": uid.toString(),
-        "orderId": orderId,
-        "token": token,
-        "amount": amount
+        'uid': uid.toString(),
+        'orderId': orderId,
+        'token': token,
+        'amount': amount
       });
 
-      if (resp.data.containsKey("error")) {
-        throw ('there was an error processing the payment');
+      if (resp.data.containsKey('error')) {
+        throw ('there was an error processing the payment ${resp.data['error'].toString()}');
       } else {
         var intentResponse = await FlutterStripePayment.confirmPaymentIntent(
             resp.data['response']['client_secret'],
             resp.data['sourceId'],
             amount);
         if (intentResponse.status == PaymentResponseStatus.succeeded) {
-          print("success");
-          //create order
-          OrdersNetworking().createOrder(orderId, cart, amount, uid, "KYnIcMxo6RaLMeIlhh9u", context, token);
+          print('success');
+          OrdersNetworking.createOrder(orderId, cart, amount, uid,
+              'KYnIcMxo6RaLMeIlhh9u', context, token);
         } else if (intentResponse.status == PaymentResponseStatus.failed) {
-          throw('internal error');
+          throw ('internal error ${intentResponse.errorMessage}');
         } else {
-          throw('failed');
+          throw ('failed to confirm payment');
         }
       }
-    } on CloudFunctionsException catch (e) {
-      print(e.details);
-      print(e.message);
-      print(e);
-    } catch (e) {
-      print(e);
-    }
-    // final Firestore _db = Firestore.instance;
-    // final ref = _db.collection('Orders').document();
-
-    // return await ref.setData({
-    //   'uid': uid,
-    //   'order_id': order_id,
-    //   'amount': amount,
-    //   'currency': currency,
-    //   'description': description
-    // }, merge: true);
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/Networking/Auth.dart';
 import 'package:provider/provider.dart';
 import '../screens/menu.dart';
-import '../screens/Profile.dart';
+import '../screens/ProfileNotLoggedIn.dart';
 import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';

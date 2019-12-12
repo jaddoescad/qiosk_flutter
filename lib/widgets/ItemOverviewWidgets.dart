@@ -163,63 +163,6 @@ class SelectionCartButton extends StatelessWidget {
 
 }
 
-// class AddToCartButton extends StatelessWidget {
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final item = Provider.of<Item>(context);
-//     final buttonTextColor = !item.disableCart ? Colors.white : Colors.grey;
-//     return Container(
-//         width: double.infinity,
-//         color: Colors.red,
-//         child: Align(
-//           alignment: FractionalOffset.bottomCenter,
-//           child: Container(
-//             color: Colors.white,
-//             width: double.infinity,
-//             height: kBottomButtonContainerHeight,
-//             child: Container(
-//               margin: const EdgeInsets.only(
-//                   bottom: kButtonContainerMargin,
-//                   left: kButtonContainerMargin,
-//                   right: kButtonContainerMargin),
-//               child: MaterialButton(
-//                 color: kMainColor,
-//                 disabledColor: kMainColor,
-//                 onPressed: item.disableCart ? null : () => {addtocart(context)},
-//                 child: Stack(
-//                   children: <Widget>[
-//                     Align(
-//                       child: Text(
-//                         'Add To Cart',
-//                         style: TextStyle(
-//                             fontWeight: FontWeight.w500,
-//                             fontSize: 16,
-//                             color: buttonTextColor),
-//                       ),
-//                       alignment: Alignment.center,
-//                     ),
-//                     Align(
-//                       child: Text('\$ ${item.totalPrice.toStringAsFixed(2)}',
-//                           style: TextStyle(
-//                               fontWeight: FontWeight.w400,
-//                               fontSize: 14,
-//                               color: buttonTextColor)),
-//                       alignment: Alignment.centerRight,
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ));
-//   }
-
-
-
-
-void printObject() {}
-
 class Header extends StatelessWidget {
   Header({this.section});
   final section;
@@ -379,11 +322,6 @@ class SelectionGroup extends StatelessWidget{
                   onTap: () {
                     if (type == 'Checkbox') item.selectCheckbox(selection);
                     if (type == 'Radio') item.selectRadio(selection, section);
-
-                    // setState(() {
-                      // if (widget.type == 'Checkbox') selectCheckBox(selection);
-                      // if (widget.type == 'Radio') radioSelected = selectRadio(selection, widget.selections);
-                    // });
                   },
                   )],
           ),
@@ -392,11 +330,6 @@ class SelectionGroup extends StatelessWidget{
     );
   }
 }
-
-
-
-  
-
 
 
 class SelectionContainer extends StatelessWidget {

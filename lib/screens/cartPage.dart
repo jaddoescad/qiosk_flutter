@@ -23,7 +23,6 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> with RouteAware {
   bool loader = false;
-
   @override
   void didPush() {
     // Route was pushed onto navigator and is now topmost route.
@@ -32,6 +31,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
   @override
   void didPopNext() {
     final goToCheckout = Provider.of<GoToCheckout>(context);
+    final cart = Provider.of<Cart>(context);
+    final user = Provider.of<User>(context);
 
     FirebaseAuth.instance.currentUser().then((firebaseUser) async {
       if (firebaseUser == null) {
@@ -46,9 +47,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           setState(() {
             loader = false;
           });
-          checkout(context);
-          // Navigator.of(context)
-          //     .push(CupertinoPageRoute(builder: (ctx) => Checkout()));
+          checkout(context, user, cart);
         } else {
           setState(() {
             loader = false;
@@ -66,12 +65,12 @@ class _CartPageState extends State<CartPage> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    final item = Provider.of<Cart>(context);
+    final cart = Provider.of<Cart>(context);
     return ModalProgressHUD(
       inAsyncCall: loader,
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: item.items.values.toList().length > 0
+        bottomNavigationBar: cart.items.values.toList().length > 0
             ? CartButton(title: "Place Your Order", func: checkout)
             : null,
         appBar: PreferredSize(
@@ -109,7 +108,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           SliverToBoxAdapter(
             child: Stack(
               children: <Widget>[
-                item.items.values.toList().length < 1
+                cart.items.values.toList().length < 1
                     ? Container(
                         color: Colors.white,
                         width: double.infinity,
@@ -159,7 +158,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           ),
           SliverList(
             delegate: SliverChildListDelegate([
-              ...item.items.values
+              ...cart.items.values
                   .toList()
                   .map((item) => CartItemCard(item: item)),
             ]),
@@ -169,7 +168,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
     );
   }
 
-  void checkout(context) async {
+  void checkout(context, user, cart) async {
+
     Payments().goToPage(context).then((page) async {
       if (page == PageToGo.Auth) {
         Navigator.of(context).push(CupertinoPageRoute(
@@ -177,32 +177,30 @@ class _CartPageState extends State<CartPage> with RouteAware {
                   cameFrom: "cart",
                 )));
       } else if (page == PageToGo.AddCard) {
-        print("adding card");
-        await Payments().showPaymentCard(context);
-        print("added card");
-
-        Future.delayed(const Duration(milliseconds: 3000), () {
-// Here you can write your code
-          pay();
-        });
-        print('payed');
+        try {
+          await Payments().showPaymentCard(context);
+          Future.delayed(const Duration(milliseconds: 3000), () {
+            pay(user, cart);
+          });
+        } catch (error) {
+          print('there was an error processing payment: $error');
+        }
       } else if (page == PageToGo.Checkout) {
-        pay();
+        pay(user, cart);
       }
     });
+
+    
   }
 
-  void pay() {
-    final user = Provider.of<User>(context);
-    final cart = Provider.of<Cart>(context);
-    final restaurantid = Provider.of<Restaurant>(context);
+  void pay(user, Cart cart) async {
+    final restaurant = Provider.of<Restaurant>(context);
 
     try {
-      Payments().pay(user.uid, DateTime.now().millisecondsSinceEpoch.toString(),
-          10.99, "CAD", cart, restaurantid.id, context);
+      await Payments.pay(user.uid, DateTime.now().millisecondsSinceEpoch.toString(),cart.totalAmount, "CAD", cart, restaurant.id, context);
       print("done");
     } catch (error) {
-      throw (error);
+      print('error paying : $error');
     }
   }
 

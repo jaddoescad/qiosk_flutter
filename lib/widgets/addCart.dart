@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
+import '../models/user.dart';
 
 class CartButton extends StatelessWidget {
   CartButton({this.title, this.func});
@@ -11,6 +12,8 @@ class CartButton extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final user = Provider.of<User>(context);
+
     return Container(
       height: 70,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
@@ -26,7 +29,7 @@ class CartButton extends StatelessWidget {
         elevation: 0,
         child: new CartButtonChildren(title: title, price: cart.totalAmount.toStringAsFixed(2)),
         color: Color(0xFF365e7a),
-        onPressed:  () {func(context);},
+        onPressed:  () {func(context, user, cart);},
       ),
     );
   }

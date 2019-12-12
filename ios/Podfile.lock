@@ -308,7 +308,7 @@ DEPENDENCIES:
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
   - flutter_stripe_payment (from `.symlinks/plugins/flutter_stripe_payment/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
 
@@ -348,7 +348,7 @@ EXTERNAL SOURCES:
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   flutter_stripe_payment:
     :path: ".symlinks/plugins/flutter_stripe_payment/ios"
   qr_code_scanner:
@@ -386,6 +386,6 @@ SPEC CHECKSUMS:
   qr_code_scanner: 16107718bdad7d708cdf6a5eacdca24b56cdf471
   Stripe: a468d5f39703807e840fdfed39572ffad0aaf053
 
-PODFILE CHECKSUM: 097b64e1c00903a097fa4231dd174c10dfb3b629
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
 COCOAPODS: 1.8.4

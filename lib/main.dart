@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iamrich/Networking/Auth.dart';
 import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:iamrich/models/restaurant.dart';
 import 'package:provider/provider.dart';
-import './screens/QRScanner.dart';
 import './screens/cartPage.dart';
 import './screens/homePage.dart';
 import 'package:flutter/services.dart';
@@ -17,12 +15,7 @@ import './models/goToCheckout.dart';
 import './models/restaurant.dart';
 import './models/orders.dart';
 import './models/payment.dart';
-
-// import 'package:stripe_payment/stripe_payment.dart';
-import 'dart:async';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
-
-// const publishableKey = "pk_test_3pnCHeZmNkaGk0lwKa9FRKln";
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -44,7 +37,6 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // FlutterStripePayment.setStripeSettings(publishableKey);
     FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
   }
 

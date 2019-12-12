@@ -10,6 +10,8 @@ import '../models/orders.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../models/user.dart';
 import '../Networking/Restaurant.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../constants.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -44,9 +46,6 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   void didPopNext() {
-    setState(() => _isloading = !_isloading);
-    // Covering route was popped off the navigator.
-    // logger.log("pop");
     if (controller != null) {
       controller.resumeCamera();
     }
@@ -54,71 +53,78 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: <Widget>[
-        Column(
-          children: <Widget>[
-            Expanded(
-              child: QRView(
-                key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
+    return ModalProgressHUD(
+        child: Scaffold(
+        body: Stack(children: <Widget>[
+          Column(
+            children: <Widget>[
+              Expanded(
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: _onQRViewCreated,
+                ),
+              ),
+            ],
+          ),
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Color(0xFF365e7a).withOpacity(0.3),
+          ),
+          Center(
+            child: Opacity(
+              opacity: 0.7,
+              child: Container(
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage('assets/images/Scan.png'),
+                )),
               ),
             ),
-          ],
-        ),
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          color: Color(0xFF365e7a).withOpacity(0.3),
-        ),
-        Center(
-          child: Opacity(
-            opacity: 0.7,
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage('assets/images/Scan.png'),
-              )),
-            ),
           ),
-        ),
-      ]),
-    );
+        ]),
+      )
+    , inAsyncCall: _isloading, opacity: 0.5, color: Colors.white, progressIndicator: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(kMainColor)));
   }
+
+
+
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
       controller.pauseCamera();
-      if (!_isloading) {
-        setState(() => _isloading = !_isloading);
-        final user = Provider.of<User>(context);
-
+      qrText = scanData;
+      if (_isloading == false) {
+        setState(() => _isloading = true);
+        print(scanData);
         try {
-            await getMenuandOrders(user);
+            await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
             goToHomePage();
+            setState(() => _isloading = false);
         } on CloudFunctionsException catch (e) {
-          print("object");
-          print("error");
-          print(e.message);
+          print('error ${e.message}');
+          setState(() => _isloading = false);
         } catch (e) {
-          print("object2");
-          print("error");
-          print(e.toString());
+          print('error ${e.toString()}');
+          setState(() => _isloading = false);
         }
       }
     });
   }
 
-  Future getMenuandOrders(user) async {
-    final data = await RestaurantNetworking.fetchMenuandOrders("effeef", user.uid);
+  Future<void> getMenuandOrders(rid) async {
+    final user = Provider.of<User>(context);
+    final data = await RestaurantNetworking.fetchMenuandOrders(rid, user.uid);
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
     final restaurant = Provider.of<Restaurant>(context);
+
     final menu = data[0];
     final _orders = data[1];
-    restaurant.fetchRestaurant('KYnIcMxo6RaLMeIlhh9u', menu);
+
+    restaurant.loadRestaurant(rid, menu);
     restaurantOrders.addOrders(_orders);
   }
 

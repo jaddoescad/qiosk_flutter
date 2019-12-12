@@ -5,7 +5,7 @@ import '../models/orders.dart';
 
 class OrdersNetworking {
 
-Future createOrder(orderId, cart, amount, uid, restaurantid, context, token) async {
+static Future createOrder(orderId, cart, amount, uid, restaurantid, context, token) async {
 
   final _items = {};
   final status = 'preparing';
@@ -44,9 +44,6 @@ Future createOrder(orderId, cart, amount, uid, restaurantid, context, token) asy
     'date': date,
     'status': status
   };
-
-
-try {
     await Firestore.instance
         .collection('Orders')
         .document(orderId)
@@ -63,10 +60,5 @@ try {
 
 });
 
-} catch(e) {
-  throw(e);
-} finally {
-  print('success');
-}
 }
 }
