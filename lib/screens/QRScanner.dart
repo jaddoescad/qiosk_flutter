@@ -98,7 +98,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
         try {
           if (user.uid != null) {
-            getMenuandOrders(user);
+            await getMenuandOrders(user);
             goToHomePage();
           } else {
             goToHomePage();
@@ -116,11 +116,13 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     });
   }
 
-  void getMenuandOrders(user) async {
+  Future getMenuandOrders(user) async {
     final data = await RestaurantNetworking.fetchMenuandOrders("effeef", user.uid);
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
+    final restaurant = Provider.of<Restaurant>(context);
     final menu = data[0];
     final _orders = data[1];
+    restaurant.fetchRestaurant('KYnIcMxo6RaLMeIlhh9u', menu);
     restaurantOrders.addOrders(_orders);
   }
 

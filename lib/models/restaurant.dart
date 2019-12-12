@@ -3,10 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future fetchRestaurant() async {
-      var document =  await Firestore.instance.collection('Restaurants').document('KYnIcMxo6RaLMeIlhh9u').get();
-      return Restaurant.fromRestaurantJson(document.data, 'KYnIcMxo6RaLMeIlhh9u');
-  }
 
 
 class Restaurant extends ChangeNotifier{
@@ -18,14 +14,14 @@ class Restaurant extends ChangeNotifier{
 
   Restaurant({this.id, this.title, this.imgUrl, this.tableNumber, this.sections});
 
-  factory Restaurant.fromRestaurantJson(Map<String,dynamic> json, String _id) {
-    return Restaurant(
-        id: _id,
-        title: json['title'],
-        imgUrl: json['imgUrl'],
-        sections: getSection(json['sections'])
-    );
-  }
+  // void fromRestaurantJson(String _id, Map<String,dynamic> json) {
+
+    
+  //       id = _id;
+  //       title = json['title'];
+  //       imgUrl = json['imgUrl'];
+  //       sections = getSection(json['sections']);
+  // }
 
   static List<Section> getSection(Map<dynamic, dynamic> sectionsJson) {
     List<Section> sectionArray = [];
@@ -63,6 +59,16 @@ class Restaurant extends ChangeNotifier{
           .compareTo(b.order.toString().toLowerCase());
     });
     return map;
+  }
+
+  void fetchRestaurant(_id, json)  {
+      // var document =  await Firestore.instance.collection('Restaurants').document('KYnIcMxo6RaLMeIlhh9u').get();
+      // return fromRestaurantJson(id, data);
+        id = _id;
+        title = json['title'];
+        imgUrl = json['imgUrl'];
+        sections = getSection(json['sections']);
+
   }
 
 }

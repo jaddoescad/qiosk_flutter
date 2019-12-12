@@ -13,12 +13,10 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> with WidgetsBindingObserver, RouteAware{
-  Future restaurantFuture;
 
   @override
   void initState() {
     super.initState();
-    restaurantFuture = fetchRestaurant();
   }
   @override
   void dispose() {
@@ -28,17 +26,10 @@ class _MenuState extends State<Menu> with WidgetsBindingObserver, RouteAware{
   @override
   Widget build(BuildContext context) {
 
-    return FutureBuilder(
-        future: restaurantFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return menuPage(snapshot.data, context);
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          return CircularProgressIndicator();
+    final restaurant = Provider.of<Restaurant>(context);
+
+            return menuPage(restaurant, context);
         }
-    );
   }
 
 
@@ -65,6 +56,4 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
         ),
       ),
     );
-}
-
 }
