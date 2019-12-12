@@ -45,16 +45,15 @@ class Order {
         quantity: item['quantity'],
         price: item['price'].toDouble(),
         selectionTitles: item['selections']);
-        
     _orderItems[item['generatedId']] = orderItem;
   }
 }
 
 class RestaurantOrders with ChangeNotifier {
-  Map<String, Order> _orders = {};
+  List<Order> _orders = [];
 
-  Map<String, Order> get orders {
-    return {..._orders};
+  List< Order> get orders {
+    return [..._orders];
   }
 
   void addOrders(orders) {
@@ -70,7 +69,9 @@ class RestaurantOrders with ChangeNotifier {
       order.addOrderItem(orderItem);
     });
 
-    _orders[orderId.toString()] = order;
+    // _orders[orderId.toString()] = order;
+    _orders.add(order);
+    //sort orders here
     MyAppState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
     notifyListeners();
   }
