@@ -183,14 +183,14 @@ class _CartPageState extends State<CartPage> with RouteAware {
             pay(user, cart);
           });
         } catch (error) {
-          print('there was an error processing payment: $error');
+          print('there was an error processing payment: ${error.toString()}');
         }
       } else if (page == PageToGo.Checkout) {
         pay(user, cart);
       }
     });
 
-    
+
   }
 
   void pay(user, Cart cart) async {

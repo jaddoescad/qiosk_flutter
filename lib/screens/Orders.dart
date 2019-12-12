@@ -5,6 +5,7 @@ import '../models/orders.dart';
 import '../Networking/Restaurant.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../models/user.dart';
+import '../models/payment.dart';
 
 class OrderPage extends StatefulWidget {
   @override
@@ -75,8 +76,10 @@ class _OrderPageState extends State<OrderPage>
             IconButton(
               icon: Icon(Icons.camera),
               onPressed: () async {
-                final userProvider = Provider.of<User>(context);
-                print(userProvider.uid);
+                    final payment = Provider.of<PaymentModel>(context);
+                print(payment.token);
+                print(payment.cardType);
+                print(payment.lastFour);
                 // print(orders.length);
               },
             ),

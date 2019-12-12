@@ -46,6 +46,8 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   void didPopNext() {
+    setState(() => _isloading = false);
+
     if (controller != null) {
       controller.resumeCamera();
     }
@@ -55,55 +57,56 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   Widget build(BuildContext context) {
     return ModalProgressHUD(
         child: Scaffold(
-        body: Stack(children: <Widget>[
-          Column(
-            children: <Widget>[
-              Expanded(
-                child: QRView(
-                  key: qrKey,
-                  onQRViewCreated: _onQRViewCreated,
+          body: Stack(children: <Widget>[
+            Column(
+              children: <Widget>[
+                Expanded(
+                  child: QRView(
+                    key: qrKey,
+                    onQRViewCreated: _onQRViewCreated,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: Color(0xFF365e7a).withOpacity(0.3),
+            ),
+            Center(
+              child: Opacity(
+                opacity: 0.7,
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/images/Scan.png'),
+                  )),
                 ),
               ),
-            ],
-          ),
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Color(0xFF365e7a).withOpacity(0.3),
-          ),
-          Center(
-            child: Opacity(
-              opacity: 0.7,
-              child: Container(
-                height: 200,
-                width: 200,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage('assets/images/Scan.png'),
-                )),
-              ),
             ),
-          ),
-        ]),
-      )
-    , inAsyncCall: _isloading, opacity: 0.5, color: Colors.white, progressIndicator: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(kMainColor)));
+          ]),
+        ),
+        inAsyncCall: _isloading,
+        opacity: 0.5,
+        color: Colors.white,
+        progressIndicator: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(kMainColor)));
   }
-
-
-
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
-      controller.pauseCamera();
-      qrText = scanData;
       if (_isloading == false) {
+        print("hello");
+        controller.pauseCamera();
+        qrText = scanData;
         setState(() => _isloading = true);
-        print(scanData);
         try {
-            await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
-            goToHomePage();
-            setState(() => _isloading = false);
+          await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
+          goToHomePage();
+          // setState(() => _isloading = false);
         } on CloudFunctionsException catch (e) {
           print('error ${e.message}');
           setState(() => _isloading = false);
