@@ -237,7 +237,7 @@ class ItemBody extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              ...item.sections.map((section) => Section(section: section)),
+              if (item.sections?.isNotEmpty ?? false) ...item.sections.map((section) => Section(section: section)),
               ItemCounter()
             ],
           ),

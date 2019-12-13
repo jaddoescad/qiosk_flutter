@@ -57,6 +57,7 @@ class RestaurantOrders with ChangeNotifier {
   }
 
   void addOrders(orders) {
+    _orders = [];
     orders.forEach((id, order) {
       addOrder(order['orderId'], order, order['status'], order['amount'].toDouble(), order['date'], false);
     });
