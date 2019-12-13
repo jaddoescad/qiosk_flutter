@@ -179,9 +179,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
       } else if (page == PageToGo.AddCard) {
         try {
           await Payments().showPaymentCard(context);
-          Future.delayed(const Duration(milliseconds: 3000), () {
-            pay(user, cart);
-          });
+            // pay(user, cart);
         } catch (error) {
           print('there was an error processing payment: ${error.toString()}');
         }

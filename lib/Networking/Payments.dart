@@ -35,11 +35,9 @@ class Payments {
 
       throw (resp.data['error']);
     } else {
-      final card = resp.data['source']['card'];
-      print(card['brand']);
-      print(resp.data['card']['last4']);
-      print(resp.data['card']['id']);
-      payment.setCard(card['brand'], card['last4'], card['id']);
+      final card = resp.data['source'];
+      payment.setCard(card['id'], card['card']['last4'], card['card']['brand'] );
+
     }
 
     // await Firestore.instance
