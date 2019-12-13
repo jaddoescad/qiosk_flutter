@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
 import '../Networking/Payments.dart';
 import '../models/payment.dart';
+import '../models/orders.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -54,7 +55,9 @@ class SignOutButton extends StatelessWidget {
         try {
           await FirebaseAuth.instance.signOut();
           final payment = Provider.of<PaymentModel>(context);
+          final orders = Provider.of<RestaurantOrders>(context);
           payment.clear();
+          orders.clear();
           user.changeUID(null, null, null, null);
         } catch (e) {
           print(e);

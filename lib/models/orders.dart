@@ -56,6 +56,10 @@ class RestaurantOrders with ChangeNotifier {
     return [..._orders];
   }
 
+  clear() {
+    _orders = [];
+  }
+
   void addOrders(orders) {
     _orders = [];
     orders.forEach((id, order) {
