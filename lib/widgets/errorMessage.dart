@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 
 
-void showError(context, e) {
+
+
+void showSuccessDialog(context, e) {
 
 showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: new Text("Error"),
+                title: new Text("Success"),
                 content: new Text(e.toString()),
                 actions: <Widget>[
                   // usually buttons at the bottom of the dialog

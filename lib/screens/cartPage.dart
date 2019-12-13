@@ -13,6 +13,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Payments.dart';
 import '../models/user.dart';
 import '../models/restaurant.dart';
+import '../widgets/errorMessage.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
@@ -179,7 +180,9 @@ class _CartPageState extends State<CartPage> with RouteAware {
       } else if (page == PageToGo.AddCard) {
         try {
           await Payments().showPaymentCard(context);
-            // pay(user, cart);
+          //show alert because of success
+          showSuccessDialog(context, "Successfully added card");
+
         } catch (error) {
           print('there was an error processing payment: ${error.toString()}');
         }

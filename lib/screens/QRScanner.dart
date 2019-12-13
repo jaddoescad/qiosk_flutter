@@ -12,6 +12,7 @@ import '../models/user.dart';
 import '../Networking/Restaurant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -119,8 +120,8 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   }
 
   Future<void> getMenuandOrders(rid) async {
-    final user = Provider.of<User>(context);
-    final data = await RestaurantNetworking.fetchMenuandOrders(rid, user.uid);
+    final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
+    final data = await RestaurantNetworking.fetchMenuandOrders(rid, firuser.uid);
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
     final restaurant = Provider.of<Restaurant>(context);
 
