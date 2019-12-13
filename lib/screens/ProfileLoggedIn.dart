@@ -5,6 +5,7 @@ import '../models/user.dart';
 import '../Networking/Payments.dart';
 import '../models/payment.dart';
 import '../models/orders.dart';
+import '../widgets/errorMessage.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -27,8 +28,9 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
             onPressed: () {
               try {
                 Payments().showPaymentCard(context);
-              } catch (e) {
-                print(e);
+              } catch (error) {
+                print(error);
+                showErrorDialog(context, 'there was an error: ${error.toString()}');
               }
             },
           ),
@@ -59,8 +61,10 @@ class SignOutButton extends StatelessWidget {
           payment.clear();
           orders.clear();
           user.changeUID(null, null, null, null);
-        } catch (e) {
-          print(e);
+        } catch (error) {
+          print(error);
+          showErrorDialog(context, 'there was an error: ${error.toString()}');
+
         }
       },
     );

@@ -3,10 +3,9 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../widgets/errorMessage.dart';
 import '../Networking/Auth.dart';
 import '../models/goToCheckout.dart';
+import '../widgets/errorMessage.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
@@ -209,6 +208,7 @@ class _SignUpPageState extends State<SignUpPage> {
         setState(() {
           loader = false;
         });
+      showErrorDialog(context, 'there was an error: ${error.toString()}');
       print(error);
       }
     }

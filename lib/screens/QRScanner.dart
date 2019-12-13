@@ -12,6 +12,7 @@ import '../Networking/Restaurant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/errorMessage.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -106,11 +107,13 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
           await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
           goToHomePage();
           // setState(() => _isloading = false);
-        } on CloudFunctionsException catch (e) {
-          print('error ${e.message}');
+        } on CloudFunctionsException catch (error) {
+          print('error ${error.message}');
+          showErrorDialog(context, 'there was an error: ${error.message.toString()}');
           setState(() => _isloading = false);
-        } catch (e) {
-          print('error ${e.toString()}');
+        } catch (error) {
+          print('error ${error.toString()}');
+          showErrorDialog(context, 'there was an error: ${error.toString()}');
           setState(() => _isloading = false);
         }
       }

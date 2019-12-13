@@ -14,6 +14,7 @@ import '../Networking/Payments.dart';
 import '../models/user.dart';
 import '../models/restaurant.dart';
 import '../widgets/errorMessage.dart';
+import '../widgets/errorMessage.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
@@ -188,6 +189,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
           });
         } catch (error) {
           print('there was an error processing payment: ${error.toString()}');
+          showErrorDialog(context, 'there was an error: ${error.toString()}');
+
         }
       } else if (page == PageToGo.Checkout) {
         setState(() {
@@ -215,6 +218,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           context);
     } catch (error) {
       print('error paying : $error');
+      showErrorDialog(context, 'there was an error: ${error.toString()}');
       setState(() {
         loader = false;
       });

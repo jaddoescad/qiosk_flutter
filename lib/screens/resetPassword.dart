@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Auth.dart';
+import '../widgets/errorMessage.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   static const routeName = '/resetPassword';
@@ -129,6 +130,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         });
       } catch (error) {
         print(error);
+        showErrorDialog(context, 'there was an error: ${error.toString()}');
         setState(() {
           loader = false;
         });

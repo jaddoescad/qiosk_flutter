@@ -42,11 +42,7 @@ class OrdersNetworking {
     await Firestore.instance
         .collection('Orders')
         .document(orderId)
-        .setData(order)
-        .catchError((error) {
-      print(error);
-      throw (error.toString());
-    });
+        .setData(order);
 
     final orderModel = Provider.of<RestaurantOrders>(context);
 

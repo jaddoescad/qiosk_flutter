@@ -175,7 +175,10 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         loader = true;
       });
-      _formKey.currentState.save(); // Save our form now.
+      _formKey.currentState.save(); 
+      
+      // Save our form now.
+      try{
       await authHandler
           .handleSignInEmail(_data.email, _data.password, context)
           .then((FirebaseUser user) async {
@@ -190,12 +193,14 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.of(context).pop();
 
-      }).catchError((e) {
+      });
+      } catch (error) {
         setState(() {
           loader = false;
         });
-        print(e);
-      });
+        print(error.toString());
+        showErrorDialog(context, 'there was an error: ${error.toString()}');
+      }
     }
   }
 }
