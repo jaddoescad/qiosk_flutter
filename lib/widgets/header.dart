@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/screens/QRScanner.dart';
 import 'package:iamrich/screens/cartPage.dart';
 
+
 class Header extends StatelessWidget {
 
   Header({this.restaurant, this.items});
