@@ -88,7 +88,7 @@ class Payments {
           amount);
       if (intentResponse.status == PaymentResponseStatus.succeeded) {
         print('success');
-        OrdersNetworking.createOrder(
+        await OrdersNetworking.createOrder(
             orderId, cart, amount, uid, 'KYnIcMxo6RaLMeIlhh9u', context, token);
       } else if (intentResponse.status == PaymentResponseStatus.failed) {
         throw ('internal error ${intentResponse.errorMessage}');

@@ -170,7 +170,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
   }
 
   void checkout(context, user, cart) async {
-
     Payments().goToPage(context).then((page) async {
       if (page == PageToGo.Auth) {
         Navigator.of(context).push(CupertinoPageRoute(
@@ -179,29 +178,46 @@ class _CartPageState extends State<CartPage> with RouteAware {
                 )));
       } else if (page == PageToGo.AddCard) {
         try {
+          setState(() {
+            loader = true;
+          });
           await Payments().showPaymentCard(context);
-          //show alert because of success
           showSuccessDialog(context, "Successfully added card");
-
+          setState(() {
+            loader = false;
+          });
         } catch (error) {
           print('there was an error processing payment: ${error.toString()}');
         }
       } else if (page == PageToGo.Checkout) {
-        pay(user, cart);
+        setState(() {
+          loader = true;
+        });
+        await pay(user, cart);
+        setState(() {
+          loader = false;
+        });
       }
     });
-
-
   }
 
-  void pay(user, Cart cart) async {
+  Future pay(user, Cart cart) async {
     final restaurant = Provider.of<Restaurant>(context);
 
     try {
-      await Payments.pay(user.uid, DateTime.now().millisecondsSinceEpoch.toString(),cart.totalAmount, "CAD", cart, restaurant.id, context);
-      print("done");
+      await Payments.pay(
+          user.uid,
+          DateTime.now().millisecondsSinceEpoch.toString(),
+          cart.totalAmount,
+          "CAD",
+          cart,
+          restaurant.id,
+          context);
     } catch (error) {
       print('error paying : $error');
+      setState(() {
+        loader = false;
+      });
     }
   }
 
