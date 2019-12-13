@@ -8,7 +8,6 @@ import '../main.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/orders.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import '../models/user.dart';
 import '../Networking/Restaurant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../constants.dart';
@@ -100,7 +99,6 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
       if (_isloading == false) {
-        print("hello");
         controller.pauseCamera();
         qrText = scanData;
         setState(() => _isloading = true);

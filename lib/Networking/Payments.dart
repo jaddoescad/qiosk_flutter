@@ -65,7 +65,7 @@ class Payments {
     return goToPage;
   }
 
-  static Future pay(uid, orderId, amount, currency, cart, r_id, context) async {
+  static Future pay(uid, orderId, amount, currency, cart, rid, context) async {
     final token = Provider.of<PaymentModel>(context).token;
 
     CloudFunctions cf = CloudFunctions();
@@ -89,7 +89,7 @@ class Payments {
       if (intentResponse.status == PaymentResponseStatus.succeeded) {
         print('success');
         await OrdersNetworking.createOrder(
-            orderId, cart, amount, uid, 'KYnIcMxo6RaLMeIlhh9u', context, token);
+            orderId, cart, amount, uid, rid, context, token);
       } else if (intentResponse.status == PaymentResponseStatus.failed) {
         throw ('internal error ${intentResponse.errorMessage}');
       } else {

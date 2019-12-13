@@ -2,11 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import '../models/restaurant.dart';
 
-Future fetchSelection() async {
+Future fetchSelection(context) async {
+  final restaurant = Provider.of<Restaurant>(context);
+  
   var document = await Firestore.instance
       .collection('Restaurants')
-      .document('KYnIcMxo6RaLMeIlhh9u')
+      .document(restaurant.id)
       .collection('Selections')
       .document('oyFRgATUnXIfR5o7dqbH')
       .get();

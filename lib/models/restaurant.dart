@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
 
 
-class Restaurant extends ChangeNotifier{
+class Restaurant extends ChangeNotifier {
   String id;
   String title;
   String imgUrl;
@@ -60,16 +59,13 @@ class Restaurant extends ChangeNotifier{
   }
 
   void loadRestaurant(_id, json)  {
-      // var document =  await Firestore.instance.collection('Restaurants').document('KYnIcMxo6RaLMeIlhh9u').get();
-      // return fromRestaurantJson(id, data);
+
         id = _id;
         title = json['title'];
         imgUrl = json['imgUrl'];
         sections = getSection(json['sections']);
 
   }
-
-
 
 }
 
