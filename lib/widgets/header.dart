@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iamrich/screens/QRScanner.dart';
 import 'package:iamrich/screens/cartPage.dart';
 
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../models/user.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Auth.dart';
 import '../widgets/errorMessage.dart';

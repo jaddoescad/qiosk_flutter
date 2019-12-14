@@ -46,6 +46,7 @@ class Auth with ChangeNotifier {
   Future handleSignUp(email, password, context, name) async {
     AuthResult result = await auth.createUserWithEmailAndPassword(
         email: email, password: password);
+    
     final userProvider = Provider.of<User>(context);
     final FirebaseUser user = result.user;
     assert(user != null);

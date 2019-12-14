@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/orders.dart';
-import '../Networking/Restaurant.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import '../models/user.dart';
 import '../models/payment.dart';
 
 class OrderPage extends StatefulWidget {

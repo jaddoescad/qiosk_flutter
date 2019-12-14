@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import '../main.dart';
 import 'package:flutter/material.dart';
 import '../screens/QRScanner.dart';
 //fetch all orders

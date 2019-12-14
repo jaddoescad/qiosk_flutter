@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:548132885352:android:0eb0444af7f07a18da3cdd",
+        "mobilesdk_app_id": "1:548132885352:android:9e80e7a5b26a5c1cda3cdd",
         "android_client_info": {
-          "package_name": "com.qiosk.qioskflutter"
+          "package_name": "qioskinc.qiosk.com.flutterqiosk"
         }
       },
       "oauth_client": [
@@ -30,6 +30,13 @@
             {
               "client_id": "548132885352-lpllbalvgl6oosbc4dhjeisq8fl1b5c0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "548132885352-eq9si92ebpof614hiublvf2f4n5dirme.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qiosk.qioskflutter"
+              }
             }
           ]
         }

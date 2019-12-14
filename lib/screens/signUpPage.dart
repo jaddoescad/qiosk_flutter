@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Auth.dart';
 import '../models/goToCheckout.dart';
@@ -21,7 +20,6 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
  
   _SignUpData _data = new _SignUpData();
-  final _auth = FirebaseAuth.instance;
   var authHandler = Auth();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   bool loader = false;

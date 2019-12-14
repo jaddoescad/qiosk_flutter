@@ -5,7 +5,6 @@ import '../widgets/ItemOverviewWidgets.dart';
 import '../models/Item.dart';
 import '../main.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:flutter/scheduler.dart';
 
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
