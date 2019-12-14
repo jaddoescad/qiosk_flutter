@@ -306,6 +306,8 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - permission_handler (4.0.0):
+    - Flutter
   - qr_code_scanner (0.0.2):
     - Flutter
     - MTBBarcodeScanner
@@ -320,6 +322,7 @@ DEPENDENCIES:
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - Flutter (from `Flutter`)
   - flutter_stripe_payment (from `.symlinks/plugins/flutter_stripe_payment/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
 
 SPEC REPOS:
@@ -365,6 +368,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_stripe_payment:
     :path: ".symlinks/plugins/flutter_stripe_payment/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
   qr_code_scanner:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
 
@@ -399,6 +404,7 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  permission_handler: 0fb88b8a3c23e31e5de45b8f1bb8b7de28cf8941
   qr_code_scanner: 16107718bdad7d708cdf6a5eacdca24b56cdf471
   Stripe: a468d5f39703807e840fdfed39572ffad0aaf053
 

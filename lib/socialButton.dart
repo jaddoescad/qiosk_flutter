@@ -23,7 +23,7 @@ class SocialButton extends StatelessWidget {
             Image.asset(image, width: 20, height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 15.0),
-              child: Text(text, style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white),),
+              child: Text(text, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white),),
             )
           ],),
             ),

@@ -69,7 +69,7 @@ class MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Qiosk',
         theme: ThemeData(
-          fontFamily: 'Roboto',
+          fontFamily: 'OpenSans',
           primaryColor: Color(0xFF365E7a),
           // accentColor: Color(0xFF365E7a)
         ),
