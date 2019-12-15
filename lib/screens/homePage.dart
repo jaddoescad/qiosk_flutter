@@ -67,17 +67,17 @@ class HomePageState extends State<HomePage>
                 Tab(
                     icon: ImageIcon(
                   AssetImage("assets/images/home.png"),
-                  size: 30,
+                  size: 25,
                 )),
                 Tab(
                     icon: ImageIcon(
                   AssetImage("assets/images/invoice.png"),
-                  size: 30,
+                  size: 25,
                 )),
                 Tab(
                     icon: ImageIcon(
                   AssetImage("assets/images/user.png"),
-                  size: 30,
+                  size: 25,
                 )),
               ],
             ),
