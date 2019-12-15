@@ -14,6 +14,7 @@ import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:core';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -106,6 +107,25 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent, //No more green
+            elevation: 0.0, //Shadow gone
+            title: Text(
+              "QIOSK",
+              style: TextStyle(fontFamily: "Avenir"),
+            ),
+            leading: new IconButton(
+              splashColor: Colors.transparent,
+              highlightColor:
+                  Colors.transparent, // makes highlight invisible too
+              icon: Image.asset(
+                'assets/images/profile.png',
+                height: 35.0,
+                width: 35.0,
+              ),
+              onPressed: () => null,
+            ),
+          ),
           body: Stack(children: <Widget>[
             Column(
               children: <Widget>[
