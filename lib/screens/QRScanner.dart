@@ -50,6 +50,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
       controller.startScanning();
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -68,10 +69,9 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
       }
     });
 
-
     controller = new QRReaderController(
-        cameras[0], ResolutionPreset.medium, [CodeFormat.qr], (dynamic value) async {
-
+        cameras[0], ResolutionPreset.medium, [CodeFormat.qr],
+        (dynamic value) async {
       print(value); // the result!
 
       if (_isloading == false) {
@@ -95,15 +95,11 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         }
       }
 
-
       // ... do something
       // wait 3 seconds then start scanning again.
       // new Future.delayed(const Duration(seconds: 3), controller.startScanning);
-
-
     });
 
-    
     controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -120,8 +116,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     super.dispose();
   }
 
-
-    void goToHomePage() {
+  void goToHomePage() {
     Navigator.of(context).push(
       CupertinoPageRoute(
           builder: (ctx) => WillPopScope(
@@ -135,7 +130,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     );
   }
 
-    Future<void> getMenuandOrders(rid) async {
+  Future<void> getMenuandOrders(rid) async {
     final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
     final data =
         await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
@@ -149,93 +144,79 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     restaurantOrders.addOrders(_orders);
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     if (!controller.value.isInitialized) {
       return new Container();
     }
-    return cameraPermission ?  qrScannerView():cameraDeniedWidget() ;
+    return cameraPermission ? qrScannerView() : cameraDeniedWidget();
   }
 
-    Scaffold cameraDeniedWidget() {
-      return Scaffold(
-          body: Container(
-            child: Center(
-              child: FlatButton(
-                child: Text('Please press to activate Camera'),
-                onPressed: () async {
-                  bool isOpened = await PermissionHandler().openAppSettings();
+  Scaffold cameraDeniedWidget() {
+    return Scaffold(
+      body: Container(
+        child: Center(
+          child: FlatButton(
+            child: Text('Please press to activate Camera'),
+            onPressed: () async {
+              bool isOpened = await PermissionHandler().openAppSettings();
 
-                  PermissionStatus permission = await PermissionHandler()
-                      .checkPermissionStatus(PermissionGroup.camera);
+              PermissionStatus permission = await PermissionHandler()
+                  .checkPermissionStatus(PermissionGroup.camera);
 
-                  if (permission == PermissionStatus.granted) {
-                    print("here");
-                    setState(() {
-                      cameraPermission = true;
-                    });
-                    // permission was granted
-                  } else {
-                    setState(() {
-                      cameraPermission = false;
-                    });
-                  }
-                },
-              ),
-            ),
+              if (permission == PermissionStatus.granted) {
+                print("here");
+                setState(() {
+                  cameraPermission = true;
+                });
+                // permission was granted
+              } else {
+                setState(() {
+                  cameraPermission = false;
+                });
+              }
+            },
           ),
-        );
-    }
+        ),
+      ),
+    );
+  }
 
-    ModalProgressHUD qrScannerView() {
+  ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent, //No more green
-            elevation: 0.0, //Shadow gone
-            title: Text(
-              "QIOSK",
-              style: TextStyle(fontFamily: "Avenir"),
-            ),
-            leading: new IconButton(
-              splashColor: Colors.transparent,
-              highlightColor:
-                  Colors.transparent, // makes highlight invisible too
-              icon: Image.asset(
-                'assets/images/profile.png',
-                height: 35.0,
-                width: 35.0,
-              ),
-              onPressed: () => null,
-            ),
-          ),
-
-
-          body: 
-          
-          Stack(children: <Widget>[
+          body: Stack(children: <Widget>[
             Column(
               children: <Widget>[
                 Expanded(
-                  child: 
-                  
-                  
-      AspectRatio(
-        aspectRatio:
-        controller.value.aspectRatio,
-        child: new QRReaderPreview(controller))
-
-
-
-
-                  
-                ),
+                    child: AspectRatio(
+                        aspectRatio: controller.value.aspectRatio,
+                        child: new QRReaderPreview(controller))),
               ],
             ),
             Container(
               height: double.infinity,
               width: double.infinity,
               color: Color(0xFF365e7a).withOpacity(0.3),
+            ),
+            AppBar(
+              backgroundColor: Colors.transparent, //No more green
+              elevation: 0.0, //Shadow gone
+              title: Text(
+                "QIOSK",
+                style: TextStyle(fontFamily: "Avenir", fontSize: 25),
+              ),
+              leading: new IconButton(
+                splashColor: Colors.transparent,
+                highlightColor:
+                    Colors.transparent, // makes highlight invisible too
+                icon: Image.asset(
+                  'assets/images/profile.png',
+                  height: 30.0,
+                  width: 30.0,
+                ),
+                onPressed: () => null,
+              ),
             ),
             Center(
               child: Opacity(
@@ -263,7 +244,6 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   //   this.controller = controller;
   //   controller.scannedDataStream.listen((scanData) async {
 
-
   //     if (_isloading == false) {
   //       controller.pauseCamera();
   //       qrText = scanData;
@@ -284,10 +264,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   //       }
   //     }
 
-
   //   });
   // }
-
-
 
 }
