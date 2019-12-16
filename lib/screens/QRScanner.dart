@@ -15,6 +15,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
+import 'dart:async';
+import 'dart:io';
+import 'package:camera/camera.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -23,14 +28,15 @@ class QRViewExample extends StatefulWidget {
 }
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  // final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
 
-  var qrText = "";
+  Timer _timer;
+  String _barcodeRead = "";
   bool _isloading = false;
-  QRViewController controller;
+  CameraController controller;
 
   @override
   void initState() {
@@ -49,6 +55,80 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         });
       }
     });
+    controller = CameraController(cameras[0], ResolutionPreset.high);
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+      _startTimer();
+    });
+  }
+
+  void _startTimer() {
+    _timer = new Timer(Duration(milliseconds: 500), _timerElapsed);
+  }
+
+  void _stopTimer() {
+    if (_timer != null) {
+      _timer.cancel();
+      _timer = null;
+    }
+  }
+
+  Future<void> _timerElapsed() async {
+    _stopTimer();
+
+    // Code to capture image and read barcode here...
+    File file = await _takePicture();
+    await _readBarcode(file);
+
+    _startTimer();
+  }
+
+  Future<File> _takePicture() async {
+    final Directory extDir = await getApplicationDocumentsDirectory();
+    final String dirPath = '${extDir.path}/Pictures/barcode';
+    await Directory(dirPath).create(recursive: true);
+    final File file = new File('$dirPath/barcode.jpg');
+
+    if (await file.exists()) await file.delete();
+
+    await controller.takePicture(file.path);
+    return file;
+  }
+
+  Future _readBarcode(File file) async {
+    FirebaseVisionImage firebaseImage = FirebaseVisionImage.fromFile(file);
+    final BarcodeDetector barcodeDetector =
+        FirebaseVision.instance.barcodeDetector();
+
+    final List<Barcode> barcodes =
+        await barcodeDetector.detectInImage(firebaseImage);
+
+    _barcodeRead = "";
+    for (Barcode barcode in barcodes) {
+      _barcodeRead += barcode.rawValue + ", ";
+    }
+
+    if (_isloading == false && _barcodeRead != "") {
+      // controller.stopImageStream();
+      setState(() => _isloading = true);
+      try {
+        await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
+        goToHomePage();
+        // setState(() => _isloading = false);
+      } on CloudFunctionsException catch (error) {
+        print('error ${error.message}');
+        showErrorDialog(
+            context, 'there was an error: ${error.message.toString()}');
+        setState(() => _isloading = false);
+      } catch (error) {
+        print('error ${error.toString()}');
+        showErrorDialog(context, 'there was an error: ${error.toString()}');
+        setState(() => _isloading = false);
+      }
+    }
   }
 
   @override
@@ -66,9 +146,9 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   void didPopNext() {
     setState(() => _isloading = false);
 
-    if (controller != null) {
-      controller.resumeCamera();
-    }
+    // if (controller != null) {
+    //   controller.stopImageStream();
+    // }
   }
 
   @override
@@ -107,35 +187,38 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent, //No more green
-            elevation: 0.0, //Shadow gone
-            title: Text(
-              "QIOSK",
-              style: TextStyle(fontFamily: "Avenir"),
-            ),
-            leading: new IconButton(
-              splashColor: Colors.transparent,
-              highlightColor:
-                  Colors.transparent, // makes highlight invisible too
-              icon: Image.asset(
-                'assets/images/profile.png',
-                height: 35.0,
-                width: 35.0,
-              ),
-              onPressed: () => null,
-            ),
-          ),
           body: Stack(children: <Widget>[
             Column(
               children: <Widget>[
-                Expanded(
-                  child: QRView(
-                    key: qrKey,
-                    onQRViewCreated: _onQRViewCreated,
-                  ),
-                ),
+                Expanded(child: CameraPreview(controller))
+
+                // child: QRView(
+                //   key: qrKey,
+                //   onQRViewCreated: _onQRViewCreated,
+                // ),
               ],
+            ),
+            AppBar(
+              backgroundColor: Colors.transparent, //No more green
+              elevation: 0.0, //Shadow gone
+              centerTitle: true,
+              // title: Text(
+              //   "QIOSK",
+            title: Image.asset('assets/images/logoappbar.png', height: 20,),
+            // Text('QIOSK',style: TextStyle(fontFamily: 'Avenir')),
+                // style: TextStyle(fontFamily: "Avenir"),
+              // ),
+              leading: new IconButton(
+                splashColor: Colors.transparent,
+                highlightColor:
+                    Colors.transparent, // makes highlight invisible too
+                icon: Image.asset(
+                  'assets/images/profile.png',
+                  height: 30.0,
+                  width: 30.0,
+                ),
+                onPressed: () => null,
+              ),
             ),
             Container(
               height: double.infinity,
@@ -162,31 +245,6 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         color: Colors.white,
         progressIndicator: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(kMainColor)));
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) async {
-      if (_isloading == false) {
-        controller.pauseCamera();
-        qrText = scanData;
-        setState(() => _isloading = true);
-        try {
-          await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
-          goToHomePage();
-          // setState(() => _isloading = false);
-        } on CloudFunctionsException catch (error) {
-          print('error ${error.message}');
-          showErrorDialog(
-              context, 'there was an error: ${error.message.toString()}');
-          setState(() => _isloading = false);
-        } catch (error) {
-          print('error ${error.toString()}');
-          showErrorDialog(context, 'there was an error: ${error.toString()}');
-          setState(() => _isloading = false);
-        }
-      }
-    });
   }
 
   Future<void> getMenuandOrders(rid) async {
