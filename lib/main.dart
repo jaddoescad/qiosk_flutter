@@ -73,7 +73,7 @@ class MyAppState extends State<MyApp> {
           primaryColor: Color(0xFF365E7a),
           // accentColor: Color(0xFF365E7a)
         ),
-        home: Splash(),
+        home: HomePage(),
         navigatorObservers: [routeObserver],
         routes: {
           // QRViewExample.routeName: (ctx) => QRViewExample(),

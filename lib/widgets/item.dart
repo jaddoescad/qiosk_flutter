@@ -9,9 +9,9 @@ class ItemContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: GestureDetector(
+    return Container(
+      color: Colors.white,
+      child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
             CupertinoPageRoute(
@@ -20,9 +20,96 @@ class ItemContainer extends StatelessWidget {
         },
         child: Container(
           padding:
-              EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0, bottom: 15.0),
+              EdgeInsets.only(left: 20.0, right: 20.0, top: 15.0, bottom: 15.0),
           // margin: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20, top: 20),
-          child: Row(
+          child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(item.imgUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                height: 150,
+                width: double.infinity,
+            ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              height: 40,
+              width: double.infinity,
+              child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        item.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1),
+                      ),
+                    ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              width: double.infinity,
+              height: 40,
+              child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        item.description,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 1),
+                      ),
+                    ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              width: double.infinity,
+              height: 40,
+              child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                      '\$ ${item.price.toStringAsFixed(2)}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    ),
+            ),
+          ],),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+/*  Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
@@ -38,7 +125,7 @@ class ItemContainer extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                             fontSize: 15,
-                            color: Color(0xFF365e7a),
+                            color: Colors.black,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1),
                       ),
@@ -51,7 +138,7 @@ class ItemContainer extends StatelessWidget {
                         maxLines: 2,
                         style: TextStyle(
                             fontSize: 13,
-                            color: Color(0xFF365e7a),
+                            color: Colors.black,
                             fontWeight: FontWeight.w300,
                             letterSpacing: 1),
                       ),
@@ -62,7 +149,7 @@ class ItemContainer extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF365e7a),
+                          color: Colors.black,
                           fontWeight: FontWeight.w500),
                     ),
                     //         ),
@@ -81,18 +168,4 @@ class ItemContainer extends StatelessWidget {
                 width: 95,
               ),
             ],
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              bottom: BorderSide(
-                color: Color(0xFF365e7a),
-                width: 0.5,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+          ), */
