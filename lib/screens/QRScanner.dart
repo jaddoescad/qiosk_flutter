@@ -47,6 +47,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
     if (controller != null) {
       // controller.resumeCamera();
+      controller.startScanning();
     }
   }
   @override
@@ -74,6 +75,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
       print(value); // the result!
 
       if (_isloading == false) {
+        controller.stopScanning();
         // controller.pauseCamera();
         // qrText = scanData;
         setState(() => _isloading = true);
@@ -96,8 +98,12 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
       // ... do something
       // wait 3 seconds then start scanning again.
-      new Future.delayed(const Duration(seconds: 3), controller.startScanning);
+      // new Future.delayed(const Duration(seconds: 3), controller.startScanning);
+
+
     });
+
+    
     controller.initialize().then((_) {
       if (!mounted) {
         return;
