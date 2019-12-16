@@ -16,11 +16,15 @@ import './models/restaurant.dart';
 import './models/orders.dart';
 import './models/payment.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
+import 'package:fast_qr_reader_view/fast_qr_reader_view.dart';
+import 'package:iamrich/Networking/Auth.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+List<CameraDescription> cameras;
 
-void main() {
+Future<Null> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   // debugPaintSizeEnabled = true; //         <--- enable visual rendering
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -36,6 +40,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   @override
   void initState() {
+    Auth().checkIfUserExists(context);
     super.initState();
     FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
   }

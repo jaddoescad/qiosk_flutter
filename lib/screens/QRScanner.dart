@@ -3,7 +3,6 @@ import 'package:iamrich/Networking/Auth.dart';
 import 'package:iamrich/models/restaurant.dart';
 import 'package:iamrich/screens/homePage.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/orders.dart';
@@ -15,6 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
+import 'package:fast_qr_reader_view/fast_qr_reader_view.dart';
+import 'dart:async';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -23,34 +24,12 @@ class QRViewExample extends StatefulWidget {
 }
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  QRReaderController controller;
+  var qrText = "";
+  bool _isloading = false;
   static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
-
-  var qrText = "";
-  bool _isloading = false;
-  QRViewController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    Auth().checkIfUserExists(context);
-    _permissionHandler
-        .requestPermissions([PermissionGroup.camera]).then((result) {
-      if (result[PermissionGroup.camera] == PermissionStatus.granted) {
-        setState(() {
-          cameraPermission = true;
-        });
-        // permission was granted
-      } else {
-        setState(() {
-          cameraPermission = false;
-        });
-      }
-    });
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -67,44 +46,142 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     setState(() => _isloading = false);
 
     if (controller != null) {
-      controller.resumeCamera();
+      // controller.resumeCamera();
     }
+  }
+  @override
+  void initState() {
+    super.initState();
+
+    _permissionHandler
+        .requestPermissions([PermissionGroup.camera]).then((result) {
+      if (result[PermissionGroup.camera] == PermissionStatus.granted) {
+        setState(() {
+          cameraPermission = true;
+        });
+        // permission was granted
+      } else {
+        setState(() {
+          cameraPermission = false;
+        });
+      }
+    });
+
+
+    controller = new QRReaderController(
+        cameras[0], ResolutionPreset.medium, [CodeFormat.qr], (dynamic value) async {
+
+      print(value); // the result!
+
+      if (_isloading == false) {
+        // controller.pauseCamera();
+        // qrText = scanData;
+        setState(() => _isloading = true);
+        try {
+          await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
+          goToHomePage();
+          // setState(() => _isloading = false);
+        } on CloudFunctionsException catch (error) {
+          print('error ${error.message}');
+          showErrorDialog(
+              context, 'there was an error: ${error.message.toString()}');
+          setState(() => _isloading = false);
+        } catch (error) {
+          print('error ${error.toString()}');
+          showErrorDialog(context, 'there was an error: ${error.toString()}');
+          setState(() => _isloading = false);
+        }
+      }
+
+
+      // ... do something
+      // wait 3 seconds then start scanning again.
+      new Future.delayed(const Duration(seconds: 3), controller.startScanning);
+    });
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+      controller.startScanning();
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return cameraPermission
-        ? qrScannerView()
-        : Scaffold(
-            body: Container(
-              child: Center(
-                child: FlatButton(
-                  child: Text('Please press to activate Camera'),
-                  onPressed: () async {
-                    bool isOpened = await PermissionHandler().openAppSettings();
-
-                    PermissionStatus permission = await PermissionHandler()
-                        .checkPermissionStatus(PermissionGroup.camera);
-
-                    if (permission == PermissionStatus.granted) {
-                      print("here");
-                      setState(() {
-                        cameraPermission = true;
-                      });
-                      // permission was granted
-                    } else {
-                      setState(() {
-                        cameraPermission = false;
-                      });
-                    }
-                  },
-                ),
-              ),
-            ),
-          );
+  void dispose() {
+    controller?.dispose();
+    routeObserver.unsubscribe(this);
+    super.dispose();
   }
 
-  ModalProgressHUD qrScannerView() {
+
+    void goToHomePage() {
+    Navigator.of(context).push(
+      CupertinoPageRoute(
+          builder: (ctx) => WillPopScope(
+              onWillPop: () async {
+                if (Navigator.of(context).userGestureInProgress)
+                  return false;
+                else
+                  return true;
+              },
+              child: HomePage(key: myTabbedPageKey))),
+    );
+  }
+
+    Future<void> getMenuandOrders(rid) async {
+    final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
+    final data =
+        await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
+    final restaurantOrders = Provider.of<RestaurantOrders>(context);
+    final restaurant = Provider.of<Restaurant>(context);
+
+    final menu = data[0];
+    final _orders = data[1];
+
+    restaurant.loadRestaurant(rid, menu);
+    restaurantOrders.addOrders(_orders);
+  }
+
+    @override
+  Widget build(BuildContext context) {
+    if (!controller.value.isInitialized) {
+      return new Container();
+    }
+    return cameraPermission ?  qrScannerView():cameraDeniedWidget() ;
+  }
+
+    Scaffold cameraDeniedWidget() {
+      return Scaffold(
+          body: Container(
+            child: Center(
+              child: FlatButton(
+                child: Text('Please press to activate Camera'),
+                onPressed: () async {
+                  bool isOpened = await PermissionHandler().openAppSettings();
+
+                  PermissionStatus permission = await PermissionHandler()
+                      .checkPermissionStatus(PermissionGroup.camera);
+
+                  if (permission == PermissionStatus.granted) {
+                    print("here");
+                    setState(() {
+                      cameraPermission = true;
+                    });
+                    // permission was granted
+                  } else {
+                    setState(() {
+                      cameraPermission = false;
+                    });
+                  }
+                },
+              ),
+            ),
+          ),
+        );
+    }
+
+    ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
           appBar: AppBar(
@@ -126,14 +203,26 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
               onPressed: () => null,
             ),
           ),
-          body: Stack(children: <Widget>[
+
+
+          body: 
+          
+          Stack(children: <Widget>[
             Column(
               children: <Widget>[
                 Expanded(
-                  child: QRView(
-                    key: qrKey,
-                    onQRViewCreated: _onQRViewCreated,
-                  ),
+                  child: 
+                  
+                  
+      AspectRatio(
+        aspectRatio:
+        controller.value.aspectRatio,
+        child: new QRReaderPreview(controller))
+
+
+
+
+                  
                 ),
               ],
             ),
@@ -164,63 +253,35 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
             valueColor: AlwaysStoppedAnimation<Color>(kMainColor)));
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) async {
-      if (_isloading == false) {
-        controller.pauseCamera();
-        qrText = scanData;
-        setState(() => _isloading = true);
-        try {
-          await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
-          goToHomePage();
-          // setState(() => _isloading = false);
-        } on CloudFunctionsException catch (error) {
-          print('error ${error.message}');
-          showErrorDialog(
-              context, 'there was an error: ${error.message.toString()}');
-          setState(() => _isloading = false);
-        } catch (error) {
-          print('error ${error.toString()}');
-          showErrorDialog(context, 'there was an error: ${error.toString()}');
-          setState(() => _isloading = false);
-        }
-      }
-    });
-  }
+  // void _onQRViewCreated(QRViewController controller) {
+  //   this.controller = controller;
+  //   controller.scannedDataStream.listen((scanData) async {
 
-  Future<void> getMenuandOrders(rid) async {
-    final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
-    final data =
-        await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
-    final restaurantOrders = Provider.of<RestaurantOrders>(context);
-    final restaurant = Provider.of<Restaurant>(context);
 
-    final menu = data[0];
-    final _orders = data[1];
+  //     if (_isloading == false) {
+  //       controller.pauseCamera();
+  //       qrText = scanData;
+  //       setState(() => _isloading = true);
+  //       try {
+  //         await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
+  //         goToHomePage();
+  //         // setState(() => _isloading = false);
+  //       } on CloudFunctionsException catch (error) {
+  //         print('error ${error.message}');
+  //         showErrorDialog(
+  //             context, 'there was an error: ${error.message.toString()}');
+  //         setState(() => _isloading = false);
+  //       } catch (error) {
+  //         print('error ${error.toString()}');
+  //         showErrorDialog(context, 'there was an error: ${error.toString()}');
+  //         setState(() => _isloading = false);
+  //       }
+  //     }
 
-    restaurant.loadRestaurant(rid, menu);
-    restaurantOrders.addOrders(_orders);
-  }
 
-  void goToHomePage() {
-    Navigator.of(context).push(
-      CupertinoPageRoute(
-          builder: (ctx) => WillPopScope(
-              onWillPop: () async {
-                if (Navigator.of(context).userGestureInProgress)
-                  return false;
-                else
-                  return true;
-              },
-              child: HomePage(key: myTabbedPageKey))),
-    );
-  }
+  //   });
+  // }
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    routeObserver.unsubscribe(this);
-    super.dispose();
-  }
+
+
 }
