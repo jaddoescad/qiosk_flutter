@@ -39,6 +39,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
 
   restaurant.sections.forEach((final section) {
     myTabs.add(Tab(
+      
         child: Container(
           padding: EdgeInsets.only(left: 15.0, right: 15.0),
           height: 25,
@@ -110,11 +111,14 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
             tabs: myTabs,
             indicator: BubbleTabIndicator(
               indicatorRadius: 20.0,
-              insets: EdgeInsets.symmetric(horizontal: 15.0),
-              indicatorHeight: 25.0,
+              // insets: EdgeInsets.symmetric(horizontal: 15.0),
+              indicatorHeight: 27.0,
+              // padding: EdgeInsets.all(100),
               indicatorColor: Colors.black,
               tabBarIndicatorSize: TabBarIndicatorSize.tab,
             ),
+
+            
           ),
           ),
           Expanded(
