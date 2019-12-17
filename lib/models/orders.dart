@@ -78,7 +78,7 @@ class RestaurantOrders with ChangeNotifier {
     _orders.add(order);
     //sort orders here
     if (dismiss == true) {
-    MyAppState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
+    QRViewExampleState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
     }
     notifyListeners();
   }

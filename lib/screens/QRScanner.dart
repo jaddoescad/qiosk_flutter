@@ -29,7 +29,7 @@ class QRViewExample extends StatefulWidget {
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
   // final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  // static final myTabbedPageKey = new GlobalKey<HomePageState>();
+  static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
 
@@ -182,11 +182,6 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
             Column(
               children: <Widget>[
                 Expanded(child: CameraPreview(controller))
-
-                // child: QRView(
-                //   key: qrKey,
-                //   onQRViewCreated: _onQRViewCreated,
-                // ),
               ],
             ),
             AppBar(
@@ -265,7 +260,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                 else
                   return true;
               },
-              child: HomePage())),
+              child: HomePage(key: myTabbedPageKey))),
     );
   }
 
