@@ -46,7 +46,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
       
         child: Container(
           padding: EdgeInsets.only(left: 15.0, right: 15.0),
-          height: 25,
+          height: 35,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
             color: Colors.transparent,
@@ -57,7 +57,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
           ),          
           child: Align(
             alignment: Alignment.center,
-            child: Text(section.title),
+            child: Text(section.title, style: TextStyle(fontWeight: FontWeight.w400),),
           ),
         ),
       ));
@@ -95,36 +95,41 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
             minWidth: 17,
             minHeight: 17,
             ),
-            child: Text(cart.items.values.length.toString(), style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500), textAlign: TextAlign.center,),
+            child: Text(cart.items.values.length.toString(), style: TextStyle(color: Colors.white, fontSize: 13, fontFamily: 'Roboto',fontWeight: FontWeight.w500), textAlign: TextAlign.center,),
             ),
             ) : Container()
           ],
         ),
         ],
-        title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: Colors.white,),),
+        title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18, color: Colors.white),),
         ),
         body: Column(children: <Widget>[
-          Container(
-          color: Colors.white,
-          width: double.infinity,
-          child: TabBar(
-            indicatorSize: TabBarIndicatorSize.tab,
-            isScrollable: true,
-            labelColor: Colors.white,
-            unselectedLabelColor: kMainColor,
-            tabs: myTabs,
-            indicator: BubbleTabIndicator(
-              indicatorRadius: 20.0,
-              // insets: EdgeInsets.symmetric(horizontal: 15.0),
-              indicatorHeight: 27.0,
-              // padding: EdgeInsets.all(100),
-              indicatorColor: kMainColor,
-              tabBarIndicatorSize: TabBarIndicatorSize.tab,
-            ),
+          
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Container(
+            color: Colors.white,
+            width: double.infinity,
+            child: TabBar(
+              indicatorSize: TabBarIndicatorSize.tab,
+              isScrollable: true,
+              labelColor: Colors.white,
+              unselectedLabelColor: kMainColor,
+              tabs: myTabs,
+              indicator: BubbleTabIndicator(
+                indicatorRadius: 20.0,
+                // insets: EdgeInsets.symmetric(horizontal: 15.0),
+                indicatorHeight: 37.0,
+                // padding: EdgeInsets.all(100),
+                indicatorColor: kMainColor,
+                tabBarIndicatorSize: TabBarIndicatorSize.tab,
+              ),
 
-            
+              
+            ),
+            ),
           ),
-          ),
+          Divider(),
           Expanded(
             flex: 1,
             child: TabBarView(

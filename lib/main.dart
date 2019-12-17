@@ -77,7 +77,7 @@ class MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Qiosk',
         theme: ThemeData(
-          fontFamily: 'OpenSans',
+          fontFamily: 'Avenir',
           primaryColor: kMainColor,
           // accentColor: Color(0xFF365E7a)
         ),
