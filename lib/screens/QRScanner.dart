@@ -1,9 +1,12 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:iamrich/Networking/Auth.dart';
 import 'package:iamrich/models/restaurant.dart';
 import 'package:iamrich/screens/homePage.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'dart:ui';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/orders.dart';
@@ -16,10 +19,6 @@ import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
 import 'dart:async';
-import 'dart:io';
-import 'package:camera/camera.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -28,20 +27,22 @@ class QRViewExample extends StatefulWidget {
 }
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
-  // final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
 
-  Timer _timer;
-  String _barcodeRead = "";
   bool _isloading = false;
-  CameraController controller;
+  BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
+  final _scanKey = GlobalKey<CameraMlVisionState>();
 
   @override
   void initState() {
     super.initState();
-    Auth().checkIfUserExists(context);
+    try {
+      Auth().checkIfUserExists(context);
+    } catch (e) {
+      print(e);
+    }
     _permissionHandler
         .requestPermissions([PermissionGroup.camera]).then((result) {
       if (result[PermissionGroup.camera] == PermissionStatus.granted) {
@@ -55,67 +56,27 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         });
       }
     });
-
-  startImageStream();
   }
 
-  void startImageStream() {
-    controller = CameraController(cameras[0], ResolutionPreset.medium);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-
-      controller.startImageStream((CameraImage availableImage)  {
-             _readBarcode(availableImage);
-      });
-
-      setState(() {});
-    });
-  }
-
-  Future _readBarcode(CameraImage availableImage) async {
-
-  BarcodeDetector _barcodeDetector = FirebaseVision.instance.barcodeDetector(BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.qrCode));
-    final FirebaseVisionImageMetadata metadata = FirebaseVisionImageMetadata(
-      rawFormat: availableImage.format.raw,
-      size: Size(availableImage.width.toDouble(), availableImage.height.toDouble()),
-      planeData: availableImage.planes.map((currentPlane) => FirebaseVisionImagePlaneMetadata(
-        bytesPerRow: currentPlane.bytesPerRow,
-        height: currentPlane.height,
-        width: currentPlane.width
-        )).toList(),
-      rotation: ImageRotation.rotation0,
-    );
-
-    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromBytes(availableImage.planes[0].bytes, metadata);
-
-    // final FirebaseVisionImage firebaseImage = FirebaseVisionImage.fromBytes(availableImage.planes[0].bytes, null);
-      List barCodes = await _barcodeDetector.detectInImage(visionImage);
-
-
-    _barcodeRead = "";
-    for (Barcode barcode in barCodes) {
-      _barcodeRead += barcode.rawValue + ", ";
-    }
-
-    if (_isloading == false && _barcodeRead != "" ) {
-      controller.stopImageStream();
+  Future _readBarcode(qrValue) async {
+    if (_isloading == false) {
       setState(() => _isloading = true);
       try {
         await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
-        goToHomePage();
+        Future.delayed(const Duration(milliseconds: 500), () {
+          goToHomePage();
+        });
         // setState(() => _isloading = false);
       } on CloudFunctionsException catch (error) {
         print('error ${error.message}');
         showErrorDialog(
             context, 'there was an error: ${error.message.toString()}');
-        startImageStream();
+        // startImageStream();
         setState(() => _isloading = false);
       } catch (error) {
         print('error ${error.toString()}');
         showErrorDialog(context, 'there was an error: ${error.toString()}');
-        startImageStream();
+        // startImageStream();
         setState(() => _isloading = false);
       }
     }
@@ -128,23 +89,13 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   }
 
   @override
-  void didPush() {
-    // Route was pushed onto navigator and is now topmost route.
-  }
-
-  @override
   void didPopNext() {
-    startImageStream();
     setState(() => _isloading = false);
-
-    // if (controller != null) {
-    //   controller.stopImageStream();
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    return cameraPermission
+    return mounted
         ? qrScannerView()
         : Scaffold(
             body: Container(
@@ -175,28 +126,41 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
           );
   }
 
+
+
+
   ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
-          body: Stack(children: <Widget>[
-            Column(
-              children: <Widget>[
-                Expanded(child: CameraPreview(controller))
-              ],
+          body: Stack(fit: StackFit.expand, children: <Widget>[
+            CameraMlVision<List<Barcode>>(
+              
+              resolution: ResolutionPreset.medium,
+              key: _scanKey,
+
+              detector: detector.detectInImage,
+              onResult: (barcodes) {
+                if (barcodes == null ||
+                    barcodes.isEmpty ||
+                    !mounted ||
+                    _isloading) {
+                  return;
+                }
+                _readBarcode(barcodes.first.displayValue);
+              },
+              onDispose: () {
+                print("disposed");
+                detector.close();
+              },
             ),
             AppBar(
               backgroundColor: Colors.transparent, //No more green
               elevation: 0.0, //Shadow gone
               centerTitle: true,
-              // title: Text(
-              //   "QIOSK",
               title: Image.asset(
                 'assets/images/logoappbar.png',
                 height: 20,
               ),
-              // Text('QIOSK',style: TextStyle(fontFamily: 'Avenir')),
-              // style: TextStyle(fontFamily: "Avenir"),
-              // ),
               leading: new IconButton(
                 splashColor: Colors.transparent,
                 highlightColor:
@@ -208,11 +172,6 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                 ),
                 onPressed: () => null,
               ),
-            ),
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: Color(0xFF365e7a).withOpacity(0.3),
             ),
             Center(
               child: Opacity(
@@ -267,7 +226,8 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   @override
   void dispose() {
     super.dispose();
-    controller?.dispose();
     routeObserver.unsubscribe(this);
   }
 }
+
+

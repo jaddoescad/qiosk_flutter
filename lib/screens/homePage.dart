@@ -35,7 +35,6 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    Auth().checkIfUserExists(context);
     tabController = new TabController(vsync: this, length: 3);
   }
 
