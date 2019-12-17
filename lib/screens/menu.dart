@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../models/restaurant.dart';
 import '../widgets/itemList.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
-import '../widgets/header.dart';
-import '../widgets/navbar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:iamrich/screens/cartPage.dart';
 
 class Menu extends StatefulWidget {
 
@@ -39,7 +39,22 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
 
   restaurant.sections.forEach((final section) {
     myTabs.add(Tab(
-        text: section.title
+        child: Container(
+          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+          height: 25,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Colors.transparent,
+            border: Border.all(
+                color: Colors.black,
+                width: 1,
+            ),
+          ),          
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(section.title),
+          ),
+        ),
       ));
     });
 
@@ -50,6 +65,37 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
         appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
+        leading: IconButton(icon: ImageIcon(AssetImage("assets/images/photo-camera.png"), size: 25, color: Colors.white,), onPressed: () {
+                Navigator.of(context).pop();
+              }                   
+            ),
+        actions: <Widget>[
+          Stack(
+          children: <Widget>[
+          IconButton(icon: ImageIcon(AssetImage("assets/images/cart.png"), size: 25, color: Colors.white,), onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(builder: (ctx) => CartPage()),
+                          );
+                        }),
+          cart.items.values.length > 0 ? Positioned(
+            right: 7,
+            top: 3,
+            child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(6),
+                ),
+            constraints: BoxConstraints(
+            minWidth: 15,
+            minHeight: 15,
+            ),
+            child: Text(cart.items.values.length.toString(), style: TextStyle(color: Colors.white, fontSize: 12,), textAlign: TextAlign.center,),
+            ),
+            ) : Container()
+          ],
+        ),
+        ],
         title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: Colors.white,),),
         ),
         body: Column(children: <Widget>[
@@ -63,6 +109,8 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
             unselectedLabelColor: Colors.black,
             tabs: myTabs,
             indicator: BubbleTabIndicator(
+              indicatorRadius: 20.0,
+              insets: EdgeInsets.symmetric(horizontal: 15.0),
               indicatorHeight: 25.0,
               indicatorColor: Colors.black,
               tabBarIndicatorSize: TabBarIndicatorSize.tab,
@@ -81,10 +129,3 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
         ),
       );
 }
-
-     //     headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-     //       return <Widget>[
-      //        Header(restaurant: restaurant, items: cart.items),
-    //          NavBar(sections: restaurant.sections),
-    //        ];
-    //      },
