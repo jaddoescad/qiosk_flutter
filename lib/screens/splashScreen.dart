@@ -4,6 +4,8 @@ import '../util/helper.dart';
 
 
 class Splash extends StatefulWidget {
+  const Splash({Key key}) : super(key: key);
+  
   @override
   _Splash createState() => new _Splash();
 }

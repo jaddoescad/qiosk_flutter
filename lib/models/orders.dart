@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../screens/QRScanner.dart';
+import '../main.dart';
 //fetch all orders
 //create order
 //listen to change in orders
@@ -77,7 +78,7 @@ class RestaurantOrders with ChangeNotifier {
     _orders.add(order);
     //sort orders here
     if (dismiss == true) {
-    QRViewExampleState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
+    MyAppState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
     }
     notifyListeners();
   }

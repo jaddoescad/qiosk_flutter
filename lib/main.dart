@@ -20,6 +20,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:camera/camera.dart';
 
+import 'screens/splashScreen.dart';
+
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 List<CameraDescription> cameras;
@@ -40,6 +42,8 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  static final myTabbedPageKey = new GlobalKey<HomePageState>();
+
   @override
   void initState() {
     super.initState();
@@ -79,7 +83,7 @@ class MyAppState extends State<MyApp> {
           primaryColor: Color(0xFF365E7a),
           // accentColor: Color(0xFF365E7a)
         ),
-        home: HomePage(),
+        home: Splash(key: myTabbedPageKey),
         navigatorObservers: [routeObserver],
         routes: {
           // QRViewExample.routeName: (ctx) => QRViewExample(),

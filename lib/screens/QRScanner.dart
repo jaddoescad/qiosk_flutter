@@ -29,7 +29,7 @@ class QRViewExample extends StatefulWidget {
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
   // final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  static final myTabbedPageKey = new GlobalKey<HomePageState>();
+  // static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
 
@@ -55,64 +55,52 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         });
       }
     });
-    controller = CameraController(cameras[0], ResolutionPreset.high);
+
+  startImageStream();
+  }
+
+  void startImageStream() {
+    controller = CameraController(cameras[0], ResolutionPreset.medium);
     controller.initialize().then((_) {
       if (!mounted) {
         return;
       }
+
+      controller.startImageStream((CameraImage availableImage)  {
+             _readBarcode(availableImage);
+      });
+
       setState(() {});
-      _startTimer();
     });
   }
 
-  void _startTimer() {
-    _timer = new Timer(Duration(milliseconds: 500), _timerElapsed);
-  }
+  Future _readBarcode(CameraImage availableImage) async {
 
-  void _stopTimer() {
-    if (_timer != null) {
-      _timer.cancel();
-      _timer = null;
-    }
-  }
+  BarcodeDetector _barcodeDetector = FirebaseVision.instance.barcodeDetector(BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.qrCode));
+    final FirebaseVisionImageMetadata metadata = FirebaseVisionImageMetadata(
+      rawFormat: availableImage.format.raw,
+      size: Size(availableImage.width.toDouble(), availableImage.height.toDouble()),
+      planeData: availableImage.planes.map((currentPlane) => FirebaseVisionImagePlaneMetadata(
+        bytesPerRow: currentPlane.bytesPerRow,
+        height: currentPlane.height,
+        width: currentPlane.width
+        )).toList(),
+      rotation: ImageRotation.rotation0,
+    );
 
-  Future<void> _timerElapsed() async {
-    _stopTimer();
+    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromBytes(availableImage.planes[0].bytes, metadata);
 
-    // Code to capture image and read barcode here...
-    File file = await _takePicture();
-    await _readBarcode(file);
+    // final FirebaseVisionImage firebaseImage = FirebaseVisionImage.fromBytes(availableImage.planes[0].bytes, null);
+      List barCodes = await _barcodeDetector.detectInImage(visionImage);
 
-    _startTimer();
-  }
-
-  Future<File> _takePicture() async {
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Pictures/barcode';
-    await Directory(dirPath).create(recursive: true);
-    final File file = new File('$dirPath/barcode.jpg');
-
-    if (await file.exists()) await file.delete();
-
-    await controller.takePicture(file.path);
-    return file;
-  }
-
-  Future _readBarcode(File file) async {
-    FirebaseVisionImage firebaseImage = FirebaseVisionImage.fromFile(file);
-    final BarcodeDetector barcodeDetector =
-        FirebaseVision.instance.barcodeDetector();
-
-    final List<Barcode> barcodes =
-        await barcodeDetector.detectInImage(firebaseImage);
 
     _barcodeRead = "";
-    for (Barcode barcode in barcodes) {
+    for (Barcode barcode in barCodes) {
       _barcodeRead += barcode.rawValue + ", ";
     }
 
-    if (_isloading == false && _barcodeRead != "") {
-      // controller.stopImageStream();
+    if (_isloading == false && _barcodeRead != "" ) {
+      controller.stopImageStream();
       setState(() => _isloading = true);
       try {
         await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
@@ -122,10 +110,12 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         print('error ${error.message}');
         showErrorDialog(
             context, 'there was an error: ${error.message.toString()}');
+        startImageStream();
         setState(() => _isloading = false);
       } catch (error) {
         print('error ${error.toString()}');
         showErrorDialog(context, 'there was an error: ${error.toString()}');
+        startImageStream();
         setState(() => _isloading = false);
       }
     }
@@ -144,7 +134,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   void didPopNext() {
-    Future.delayed(const Duration(milliseconds: 500), () {});
+    startImageStream();
     setState(() => _isloading = false);
 
     // if (controller != null) {
@@ -275,14 +265,14 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                 else
                   return true;
               },
-              child: HomePage(key: myTabbedPageKey))),
+              child: HomePage())),
     );
   }
 
   @override
   void dispose() {
+    super.dispose();
     controller?.dispose();
     routeObserver.unsubscribe(this);
-    super.dispose();
   }
 }

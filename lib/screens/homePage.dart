@@ -7,14 +7,9 @@ import '../screens/ProfileNotLoggedIn.dart';
 import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
-import 'package:iamrich/models/restaurant.dart';
-import '../models/orders.dart';
-import '../Networking/Restaurant.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
   static const routeName = '/HomePage';
  
   @override
@@ -38,22 +33,10 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
     Auth().checkIfUserExists(context);
     tabController = new TabController(vsync: this, length: 3);
   }
-  Future<void> getMenuandOrders(rid) async {
-    final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
-    final data = await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
-    final restaurantOrders = Provider.of<RestaurantOrders>(context);
-    final restaurant = Provider.of<Restaurant>(context);
 
-    final menu = data[0];
-    final _orders = data[1];
-
-    restaurant.loadRestaurant(rid, menu);
-    restaurantOrders.addOrders(_orders);
-  }
   @override
   void dispose() {
     tabController.dispose();
