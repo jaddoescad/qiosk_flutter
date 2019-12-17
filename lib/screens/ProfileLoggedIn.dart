@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
 import '../Networking/Payments.dart';
-import '../models/payment.dart';
-import '../models/orders.dart';
+import 'package:flutter/cupertino.dart';
 import '../widgets/errorMessage.dart';
+import '../screens/account.dart';
+import '../screens/wallet.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -20,53 +20,54 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
     final user = Provider.of<User>(context, listen: false);
     return Scaffold(
       key: _scaffoldKey,
-      body: Row(
+      appBar: AppBar(
+        title: Text("Profile"),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
+      body: ListView(
         children: <Widget>[
-          Divider(),
           RaisedButton(
-            child: Text("Create Token with Card Form"),
+            child: Text("Account"),
+            onPressed: () {
+                Navigator.of(context).push(
+                 CupertinoPageRoute(
+            builder: (ctx) => Account()
+                
+                
+                )
+                );
+ 
+            },
+          ),
+          RaisedButton(
+            child: Text("Wallet"),
+            onPressed: () {
+   Navigator.of(context).push(
+                 CupertinoPageRoute(
+            builder: (ctx) => Wallet()
+                
+                
+                )
+                );
+            },
+          ),
+          RaisedButton(
+            child: Text("About Us"),
             onPressed: () {
               try {
                 Payments().showPaymentCard(context);
               } catch (error) {
                 print(error);
-                showErrorDialog(context, 'there was an error: ${error.toString()}');
+                showErrorDialog(
+                    context, 'there was an error: ${error.toString()}');
               }
             },
           ),
-          new SignOutButton(user: user),
         ],
       ),
     );
   }
 }
 
-class SignOutButton extends StatelessWidget {
-  const SignOutButton({
-    Key key,
-    @required this.user,
-  }) : super(key: key);
 
-  final User user;
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      child: Text("sign out"),
-      onPressed: () async {
-        try {
-          await FirebaseAuth.instance.signOut();
-          final payment = Provider.of<PaymentModel>(context);
-          final orders = Provider.of<RestaurantOrders>(context);
-          payment.clear();
-          orders.clear();
-          user.changeUID(null, null, null, null);
-        } catch (error) {
-          print(error);
-          showErrorDialog(context, 'there was an error: ${error.toString()}');
-
-        }
-      },
-    );
-  }
-}

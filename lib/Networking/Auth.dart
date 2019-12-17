@@ -85,7 +85,7 @@ class Auth with ChangeNotifier {
             .get();
         final userProvider = Provider.of<User>(context);
         final payment = Provider.of<PaymentModel>(context);
-        userProvider.changeUID(document['uid'], document['displayNane'],
+        userProvider.changeUID(document['uid'], document['name'],
             document['email'], document['stripe_id']);
         if (document.data.containsKey('source')) {
           final source = document['source'];
