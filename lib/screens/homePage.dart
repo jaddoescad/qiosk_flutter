@@ -38,6 +38,7 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
+    getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
     Auth().checkIfUserExists(context);
     tabController = new TabController(vsync: this, length: 3);
   }
@@ -69,7 +70,7 @@ class HomePageState extends State<HomePage>
         backgroundColor: Colors.white,
         body: Scaffold(
           bottomNavigationBar: Container(
-            decoration: new BoxDecoration(color: Color(0xFF365e7a), boxShadow: [
+            decoration: new BoxDecoration(color: Colors.black, boxShadow: [
               new BoxShadow(
                 color: Colors.grey,
                 blurRadius: 4.0,

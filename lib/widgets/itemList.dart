@@ -17,14 +17,10 @@ class ItemContainerList extends StatelessWidget {
             physics: ClampingScrollPhysics(),
             key: PageStorageKey<String>(section.title),
             slivers: <Widget>[
-              SliverFixedExtentList(
-                itemExtent: 150.0,
-                delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    return ItemContainer(item: section.items[index]);
-                  },
-                  childCount: section.items.length,
-                ),
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  ...section.items.map((item) => ItemContainer(item: item)),
+                ]),
               ),
             ],
           );
