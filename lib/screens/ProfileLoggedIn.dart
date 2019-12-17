@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart';
-import '../Networking/Payments.dart';
 import 'package:flutter/cupertino.dart';
-import '../widgets/errorMessage.dart';
 import '../screens/account.dart';
 import '../screens/wallet.dart';
 import '../screens/AboutUs.dart';
@@ -11,6 +9,8 @@ import '../screens/AboutUs.dart';
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
 class ProfileLoggedIn extends StatefulWidget {
+  final showBackButton;
+  ProfileLoggedIn({this.showBackButton = true});
   @override
   _ProfileLoggedInState createState() => _ProfileLoggedInState();
 }
@@ -23,8 +23,8 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Profile"),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
+        centerTitle:  true,
+        automaticallyImplyLeading: widget.showBackButton,
       ),
       body: ListView(
         children: <Widget>[

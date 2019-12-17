@@ -19,6 +19,9 @@ import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
 import 'dart:async';
+import '../screens/ProfileNotLoggedIn.dart';
+import '../screens/ProfileLoggedIn.dart';
+import '../models/user.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -126,14 +129,11 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
           );
   }
 
-
-
-
   ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
           body: Stack(fit: StackFit.expand, children: <Widget>[
-                        Container(
+            Container(
               height: double.infinity,
               width: double.infinity,
               color: Color(0xff131111),
@@ -181,7 +181,16 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                   height: 30.0,
                   width: 30.0,
                 ),
-                onPressed: () => null,
+                onPressed: () {
+                  final user = Provider.of<User>(context);
+                  Navigator.of(context).push(
+                    CupertinoPageRoute(builder: (ctx) {
+                      return (user.uid == null)
+                          ? ProfileNotLoggedIn(showBackButton: true,)
+                          : ProfileLoggedIn(showBackButton: true,);
+                    }),
+                  );
+                },
               ),
             ),
             Center(
@@ -240,5 +249,3 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     routeObserver.unsubscribe(this);
   }
 }
-
-

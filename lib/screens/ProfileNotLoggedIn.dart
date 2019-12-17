@@ -4,6 +4,8 @@ import 'package:iamrich/screens/AboutUs.dart';
 import '../screens/authScreen.dart';
 
 class ProfileNotLoggedIn extends StatelessWidget {
+  final showBackButton;
+  ProfileNotLoggedIn({this.showBackButton = false});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +13,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55.0),
         child: AppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: showBackButton,
           backgroundColor: Color(0xFF365e7a),
           title: Text(
             "Profile",
