@@ -133,8 +133,20 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     return ModalProgressHUD(
         child: Scaffold(
           body: Stack(fit: StackFit.expand, children: <Widget>[
+                        Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: Color(0xff131111),
+            ),
             CameraMlVision<List<Barcode>>(
-              
+              // loadingBuilder: ,
+              loadingBuilder: (c) {
+                return Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Color(0xff131111),
+                );
+              },
               resolution: ResolutionPreset.medium,
               key: _scanKey,
 
@@ -149,7 +161,6 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                 _readBarcode(barcodes.first.displayValue);
               },
               onDispose: () {
-                print("disposed");
                 detector.close();
               },
             ),
