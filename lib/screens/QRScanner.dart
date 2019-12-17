@@ -144,6 +144,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   void didPopNext() {
+    Future.delayed(const Duration(milliseconds: 500), () {});
     setState(() => _isloading = false);
 
     // if (controller != null) {
@@ -204,9 +205,12 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
               centerTitle: true,
               // title: Text(
               //   "QIOSK",
-            title: Image.asset('assets/images/logoappbar.png', height: 20,),
-            // Text('QIOSK',style: TextStyle(fontFamily: 'Avenir')),
-                // style: TextStyle(fontFamily: "Avenir"),
+              title: Image.asset(
+                'assets/images/logoappbar.png',
+                height: 20,
+              ),
+              // Text('QIOSK',style: TextStyle(fontFamily: 'Avenir')),
+              // style: TextStyle(fontFamily: "Avenir"),
               // ),
               leading: new IconButton(
                 splashColor: Colors.transparent,
