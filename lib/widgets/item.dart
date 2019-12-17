@@ -58,26 +58,28 @@ class ItemContainer extends StatelessWidget {
             ),
               ),
             ) : Container(),
-            Container(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-              height: 40,
-              width: double.infinity,
-              child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        item.title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 5),
+              child: Container(
+                padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                width: double.infinity,
+                child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          item.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.2),
+                        ),
                       ),
-                    ),
+              ),
             ),
             item.description != null ? Container(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: EdgeInsets.only(left: 10.0, right: 8),
               width: double.infinity,
               height: 40,
               child: Align(
@@ -90,24 +92,23 @@ class ItemContainer extends StatelessWidget {
                             fontSize: 13,
                             color: Colors.black,
                             fontWeight: FontWeight.w300,
-                            letterSpacing: 1),
+                            letterSpacing: 0.2),
                       ),
                     ),
             ) : Container(),
             Container(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 8),
               width: double.infinity,
-              height: 40,
               child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                      '\$ ${item.price.toStringAsFixed(2)}',
+                      '\$${item.price.toStringAsFixed(2)}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
                           fontSize: 13,
                           color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w700),
                     ),
                     ),
             ),
