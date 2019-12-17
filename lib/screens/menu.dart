@@ -70,32 +70,32 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
         appBar: AppBar(
         backgroundColor: kMainColor,
         centerTitle: true,
-        leading: IconButton(icon: ImageIcon(AssetImage("assets/images/photo-camera.png"), size: 25, color: Colors.white,), onPressed: () {
+        leading: IconButton(icon: ImageIcon(AssetImage("assets/images/camera.png"), size: 30, color: Colors.white,), onPressed: () {
                 Navigator.of(context).pop();
               }                   
             ),
         actions: <Widget>[
           Stack(
           children: <Widget>[
-          IconButton(icon: ImageIcon(AssetImage("assets/images/cart.png"), size: 25, color: Colors.white,), onPressed: () {
+          IconButton(icon: ImageIcon(AssetImage("assets/images/cart.png"), size: 30, color: Colors.white,), onPressed: () {
                       Navigator.of(context).push(
                         CupertinoPageRoute(builder: (ctx) => CartPage()),
                           );
                         }),
           cart.items.values.length > 0 ? Positioned(
-            right: 7,
-            top: 3,
+            left: 4,
+            top: 4,
             child: Container(
                 padding: EdgeInsets.all(2),
                 decoration: BoxDecoration(
                 color: Colors.red,
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(4),
                 ),
             constraints: BoxConstraints(
-            minWidth: 15,
-            minHeight: 15,
+            minWidth: 17,
+            minHeight: 17,
             ),
-            child: Text(cart.items.values.length.toString(), style: TextStyle(color: Colors.white, fontSize: 12,), textAlign: TextAlign.center,),
+            child: Text(cart.items.values.length.toString(), style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500), textAlign: TextAlign.center,),
             ),
             ) : Container()
           ],
