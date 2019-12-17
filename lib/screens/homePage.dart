@@ -7,7 +7,7 @@ import '../screens/ProfileNotLoggedIn.dart';
 import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
-
+import 'package:iamrich/constants.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -54,7 +54,7 @@ class HomePageState extends State<HomePage>
         backgroundColor: Colors.white,
         body: Scaffold(
           bottomNavigationBar: Container(
-            decoration: new BoxDecoration(color: Colors.black, boxShadow: [
+            decoration: new BoxDecoration(color: kMainColor, boxShadow: [
               new BoxShadow(
                 color: Colors.grey,
                 blurRadius: 4.0,
@@ -68,17 +68,17 @@ class HomePageState extends State<HomePage>
                 Tab(
                     icon: ImageIcon(
                   AssetImage("assets/images/home.png"),
-                  size: 30,
+                  size: 27,
                 )),
                 Tab(
                     icon: ImageIcon(
                   AssetImage("assets/images/invoice.png"),
-                  size: 30,
+                  size: 27,
                 )),
                 Tab(
                     icon: ImageIcon(
                   AssetImage("assets/images/user.png"),
-                  size: 30,
+                  size: 27,
                 )),
               ],
             ),

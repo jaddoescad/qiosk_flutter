@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
 import '../models/restaurant.dart';
 import '../widgets/itemList.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -47,7 +51,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
             borderRadius: BorderRadius.circular(20.0),
             color: Colors.transparent,
             border: Border.all(
-                color: Colors.black,
+                color: kMainColor,
                 width: 1,
             ),
           ),          
@@ -64,7 +68,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: kMainColor,
         centerTitle: true,
         leading: IconButton(icon: ImageIcon(AssetImage("assets/images/photo-camera.png"), size: 25, color: Colors.white,), onPressed: () {
                 Navigator.of(context).pop();
@@ -107,14 +111,14 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
             indicatorSize: TabBarIndicatorSize.tab,
             isScrollable: true,
             labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
+            unselectedLabelColor: kMainColor,
             tabs: myTabs,
             indicator: BubbleTabIndicator(
               indicatorRadius: 20.0,
               // insets: EdgeInsets.symmetric(horizontal: 15.0),
               indicatorHeight: 27.0,
               // padding: EdgeInsets.all(100),
-              indicatorColor: Colors.black,
+              indicatorColor: kMainColor,
               tabBarIndicatorSize: TabBarIndicatorSize.tab,
             ),
 

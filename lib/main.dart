@@ -16,10 +16,9 @@ import './models/restaurant.dart';
 import './models/orders.dart';
 import './models/payment.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:camera/camera.dart';
 
+import 'constants.dart';
 import 'screens/splashScreen.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -79,7 +78,7 @@ class MyAppState extends State<MyApp> {
         title: 'Qiosk',
         theme: ThemeData(
           fontFamily: 'OpenSans',
-          primaryColor: Color(0xFF365E7a),
+          primaryColor: kMainColor,
           // accentColor: Color(0xFF365E7a)
         ),
         home: Splash(),
