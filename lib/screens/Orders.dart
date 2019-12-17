@@ -49,7 +49,7 @@ class _OrderPageState extends State<OrderPage>
           centerTitle: true,
         ),
       ),
-      body: Container(
+      body: orders.length < 1 ? Container(
         color: Colors.white,
         constraints: BoxConstraints.expand(),
         child: Column(
@@ -70,16 +70,6 @@ class _OrderPageState extends State<OrderPage>
               style: TextStyle(
                   color: Color(0xFF365e7a).withOpacity(0.4), fontSize: 20),
             ),
-            IconButton(
-              icon: Icon(Icons.camera),
-              onPressed: () async {
-                    final payment = Provider.of<PaymentModel>(context);
-                print(payment.token);
-                print(payment.cardType);
-                print(payment.lastFour);
-                // print(orders.length);
-              },
-            ),
             ...orders
                 .map((i, order) => MapEntry(i, Text(
                     order.date.toString()
@@ -88,7 +78,7 @@ class _OrderPageState extends State<OrderPage>
                 .toList()
           ],
         ),
-      ),
+      ) : Container(),
     );
   }
 }

@@ -27,7 +27,6 @@ class _MenuState extends State<Menu> with WidgetsBindingObserver, RouteAware{
   @override
   Widget build(BuildContext context) {
     final restaurant = Provider.of<Restaurant>(context);
-
             return menuPage(restaurant, context);
         }
   }
