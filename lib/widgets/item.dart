@@ -26,19 +26,38 @@ class ItemContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            ClipRRect(
+            item.imgUrl != null ? ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(item.imgUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 height: 150,
                 width: double.infinity,
+                child: Image.network(
+                       item.imgUrl,
+                       fit: BoxFit.cover,
+                       loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                       if (loadingProgress == null) return child;
+                       return ClipRRect(
+                       borderRadius: BorderRadius.circular(8.0),
+                       child: Container(
+                       height: 150,
+                       color: Colors.grey.withOpacity(0.5),
+                       width: double.infinity,
+                       child: Center(
+                       child: CircularProgressIndicator(
+                       backgroundColor: Colors.transparent,
+                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                       value: loadingProgress.expectedTotalBytes != null
+                       ? loadingProgress.cumulativeBytesLoaded /
+                       loadingProgress.expectedTotalBytes
+                       : null,
+                    ),
+                  ),
+                ),
+               );
+              }
             ),
-            ),
+              ),
+            ) : Container(),
             Container(
               padding: EdgeInsets.only(left: 10.0, right: 10.0),
               height: 40,
@@ -57,7 +76,7 @@ class ItemContainer extends StatelessWidget {
                       ),
                     ),
             ),
-            Container(
+            item.description != null ? Container(
               padding: EdgeInsets.only(left: 10.0, right: 10.0),
               width: double.infinity,
               height: 40,
@@ -74,7 +93,7 @@ class ItemContainer extends StatelessWidget {
                             letterSpacing: 1),
                       ),
                     ),
-            ),
+            ) : Container(),
             Container(
               padding: EdgeInsets.only(left: 10.0, right: 10.0),
               width: double.infinity,
