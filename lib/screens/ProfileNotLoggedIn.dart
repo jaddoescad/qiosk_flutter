@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iamrich/screens/AboutUs.dart';
 import '../screens/authScreen.dart';
 
 class ProfileNotLoggedIn extends StatelessWidget {
@@ -125,38 +126,48 @@ class ProfileNotLoggedIn extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                  bottom: BorderSide(color: Color(0xFF365e7a), width: 0.25)),
-            ),
-            height: 50.0,
-            padding: EdgeInsets.only(left: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  child: Icon(
-                    CupertinoIcons.mail,
-                    size: 35,
-                    color: Color(0xFF365e7a),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 25),
-                  child: Text(
-                    "Contact Us",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 15,
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                CupertinoPageRoute(
+                    builder: (ctx) => AboutUs()
+                        
+                        ),
+              );
+            },
+                      child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                    bottom: BorderSide(color: Color(0xFF365e7a), width: 0.25)),
+              ),
+              height: 50.0,
+              padding: EdgeInsets.only(left: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Icon(
+                      CupertinoIcons.mail,
+                      size: 35,
                       color: Color(0xFF365e7a),
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                    padding: EdgeInsets.only(left: 25),
+                    child: Text(
+                      "About Us",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xFF365e7a),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

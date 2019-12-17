@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import '../widgets/errorMessage.dart';
 import '../screens/account.dart';
 import '../screens/wallet.dart';
+import '../screens/AboutUs.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -55,13 +56,11 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
           RaisedButton(
             child: Text("About Us"),
             onPressed: () {
-              try {
-                Payments().showPaymentCard(context);
-              } catch (error) {
-                print(error);
-                showErrorDialog(
-                    context, 'there was an error: ${error.toString()}');
-              }
+              Navigator.of(context).push(
+                 CupertinoPageRoute(
+            builder: (ctx) => AboutUs()
+                )
+                );
             },
           ),
         ],
