@@ -19,9 +19,8 @@ import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
 import 'dart:async';
-import '../screens/ProfileNotLoggedIn.dart';
-import '../screens/ProfileLoggedIn.dart';
 import '../models/user.dart';
+import '../screens/profile.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -185,9 +184,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                   final user = Provider.of<User>(context);
                   Navigator.of(context).push(
                     CupertinoPageRoute(builder: (ctx) {
-                      return (user.uid == null)
-                          ? ProfileNotLoggedIn(showBackButton: true,)
-                          : ProfileLoggedIn(showBackButton: true,);
+                      return Profile();
                     }),
                   );
                 },
