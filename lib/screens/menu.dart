@@ -42,7 +42,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
     myTabs.add(Tab(
       
         child: Container(
-          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+          padding: EdgeInsets.only(left: 20.0, right: 20.0),
           height: 35,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
@@ -104,7 +104,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
           slivers: <Widget>[
           SliverToBoxAdapter(
           child: Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: EdgeInsets.only(top: 5, bottom: 5),
             decoration: new BoxDecoration(color: Colors.white, boxShadow: [
               new BoxShadow(
                 color: Colors.grey,
