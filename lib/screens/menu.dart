@@ -104,11 +104,14 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
         title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18, color: Colors.white),),
         ),
         body: Column(children: <Widget>[
-          
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Container(
-            color: Colors.white,
+          Container(
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            decoration: new BoxDecoration(color: Colors.white, boxShadow: [
+              new BoxShadow(
+                color: Colors.grey,
+                blurRadius: 10.0,
+              ),
+            ]),
             width: double.infinity,
             child: TabBar(
               indicatorSize: TabBarIndicatorSize.tab,
@@ -128,7 +131,6 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
               
             ),
             ),
-          ),
           Divider(),
           Expanded(
             flex: 1,
