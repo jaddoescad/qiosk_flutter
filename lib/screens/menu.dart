@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../models/restaurant.dart';
 import '../widgets/itemList.dart';
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:iamrich/screens/cartPage.dart';
 
@@ -40,17 +39,11 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
 
   restaurant.sections.forEach((final section) {
     myTabs.add(Tab(
-      
         child: Container(
-          padding: EdgeInsets.only(left: 15.0, right: 15.0),
-          height: 35,
+          padding: EdgeInsets.only(left: 25, right: 25),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            color: Colors.transparent,
-            border: Border.all(
-                color: kMainColor,
-                width: 1,
-            ),
+            borderRadius: BorderRadius.circular(50.0),
+            border: Border.all(color: kMainColor, width: 2),
           ),          
           child: Align(
             alignment: Alignment.center,
@@ -60,11 +53,11 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
       ));
     });
 
-  return DefaultTabController(
+return DefaultTabController(
       length: restaurant.sections.length,
       child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
         backgroundColor: kMainColor,
         centerTitle: true,
         leading: IconButton(icon: ImageIcon(AssetImage("assets/images/camera.png"), size: 30, color: Colors.white,), onPressed: () {
@@ -99,44 +92,46 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
         ),
         ],
         title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18, color: Colors.white),),
-        ),
-        body: CustomScrollView(
-          slivers: <Widget>[
-          SliverToBoxAdapter(
-          child: Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            decoration: new BoxDecoration(color: Colors.white, boxShadow: [
-              new BoxShadow(
-                color: Colors.grey,
-                blurRadius: 10.0,
-              ),
-            ]),
-            width: double.infinity,
-            child: TabBar(
-              indicatorSize: TabBarIndicatorSize.tab,
+        bottom: ColoredTabBar(Colors.white, TabBar(
+              indicatorSize: TabBarIndicatorSize.label,
               isScrollable: true,
               labelColor: Colors.white,
               unselectedLabelColor: kMainColor,
               tabs: myTabs,
-              indicator: BubbleTabIndicator(
-                indicatorRadius: 20.0,
-                insets: EdgeInsets.symmetric(horizontal: 15.0),
-                indicatorHeight: 37.0,
-                indicatorColor: kMainColor,
-                tabBarIndicatorSize: TabBarIndicatorSize.tab,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: kMainColor,
               ),
             ),
             ),
-          ),
-          SliverFillRemaining(
-          child: TabBarView(
+        ),
+      body: TabBarView(
             children: restaurant.sections.map((section) {
               return ItemContainerList(section: section);
             }).toList(),
           ),
-          ),
-          ],
-        ),
-        ),
-      );
+      ),
+  );
+}
+
+class ColoredTabBar extends Container implements PreferredSizeWidget {
+  ColoredTabBar(this.color, this.tabBar);
+
+  final Color color;
+  final TabBar tabBar;
+
+  @override
+  Size get preferredSize => tabBar.preferredSize;
+
+  @override
+  Widget build(BuildContext context) => Material(
+    elevation: 15.0,
+    child: Container(
+    height: 60,
+    padding: EdgeInsets.only(top: 10, bottom: 10),
+    color: color,
+    width: double.infinity,
+    child: tabBar,
+    ),
+  );
 }
