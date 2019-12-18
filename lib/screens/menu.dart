@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 import '../models/restaurant.dart';
 import '../widgets/itemList.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -103,8 +100,10 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
         ],
         title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18, color: Colors.white),),
         ),
-        body: Column(children: <Widget>[
-          Container(
+        body: CustomScrollView(
+          slivers: <Widget>[
+          SliverToBoxAdapter(
+          child: Container(
             padding: EdgeInsets.only(top: 10, bottom: 10),
             decoration: new BoxDecoration(color: Colors.white, boxShadow: [
               new BoxShadow(
@@ -121,26 +120,23 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
               tabs: myTabs,
               indicator: BubbleTabIndicator(
                 indicatorRadius: 20.0,
-                // insets: EdgeInsets.symmetric(horizontal: 15.0),
+                insets: EdgeInsets.symmetric(horizontal: 15.0),
                 indicatorHeight: 37.0,
-                // padding: EdgeInsets.all(100),
                 indicatorColor: kMainColor,
                 tabBarIndicatorSize: TabBarIndicatorSize.tab,
               ),
-
-              
             ),
             ),
-          Divider(),
-          Expanded(
-            flex: 1,
-            child: TabBarView(
+          ),
+          SliverFillRemaining(
+          child: TabBarView(
             children: restaurant.sections.map((section) {
               return ItemContainerList(section: section);
             }).toList(),
           ),
           ),
-        ],)
+          ],
+        ),
         ),
       );
 }
