@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/restaurant.dart';
+import '../constants.dart';
+import '../constants.dart';
 import '../screens/ItemOverView.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -29,7 +31,8 @@ class ItemContainer extends StatelessWidget {
             item.imgUrl != null ? ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                height: 150,
+                color: kMainColor,
+                height: 175,
                 width: double.infinity,
                 child: Image.network(
                        item.imgUrl,
@@ -39,8 +42,8 @@ class ItemContainer extends StatelessWidget {
                        return ClipRRect(
                        borderRadius: BorderRadius.circular(8.0),
                        child: Container(
-                       height: 150,
-                       color: Colors.grey.withOpacity(0.5),
+                       height: 175,
+                       color: kMainColor,
                        width: double.infinity,
                        child: Center(
                        child: CircularProgressIndicator(
