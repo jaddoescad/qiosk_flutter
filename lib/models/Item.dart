@@ -17,6 +17,15 @@ Future fetchSelection(context) async {
   return document.data;
 }
 
+ Stream streamSelection(context)  {
+    final restaurant = Provider.of<Restaurant>(context);
+      return Firestore.instance
+      .collection('Restaurants')
+      .document(restaurant.id)
+      .collection('Selections')
+      .document('oyFRgATUnXIfR5o7dqbH').snapshots();
+}
+
 class Item extends ChangeNotifier {
   String id;
   double basePrice;
@@ -136,7 +145,7 @@ class Item extends ChangeNotifier {
     imgUrl = itemFromMenu.imgUrl;
   }
 
-  fromSelectionJson(Map<String, dynamic> json) {
+  fromSelectionJson(json) {
     sections = getSection(json['sections']);
   }
 

@@ -5,6 +5,7 @@ import '../widgets/ItemOverviewWidgets.dart';
 import '../models/Item.dart';
 import '../main.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
@@ -18,7 +19,7 @@ class ItemOverview extends StatefulWidget {
 class _ItemOverviewState extends State<ItemOverview>
     with WidgetsBindingObserver, RouteAware {
   Future itemFuture;
-  bool loader = true;
+  bool loader = false;
 
   interceptReturn() {
     if (loader == true) {
@@ -33,7 +34,9 @@ class _ItemOverviewState extends State<ItemOverview>
   @override
   void initState() {
     super.initState();
-    itemFuture = Future.delayed(Duration.zero, () => fetchSelection(context));
+    itemFuture = Future.delayed(Duration.zero, () {
+      return fetchSelection(context);
+    });
   }
 
   @override
@@ -66,6 +69,21 @@ class _ItemOverviewState extends State<ItemOverview>
         title: widget.fromMenuItem.title.toString());
     item.updateHeader(menuItem);
 
+    return StreamBuilder(
+        stream: streamSelection(context),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return itemFutureBuilder(item);
+          } else if (snapshot.hasData) {
+            // print(snapshot.data['sections']);
+            item.fromSelectionJson(snapshot.data);
+            item.checkIfItemMeetsAllConditions();
+            return SelectionPage();
+          }
+        });
+  }
+
+  FutureBuilder itemFutureBuilder(Item item) {
     return FutureBuilder(
         future: itemFuture,
         builder: (context, snapshot) {

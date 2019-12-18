@@ -10,7 +10,7 @@ GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
 class ProfileLoggedIn extends StatefulWidget {
   final showBackButton;
-  ProfileLoggedIn({this.showBackButton = true});
+  ProfileLoggedIn({this.showBackButton = false});
   @override
   _ProfileLoggedInState createState() => _ProfileLoggedInState();
 }
