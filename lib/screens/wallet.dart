@@ -5,6 +5,7 @@ import '../widgets/errorMessage.dart';
 import '../Networking/Payments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 
 class Wallet extends StatefulWidget {
   @override
@@ -42,10 +43,12 @@ class _WalletState extends State<Wallet> {
                 child: Text("Wallet"),
                 onPressed: () async {
                   try {
+                  PaymentResponse paymentResponse = await FlutterStripePayment.addPaymentMethod();
+
                     setState(() {
                       loader = true;
                     });
-                    await Payments().showPaymentCard(context);
+                    await Payments().showPaymentCard(context, paymentResponse);
                     setState(() {
                       loader = false;
                     });

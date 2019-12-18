@@ -14,6 +14,7 @@ import '../Networking/Payments.dart';
 import '../models/user.dart';
 import '../models/restaurant.dart';
 import '../widgets/errorMessage.dart';
+import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
@@ -64,22 +65,22 @@ class _CartPageState extends State<CartPage> with RouteAware {
     routeObserver.subscribe(this, ModalRoute.of(context));
   }
 
-   interceptReturn() {
-     if (loader != true) {
-       return null;
-     } else {
-     return () async {
-      return false;
-    };
-     }
+  interceptReturn() {
+    if (loader != true) {
+      return null;
+    } else {
+      return () async {
+        return false;
+      };
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     return WillPopScope(
-        onWillPop: interceptReturn(),
-          child: ModalProgressHUD(
+      onWillPop: interceptReturn(),
+      child: ModalProgressHUD(
         inAsyncCall: loader,
         child: Scaffold(
           backgroundColor: Colors.white,
@@ -191,10 +192,13 @@ class _CartPageState extends State<CartPage> with RouteAware {
                 )));
       } else if (page == PageToGo.AddCard) {
         try {
+          PaymentResponse paymentResponse = await FlutterStripePayment.addPaymentMethod();
+
           setState(() {
             loader = true;
           });
-          await Payments().showPaymentCard(context);
+          final addPaymentStatus =
+              await Payments().showPaymentCard(context, paymentResponse);
           showSuccessDialog(context, "Successfully added card");
           setState(() {
             loader = false;
@@ -202,7 +206,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
         } catch (error) {
           print('there was an error processing payment: ${error.toString()}');
           showErrorDialog(context, 'there was an error: ${error.toString()}');
-
         }
       } else if (page == PageToGo.Checkout) {
         setState(() {

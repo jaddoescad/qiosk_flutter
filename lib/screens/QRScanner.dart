@@ -29,7 +29,7 @@ class QRViewExample extends StatefulWidget {
 }
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
-  final myTabbedPageKey = new GlobalKey<HomePageState>();
+  static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
 

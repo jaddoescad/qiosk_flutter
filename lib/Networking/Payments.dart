@@ -8,14 +8,15 @@ import '../Networking/Orders.dart';
 import '../models/payment.dart';
 
 enum PageToGo { Checkout, AddCard, Auth }
+enum AddPaymentStatus {Success, Failed}
 
 class Payments {
-  Future showPaymentCard(context) async {
-    PaymentResponse paymentResponse =
-        await FlutterStripePayment.addPaymentMethod();
-
+  Future showPaymentCard(context, paymentResponse) async {
     if (paymentResponse.status == PaymentResponseStatus.succeeded) {
       await addPaymentSource(paymentResponse.paymentMethodId, context);
+      return AddPaymentStatus.Success;
+    } else {
+      return AddPaymentStatus.Failed;
     }
   }
 
