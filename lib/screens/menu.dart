@@ -108,7 +108,7 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
             decoration: new BoxDecoration(color: Colors.white, boxShadow: [
               new BoxShadow(
                 color: Colors.grey,
-                blurRadius: 10.0,
+                blurRadius: 3.0,
               ),
             ]),
             width: double.infinity,
