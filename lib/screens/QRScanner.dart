@@ -19,9 +19,8 @@ import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
 import 'dart:async';
-import '../screens/ProfileNotLoggedIn.dart';
-import '../screens/ProfileLoggedIn.dart';
 import '../models/user.dart';
+import '../screens/profile.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -30,11 +29,12 @@ class QRViewExample extends StatefulWidget {
 }
 
 class QRViewExampleState extends State<QRViewExample> with RouteAware {
-  static final myTabbedPageKey = new GlobalKey<HomePageState>();
+  final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
 
   bool _isloading = false;
+  bool _disable = false;
   BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
   final _scanKey = GlobalKey<CameraMlVisionState>();
 
@@ -62,8 +62,11 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   }
 
   Future _readBarcode(qrValue) async {
-    if (_isloading == false) {
-      setState(() => _isloading = true);
+    if (_isloading == false && _disable == false) {
+      setState(() {
+_isloading = true;
+_disable = true;
+      } );
       try {
         await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -93,7 +96,16 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   void didPopNext() {
-    setState(() => _isloading = false);
+    Future.delayed(const Duration(milliseconds: 500), () {
+// Here you can write your code
+
+      setState(() {
+        _disable = false;
+      });
+    });
+    setState(() {
+      _isloading = false;
+    });
   }
 
   @override
@@ -155,7 +167,8 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                 if (barcodes == null ||
                     barcodes.isEmpty ||
                     !mounted ||
-                    _isloading) {
+                    _isloading ||
+                    _disable) {
                   return;
                 }
                 _readBarcode(barcodes.first.displayValue);
@@ -182,14 +195,16 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                   width: 30.0,
                 ),
                 onPressed: () {
-                  final user = Provider.of<User>(context);
-                  Navigator.of(context).push(
-                    CupertinoPageRoute(builder: (ctx) {
-                      return (user.uid == null)
-                          ? ProfileNotLoggedIn(showBackButton: true,)
-                          : ProfileLoggedIn(showBackButton: true,);
-                    }),
-                  );
+                  if (_disable == false) {
+                    setState(() {
+                      _disable = true;
+                    });
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(builder: (ctx) {
+                        return Profile();
+                      }),
+                    );
+                  }
                 },
               ),
             ),
