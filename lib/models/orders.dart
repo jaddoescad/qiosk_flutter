@@ -31,8 +31,7 @@ class Order {
 
   Map<String, OrderItem> _orderItems = {};
   Map<String, OrderItem> get orderItems {
-
-    return {...orderItems};
+    return {..._orderItems};
   }
   
   Order({this.orderId, this.status, this.amount, this.date});
