@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
 import 'package:iamrich/models/cart.dart';
+import '../constants.dart';
+import '../constants.dart';
 import '../screens/authScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';
@@ -86,36 +88,57 @@ class _CartPageState extends State<CartPage> with RouteAware {
           bottomNavigationBar: cart.items.values.toList().length > 0
               ? CartButton(title: "Place Your Order", func: checkout)
               : null,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(55.0),
-            child: AppBar(
-              backgroundColor: Color(0xFF365e7a),
-              title: Text(
-                "Cart",
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
-              centerTitle: true,
-              leading: new IconButton(
-                splashColor: Colors.transparent,
-                highlightColor:
-                    Colors.transparent, // makes highlight invisible too
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 24,
-                ),
-                onPressed: () {
-                  //add to cart
-                  Navigator.of(context).pop();
-                },
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: kMainColor),
+            brightness: Brightness.light,
+            elevation: 1,
+            backgroundColor: Colors.white,
+            title: Text(
+              "Cart",
+              
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+                color: kMainColor,
               ),
             ),
+            centerTitle: true,
+            leading: new IconButton(
+              splashColor: Colors.transparent,
+              highlightColor:
+                  Colors.transparent, // makes highlight invisible too
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+              ),
+              onPressed: () {
+                //add to cart
+                Navigator.of(context).pop();
+              },
+            ),
+          // bottom: PreferredSize(
+          // preferredSize: Size.fromHeight(50.0),
+          // child: Container(
+          //         color: Colors.white,
+          //         height: 50,
+          //         padding: EdgeInsets.only(left: 20),
+          //         child: Align(
+          //             alignment: Alignment.centerLeft,
+          //             child: Text(
+          //               "Cart",
+          //               overflow: TextOverflow.ellipsis,
+          //               maxLines: 1,
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.w500,
+          //                 fontSize: 16,
+          //                 color: Colors.black,
+          //               ),
+          //             )),
+          //       ),
+          // ),
           ),
           body: CustomScrollView(slivers: <Widget>[
             SliverToBoxAdapter(
@@ -140,7 +163,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
                                 style: TextStyle(fontSize: 10),
                               ),
                               Text(
-                                "      Cart is Empty",
+                                "Cart is Empty",
                                 style: TextStyle(
                                     color: Color(0xFF365e7a).withOpacity(0.4),
                                     fontSize: 20),
@@ -149,23 +172,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
                           ),
                         )
                       : Container(),
-                  Container(
-                    color: kSectionColor,
-                    height: 50.0,
-                    padding: EdgeInsets.only(left: 20),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Les Moulins La Fayette",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: Color(0xFF365e7a),
-                          ),
-                        )),
-                  ),
                 ],
               ),
             ),
@@ -245,3 +251,5 @@ class _CartPageState extends State<CartPage> with RouteAware {
     super.dispose();
   }
 }
+
+
