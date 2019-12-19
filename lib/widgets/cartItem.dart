@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iamrich/constants.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
+import '../constants.dart';
 import '../models/cart.dart';
 
 class CartItemCard extends StatelessWidget {
@@ -61,7 +62,8 @@ class CartItemCard extends StatelessWidget {
           border: Border(
             bottom: BorderSide(
               // color: kMainColor,
-              width: 0.3,
+              color: kMainColor.withOpacity(0.2),
+              width: 0.5,
             ),
           ),
         ),
