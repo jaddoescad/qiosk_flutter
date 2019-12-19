@@ -146,10 +146,6 @@ _disable = false;
   }
 
   ModalProgressHUD qrScannerView() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-   statusBarColor: Colors.black, // Color for Android
-   statusBarBrightness: Brightness.light // Dark == white status bar -- for IOS.
-));
     return ModalProgressHUD(
         child: Scaffold(
           body: Stack(fit: StackFit.expand, children: <Widget>[
@@ -186,6 +182,7 @@ _disable = false;
               },
             ),
             AppBar(
+              brightness: Brightness.dark,
               backgroundColor: Colors.transparent, //No more green
               elevation: 0.0, //Shadow gone
               centerTitle: true,

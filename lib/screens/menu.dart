@@ -62,6 +62,7 @@ return DefaultTabController(
       child: Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        brightness: Brightness.light,
         elevation: 1,
         backgroundColor: Colors.white,
         centerTitle: true,

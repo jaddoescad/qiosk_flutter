@@ -50,6 +50,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -76,9 +77,11 @@ class MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         title: 'Qiosk',
+        // darkTheme: ThemeData.dark(),
         theme: ThemeData(
           fontFamily: 'Avenir',
           primaryColor: kMainColor,
+          
 
           // accentColor: Color(0xFF365E7a)
         ),

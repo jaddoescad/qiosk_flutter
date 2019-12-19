@@ -12,6 +12,7 @@ import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
 import 'package:iamrich/constants.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -22,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin , WidgetsBindingObserver{
   CupertinoTabController tabController;
   int _currentTabIndex = 0;
 
@@ -34,18 +35,22 @@ class HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     tabController = new CupertinoTabController(initialIndex: 0);
-    
+    WidgetsBinding.instance.addObserver(this);
+
   }
 
   @override
   void dispose() {
     tabController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+  
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+
 
     return CupertinoTabScaffold(
       controller: tabController,
