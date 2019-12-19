@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iamrich/constants.dart';
 import 'package:provider/provider.dart';
+import '../constants.dart';
 import '../models/cart.dart';
 
 class CartItemCard extends StatelessWidget {
@@ -76,7 +77,7 @@ class CartItemCard extends StatelessWidget {
                       duration: Duration(
                         seconds: 2,
                       ),
-                      backgroundColor: Color(0xFF365e7a),
+                      backgroundColor: kMainColor,
                       content: Text("Item Deleted", textAlign: TextAlign.center,)));
 
                     cart.removeItem(item.generatedId);

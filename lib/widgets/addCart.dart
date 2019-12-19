@@ -16,13 +16,13 @@ class CartButton extends StatelessWidget {
     final user = Provider.of<User>(context);
 
     return Container(
-      height: 70,
+      height: 75,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [BoxShadow(
             color: Colors.grey,
-            blurRadius: 1.0,
+            // blurRadius: 1.0,
           ),
           ]
       ),
@@ -56,12 +56,12 @@ class CartButtonChildren extends StatelessWidget {
         
         child: Align(
           alignment: Alignment.center,
-          child: Text('$title', style: TextStyle(fontSize: 15, color: color),))),
+          child: Text('$title', style: TextStyle(fontSize: 15, color: color, fontWeight: FontWeight.w100),))),
 
     Positioned(child: Align(
       
       alignment: Alignment.centerRight,
-      child: Text('\$ $price', style: TextStyle(fontSize: 15, color: color),)))
+      child: Text('\$$price', style: TextStyle(fontSize: 15, color: color, fontWeight: FontWeight.w100),)))
     
     
     ],);
