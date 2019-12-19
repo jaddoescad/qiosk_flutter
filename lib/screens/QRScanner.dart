@@ -79,7 +79,10 @@ _disable = true;
         showErrorDialog(
             context, 'there was an error: ${error.message.toString()}');
         // startImageStream();
-        setState(() => _isloading = false);
+        setState(() {
+_isloading = false;
+_disable = false;
+        });
       } catch (error) {
         print('error ${error.toString()}');
         showErrorDialog(context, 'there was an error: ${error.toString()}');
@@ -237,8 +240,8 @@ _disable = true;
 
   Future<void> getMenuandOrders(rid) async {
     final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
-    final data =
-        await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
+    final data =await RestaurantNetworking.fetchMenuandOrders(rid, firuser.uid);
+
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
     final restaurant = Provider.of<Restaurant>(context);
 

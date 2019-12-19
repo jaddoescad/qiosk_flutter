@@ -49,7 +49,7 @@ class Order {
         quantity: item['quantity'],
         price: item['price'].toDouble(),
         selectionTitles: item['selections']);
-        orderItems[item['generatedId']] = orderItem;
+        _orderItems[item['generatedId']] = orderItem;
   }
 }
 
