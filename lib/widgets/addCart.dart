@@ -56,12 +56,12 @@ class CartButtonChildren extends StatelessWidget {
         
         child: Align(
           alignment: Alignment.center,
-          child: Text('$title', style: TextStyle(fontSize: 15, color: color, fontWeight: FontWeight.w100),))),
+          child: Text('$title', style: TextStyle(fontSize: 15, color: color, fontWeight: FontWeight.w600),))),
 
     Positioned(child: Align(
       
       alignment: Alignment.centerRight,
-      child: Text('\$$price', style: TextStyle(fontSize: 15, color: color, fontWeight: FontWeight.w100),)))
+      child: Text('\$$price', style: TextStyle(fontSize: 15, color: color, fontWeight: FontWeight.w600),)))
     
     
     ],);

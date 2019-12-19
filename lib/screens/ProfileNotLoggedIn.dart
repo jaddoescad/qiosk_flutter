@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iamrich/screens/AboutUs.dart';
+import '../constants.dart';
 import '../screens/authScreen.dart';
 
 class ProfileNotLoggedIn extends StatelessWidget {
@@ -14,7 +15,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
         preferredSize: Size.fromHeight(55.0),
         child: AppBar(
           automaticallyImplyLeading: showBackButton,
-          backgroundColor: Color(0xFF365e7a),
+          backgroundColor: kMainColor,
           title: Text(
             "Profile",
             overflow: TextOverflow.ellipsis,
@@ -35,7 +36,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border(
-                  bottom: BorderSide(color: Color(0xFF365e7a), width: 0.25)),
+                  bottom: BorderSide(color: kMainColor, width: 0.25)),
             ),
             height: 35.0,
             padding: EdgeInsets.only(left: 20),
@@ -53,7 +54,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                    bottom: BorderSide(color: Color(0xFF365e7a), width: 0.25)),
+                    bottom: BorderSide(color: kMainColor, width: 0.25)),
               ),
               height: 50.0,
               padding: EdgeInsets.only(left: 20),
@@ -65,7 +66,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
                     child: Icon(
                       CupertinoIcons.padlock,
                       size: 35,
-                      color: Color(0xFF365e7a),
+                      color: kMainColor,
                     ),
                   ),
                   Container(
@@ -76,7 +77,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: 15,
-                        color: Color(0xFF365e7a),
+                        color: kMainColor,
                       ),
                     ),
                   ),
@@ -97,7 +98,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                    bottom: BorderSide(color: Color(0xFF365e7a), width: 0.25)),
+                    bottom: BorderSide(color: kMainColor, width: 0.25)),
               ),
               height: 50.0,
               padding: EdgeInsets.only(left: 20),
@@ -109,7 +110,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
                     child: Icon(
                       CupertinoIcons.person_add,
                       size: 35,
-                      color: Color(0xFF365e7a),
+                      color: kMainColor,
                     ),
                   ),
                   Container(
@@ -120,7 +121,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: 15,
-                        color: Color(0xFF365e7a),
+                        color: kMainColor,
                       ),
                     ),
                   ),
@@ -141,7 +142,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                    bottom: BorderSide(color: Color(0xFF365e7a), width: 0.25)),
+                    bottom: BorderSide(color: kMainColor, width: 0.25)),
               ),
               height: 50.0,
               padding: EdgeInsets.only(left: 20),
@@ -153,7 +154,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
                     child: Icon(
                       CupertinoIcons.mail,
                       size: 35,
-                      color: Color(0xFF365e7a),
+                      color: kMainColor,
                     ),
                   ),
                   Container(
@@ -164,7 +165,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: 15,
-                        color: Color(0xFF365e7a),
+                        color: kMainColor,
                       ),
                     ),
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/orders.dart';
 import '../widgets/orderItem.dart';
+import '../constants.dart';
 
 class OrderPage extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _OrderPageState extends State<OrderPage>
         preferredSize: Size.fromHeight(55.0),
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFF365e7a),
+          backgroundColor: kMainColor,
           title: Text(
             "Orders",
             overflow: TextOverflow.ellipsis,
@@ -59,7 +60,7 @@ class _OrderPageState extends State<OrderPage>
             ImageIcon(
               AssetImage("assets/images/invoice.png"),
               size: 110,
-              color: Color(0xFF365e7a).withOpacity(0.4),
+              color: kMainColor.withOpacity(0.4),
             ),
             Text(
               "",
@@ -68,7 +69,7 @@ class _OrderPageState extends State<OrderPage>
             Text(
               "No Orders",
               style: TextStyle(
-                  color: Color(0xFF365e7a).withOpacity(0.4), fontSize: 20),
+                  color: kMainColor.withOpacity(0.4), fontSize: 20),
             ),
           ],
         ),

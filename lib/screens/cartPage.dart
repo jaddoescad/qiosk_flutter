@@ -153,19 +153,10 @@ class _CartPageState extends State<CartPage> with RouteAware {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              // ImageIcon(
-                              //   AssetImage("assets/images/cart.png"),
-                              //   size: 130,
-                              //   color: Color(0xFF365e7a).withOpacity(0.4),
-                              // ),
-                              // Text(
-                              //   "",
-                              //   style: TextStyle(fontSize: 10),
-                              // ),
                               Text(
                                 "Cart Is Empty",
                                 style: TextStyle(
-                                    color: Color(0xFF365e7a).withOpacity(0.4),
+                                    color: kMainColor.withOpacity(0.4),
                                     fontSize: 20),
                               )
                             ],

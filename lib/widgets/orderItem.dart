@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/cart.dart';
+import '../constants.dart';
 
 class OrderItemCard extends StatelessWidget {
   OrderItemCard({this.order});
@@ -24,22 +25,22 @@ class OrderItemCard extends StatelessWidget {
               children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Text(order.amount.toString(), textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a)),),
+                    child: Text(order.amount.toString(), textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: kMainColor),),
                   ),
                   Expanded(
                     flex: 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(order.orderId, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a))),
-                        ...order.orderItems.map((selection) => Text(selection.title, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12, color: Color(0xFF365e7a)),),
+                        Text(order.orderId, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: kMainColor)),
+                        ...order.orderItems.map((selection) => Text(selection.title, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12, color: kMainColor),),
                         ),
                       ],
                      ),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text('\$ ${order.amount.toStringAsFixed(2)}', textAlign: TextAlign.right, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a)),),
+                    child: Text('\$ ${order.amount.toStringAsFixed(2)}', textAlign: TextAlign.right, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: kMainColor),),
                   ),
                 ],
               ),
@@ -49,7 +50,7 @@ class OrderItemCard extends StatelessWidget {
           color: Colors.white,
           border: Border(
             bottom: BorderSide(
-              color: Color(0xFF365e7a),
+              color: kMainColor,
               width: 0.5,
             ),
           ),

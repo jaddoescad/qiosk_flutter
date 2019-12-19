@@ -60,7 +60,7 @@ class CartItemCard extends StatelessWidget {
           color: Colors.white,
           border: Border(
             bottom: BorderSide(
-              // color: Color(0xFF365e7a),
+              // color: kMainColor,
               width: 0.3,
             ),
           ),

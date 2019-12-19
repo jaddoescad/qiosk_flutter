@@ -95,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   new Container(
                     width: screenSize.width,
                     height: 50,
-                    // color: Color(0xff365e7a),
+                    // color: kMainColor,
                     child: new FlatButton(
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
@@ -107,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         this.submit();
                         // Navigator.popUntil(context, ModalRoute.withName('/screen2'));
                       },
-                      color: Color(0xff365e7a),
+                      color: kMainColor,
                     ),
                     margin: new EdgeInsets.only(top: 20.0),
                   ),
@@ -126,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: <Widget>[
                       Text("Need to Login?  ",
                           style: TextStyle(
-                              color: Color(0xff365e7a),
+                              color: kMainColor,
                               fontWeight: FontWeight.w300)),
                       InkWell(
                         highlightColor: Colors.transparent,
@@ -134,7 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: Text(
                           "Login",
                           style: TextStyle(
-                              color: Color(0xff365e7a),
+                              color: kMainColor,
                               fontWeight: FontWeight.w500),
                         ),
                         onTap: () {

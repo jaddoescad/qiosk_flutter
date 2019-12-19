@@ -83,7 +83,6 @@ class MyAppState extends State<MyApp> {
           primaryColor: kMainColor,
           
 
-          // accentColor: Color(0xFF365E7a)
         ),
         home: Splash(),
         navigatorObservers: [routeObserver],

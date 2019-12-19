@@ -4,8 +4,10 @@ import 'package:iamrich/models/cart.dart';
 import 'package:iamrich/widgets/addCart.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-
-
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
 
 class ItemHeader extends StatelessWidget {
   @override
@@ -13,13 +15,16 @@ class ItemHeader extends StatelessWidget {
     final item = Provider.of<Item>(context);
     return Column(
       children: <Widget>[
-        item.imgUrl.isNotEmpty ? ItemImage(imgUrl: item.imgUrl) : ItemSelectionSpacer(),
+        item.imgUrl.isNotEmpty
+            ? ItemImage(imgUrl: item.imgUrl)
+            : ItemSelectionSpacer(),
         ItemTitle(title: item.title),
-        if (item.description.isNotEmpty) ItemDescription(description: item.description),
+        if (item.description.isNotEmpty)
+          ItemDescription(description: item.description),
       ],
     );
-}
   }
+}
 
 class ItemSelectionSpacer extends StatelessWidget {
   @override
@@ -38,14 +43,14 @@ class ItemImage extends StatelessWidget {
   final imgUrl;
   @override
   Widget build(BuildContext context) {
-      return Container(
+    return Container(
       height: 250,
       width: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(imgUrl),
-      ),
+        ),
       ),
     );
   }
@@ -95,11 +100,9 @@ class ItemDescription extends StatelessWidget {
 }
 
 class ItemAppBar extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-return Positioned(
+    return Positioned(
       //Place it at the top, and not use the entire screen
       top: 0.0,
       left: 0.0,
@@ -110,10 +113,30 @@ return Positioned(
         leading: new IconButton(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent, // makes highlight invisible too
-          icon: Image.asset(
-            'assets/images/backButton.png',
-            height: 35.0,
-            width: 35.0,
+          icon: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Container(
+                width: 300.0,
+                height: 300.0,
+                decoration: new BoxDecoration(
+                  color: kMainColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 4.0),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                ),
+              )
+              // Image.asset(
+              //   'assets/images/backButton.png',
+              //   height: 35.0,
+              //   width: 35.0,
+              // )
+            ],
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -123,44 +146,44 @@ return Positioned(
 }
 
 class SelectionCartButton extends StatelessWidget {
-
   @override
-
   Widget build(BuildContext context) {
-    
     final item = Provider.of<Item>(context);
-    final buttonTextColor = !item.disableCart ? Colors.white : Color(0xFF879FB0);
-
+    final buttonTextColor =
+        item.disableCart ? Colors.white.withOpacity(0.75) : Colors.white;
 
     return Container(
-      height: 70,
+      height: 75,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [BoxShadow(
-            color: Colors.grey,
-            blurRadius: 6.0,
-          ),
-          ]
-      ),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          blurRadius: 0.3,
+        ),
+      ]),
       child: RaisedButton(
-        disabledColor: kMainColor,
-        child: CartButtonChildren(title: "Add To Cart", price: item.totalPrice.toStringAsFixed(2), color: buttonTextColor),
+        disabledColor: Color(0xffC0C0C0),
+        child: CartButtonChildren(
+          title: "Add To Cart",
+          price: item.totalPrice.toStringAsFixed(2),
+          color: buttonTextColor,
+        ),
+        color: kMainColor,
         // Text('Add To Cart \$ ${item.totalPrice.toStringAsFixed(2)}', style: TextStyle(fontSize: 15, color: buttonTextColor),),
-        color: Color(0xFF365e7a),
+        // color: buttonTextColor,
         onPressed: item.disableCart ? null : () => {addtocart(context)},
       ),
     );
   }
 
-    void addtocart(context) {
+  void addtocart(context) {
     final cart = Provider.of<Cart>(context);
     final item = Provider.of<Item>(context);
 
-    cart.addItem(item.id, item.totalPrice, item.title, item.itemCount, item.selections);
+    cart.addItem(
+        item.id, item.totalPrice, item.title, item.itemCount, item.selections);
     Navigator.of(context).pop();
   }
-
 }
 
 class Header extends StatelessWidget {
@@ -204,19 +227,19 @@ class Header extends StatelessWidget {
 }
 
 class Section extends StatelessWidget {
-
   Section({this.section});
   final section;
-
 
   @override
   Widget build(BuildContext context) {
     final String type = section.type ?? "Radio";
     final selections = section.selections;
-    return Column(children: <Widget>[
-    Header(section: section),
-    if (selections != null) SelectionGroup(type: type, section: section),
-    ],);  
+    return Column(
+      children: <Widget>[
+        Header(section: section),
+        if (selections != null) SelectionGroup(type: type, section: section),
+      ],
+    );
   }
 }
 
@@ -237,7 +260,8 @@ class ItemBody extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              if (item.sections?.isNotEmpty ?? false) ...item.sections.map((section) => Section(section: section)),
+              if (item.sections?.isNotEmpty ?? false)
+                ...item.sections.map((section) => Section(section: section)),
               ItemCounter()
             ],
           ),
@@ -247,8 +271,7 @@ class ItemBody extends StatelessWidget {
   }
 }
 
-
-class ItemCounter extends StatelessWidget{
+class ItemCounter extends StatelessWidget {
 //  int _defaultValue =1;
   @override
   Widget build(BuildContext context) {
@@ -257,51 +280,60 @@ class ItemCounter extends StatelessWidget{
     return Container(
       height: 100,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-      InkWell(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        
-        child: Stack(alignment: Alignment.center, children: <Widget>[
-        Icon(Icons.remove, color: kMainColor,), 
-        counterButtonContainer()
-      ],) , onTap: () {
-        item.decrement();
-      }),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text('${item.itemCount}', style: TextStyle(color: kMainColor),),
-      ),
-      InkWell( 
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        
-        child: Stack( alignment: Alignment.center,
-        children: <Widget> [
-          counterButtonContainer(), 
-          Icon(Icons.add, color: kMainColor,)
-        ]), onTap: () {
-          item.increment();
-      })
-      ]),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.remove,
+                      color: kMainColor,
+                    ),
+                    counterButtonContainer()
+                  ],
+                ),
+                onTap: () {
+                  item.decrement();
+                }),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${item.itemCount}',
+                style: TextStyle(color: kMainColor),
+              ),
+            ),
+            InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                child: Stack(alignment: Alignment.center, children: <Widget>[
+                  counterButtonContainer(),
+                  Icon(
+                    Icons.add,
+                    color: kMainColor,
+                  )
+                ]),
+                onTap: () {
+                  item.increment();
+                })
+          ]),
     );
-}
+  }
 
   Container counterButtonContainer() {
-    return Container(width: 50, 
-      height: 50, 
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: kMainColor, width: 2)));
+    return Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: kMainColor, width: 2)));
   }
 }
 
-
-
-class SelectionGroup extends StatelessWidget{
-
+class SelectionGroup extends StatelessWidget {
   SelectionGroup({this.type, this.section});
   final section;
   final type;
@@ -315,15 +347,17 @@ class SelectionGroup extends StatelessWidget{
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              SelectionContainer(type: type, selection: selection, section: section),
-              InkWell(                
+              SelectionContainer(
+                  type: type, selection: selection, section: section),
+              InkWell(
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
-                  onTap: () {
-                    if (type == 'Checkbox') item.selectCheckbox(selection);
-                    if (type == 'Radio') item.selectRadio(selection, section);
-                  },
-                  )],
+                onTap: () {
+                  if (type == 'Checkbox') item.selectCheckbox(selection);
+                  if (type == 'Radio') item.selectRadio(selection, section);
+                },
+              )
+            ],
           ),
         );
       }).toList(),
@@ -331,28 +365,34 @@ class SelectionGroup extends StatelessWidget{
   }
 }
 
-
 class SelectionContainer extends StatelessWidget {
   SelectionContainer({this.selection, this.section, this.type});
   final selection;
   final section;
   final type;
 
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Align(alignment: Alignment.centerRight, child: Padding(
-          padding: const EdgeInsets.all(18),
-          child: Text('\$ ${selection.price.toString()}', style: TextStyle(fontSize: 16, color: kMainColor),),
-        )),
+        Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.all(18),
+              child: Text(
+                '\$ ${selection.price.toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 16, color: kMainColor),
+              ),
+            )),
         Align(
           alignment: Alignment.centerLeft,
           child: Row(
             children: <Widget>[
-              (type == 'Checkbox') ? SingleCheckbox(selection: selection) : SingleRadio(section: section,selection: selection),
-              Text(selection.title, style: TextStyle(fontSize: 16, color: kMainColor)),
+              (type == 'Checkbox')
+                  ? SingleCheckbox(selection: selection)
+                  : SingleRadio(section: section, selection: selection),
+              Text(selection.title,
+                  style: TextStyle(fontSize: 16, color: kMainColor)),
             ],
           ),
         ),
@@ -368,8 +408,7 @@ class SingleCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Checkbox(
       value: selection.selected,
-      onChanged: (bool value) {
-      },
+      onChanged: (bool value) {},
     );
   }
 }

@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   new Container(
                     width: screenSize.width,
                     height: 50,
-                    // color: Color(0xff365e7a),
+                    // color: kMainColor,
                     child: new FlatButton(
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         submit();
                       },
-                      color: Color(0xff365e7a),
+                      color: kMainColor,
                     ),
                     margin: new EdgeInsets.only(top: 20.0),
                   ),
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.transparent,
                     child: Text("Forgot your password?",
                         style: TextStyle(
-                            color: Color(0xff365e7a),
+                            color: kMainColor,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
                               Navigator.of(context).push(CupertinoPageRoute(builder: (ctx) => ResetPasswordPage()));
@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       Text("Need an Account?  ",
                           style: TextStyle(
-                              color: Color(0xff365e7a),
+                              color: kMainColor,
                               fontWeight: FontWeight.w300)),
                       InkWell(
                         highlightColor: Colors.transparent,
@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Sign Up",
                           style: TextStyle(
-                              color: Color(0xff365e7a),
+                              color: kMainColor,
                               fontWeight: FontWeight.w500),
                         ),
                         onTap: () {

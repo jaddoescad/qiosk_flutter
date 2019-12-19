@@ -82,7 +82,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               new Container(
                 width: screenSize.width,
                 height: 50,
-                // color: Color(0xff365e7a),
+                // color: kMainColor,
                 child: new FlatButton(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
@@ -94,7 +94,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     this.submit();
                     // Navigator.popUntil(context, ModalRoute.withName('/screen2'));
                   },
-                  color: Color(0xff365e7a),
+                  color: kMainColor,
                 ),
                 margin: new EdgeInsets.only(top: 20.0),
               ),

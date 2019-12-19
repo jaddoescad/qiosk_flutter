@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import '../constants.dart';
 
 class NavBar extends StatelessWidget {
 
@@ -28,7 +29,7 @@ class NavBar extends StatelessWidget {
               color: Colors.white,
               border: Border(
                 bottom: BorderSide(
-                  color: Color(0xFF365e7a),
+                  color: kMainColor,
                   width: 0.25,
                 ),
               ),
@@ -40,9 +41,9 @@ class NavBar extends StatelessWidget {
           ),
           child: TabBar(
             isScrollable: true,
-            indicatorColor: Color(0xFF365e7a),
+            indicatorColor: kMainColor,
             indicatorWeight: 2.0,
-            labelColor: Color(0xFF365e7a),
+            labelColor: kMainColor,
             tabs: myTabs,
           ),
         ),
