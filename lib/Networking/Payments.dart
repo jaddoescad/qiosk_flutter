@@ -38,14 +38,6 @@ class Payments {
       final card = resp.data['source'];
       payment.setCard(card['id'], card['card']['last4'], card['card']['brand'] );
     }
-
-    // await Firestore.instance
-    //     .collection('Users')
-    //     .document(user.uid)
-    //     .collection('tokens')
-    //     .document()
-    //     .setData({'tokenId': token});
-    // payment.setToken(token);
   }
 
   Future<PageToGo> goToPage(context) async {

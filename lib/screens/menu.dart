@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
 import '../models/restaurant.dart';
 import '../widgets/itemList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:iamrich/screens/cartPage.dart';
+import 'package:flutter/services.dart';
 
 class Menu extends StatefulWidget {
 
@@ -58,16 +62,17 @@ return DefaultTabController(
       child: Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: kMainColor,
+        elevation: 1,
+        backgroundColor: Colors.white,
         centerTitle: true,
-        leading: IconButton(icon: ImageIcon(AssetImage("assets/images/camera.png"), size: 30, color: Colors.white,), onPressed: () {
+        leading: IconButton(icon: ImageIcon(AssetImage("assets/images/camera.png"), size: 30, color: kMainColor,), onPressed: () {
                 Navigator.of(context).pop();
               }                   
             ),
         actions: <Widget>[
           Stack(
           children: <Widget>[
-          IconButton(icon: ImageIcon(AssetImage("assets/images/cart.png"), size: 30, color: Colors.white,), onPressed: () {
+          IconButton(icon: ImageIcon(AssetImage("assets/images/cart.png"), size: 30, color: kMainColor,), onPressed: () {
                       Navigator.of(context).push(
                         CupertinoPageRoute(builder: (ctx) => CartPage()),
                           );
@@ -91,7 +96,7 @@ return DefaultTabController(
           ],
         ),
         ],
-        title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18, color: Colors.white),),
+        title: Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18, color: kMainColor),),
         bottom: ColoredTabBar(Colors.white, TabBar(
           labelPadding: EdgeInsets.only(left: 10, right: 10),
               indicatorSize: TabBarIndicatorSize.label,
@@ -126,7 +131,7 @@ class ColoredTabBar extends Container implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-    elevation: 15.0,
+    elevation: 0,
     child: Container(
     height: 60,
     padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),

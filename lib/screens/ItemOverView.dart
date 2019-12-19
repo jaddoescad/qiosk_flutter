@@ -92,6 +92,7 @@ class _ItemOverviewState extends State<ItemOverview>
             item.checkIfItemMeetsAllConditions();
             return SelectionPage();
           } else if (snapshot.hasError) {
+            //work on this later
             return Text("${snapshot.error}");
           }
           return WillPopScope(

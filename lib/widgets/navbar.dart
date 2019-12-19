@@ -34,7 +34,7 @@ class NavBar extends StatelessWidget {
               ),
               boxShadow: [new BoxShadow(
                 color: Colors.grey,
-                blurRadius: 4.0,
+                // blurRadius: 4.0,
               ),
               ]
           ),

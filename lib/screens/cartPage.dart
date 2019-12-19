@@ -45,7 +45,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
         });
         if (goToCheckout.goToCheckout) {
           goToCheckout.setGoToCheckout(false);
-          await Future.delayed(const Duration(milliseconds: 500), () {});
           setState(() {
             loader = false;
           });

@@ -79,6 +79,7 @@ class MyAppState extends State<MyApp> {
         theme: ThemeData(
           fontFamily: 'Avenir',
           primaryColor: kMainColor,
+
           // accentColor: Color(0xFF365E7a)
         ),
         home: Splash(),

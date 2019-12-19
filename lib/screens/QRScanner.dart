@@ -21,6 +21,7 @@ import 'dart:core';
 import 'dart:async';
 import '../models/user.dart';
 import '../screens/profile.dart';
+import 'package:flutter/services.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -142,6 +143,10 @@ _disable = true;
   }
 
   ModalProgressHUD qrScannerView() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+   statusBarColor: Colors.black, // Color for Android
+   statusBarBrightness: Brightness.light // Dark == white status bar -- for IOS.
+));
     return ModalProgressHUD(
         child: Scaffold(
           body: Stack(fit: StackFit.expand, children: <Widget>[

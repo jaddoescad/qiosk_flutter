@@ -31,7 +31,11 @@ class Order {
   int date;
 
   Map<String, OrderItem> _orderItems = {};
+  Map<String, OrderItem> get orderItems {
 
+    return {...orderItems};
+  }
+  
   Order({this.orderId, this.status, this.amount, this.date});
 
 
@@ -45,7 +49,7 @@ class Order {
         quantity: item['quantity'],
         price: item['price'].toDouble(),
         selectionTitles: item['selections']);
-    _orderItems[item['generatedId']] = orderItem;
+        orderItems[item['generatedId']] = orderItem;
   }
 }
 
@@ -78,7 +82,7 @@ class RestaurantOrders with ChangeNotifier {
     _orders.add(order);
     //sort orders here
     if (dismiss == true) {
-    QRViewExampleState.myTabbedPageKey.currentState.tabController.animateTo(1, duration: Duration(milliseconds: 0),  );
+    QRViewExampleState.myTabbedPageKey.currentState.changeMyTab();
     }
     notifyListeners();
   }
