@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../screens/QRScanner.dart';
-import '../main.dart';
 //fetch all orders
 //create order
 //listen to change in orders

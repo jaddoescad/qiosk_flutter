@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart';
+import 'package:iamrich/constants.dart';
 
 class CartButton extends StatelessWidget {
   CartButton({this.title, this.func});
@@ -28,7 +29,7 @@ class CartButton extends StatelessWidget {
       child: RaisedButton(
         elevation: 0,
         child: new CartButtonChildren(title: title, price: cart.totalAmount.toStringAsFixed(2)),
-        color: Color(0xFF365e7a),
+        color: kMainColor,
         onPressed:  () {func(context, user, cart);},
       ),
     );

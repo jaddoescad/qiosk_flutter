@@ -87,11 +87,11 @@ class _CartPageState extends State<CartPage> with RouteAware {
               ? CartButton(title: "Place Your Order", func: checkout)
               : null,
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(55.0),
+            preferredSize: Size.fromHeight(100.0),
             child: AppBar(
-              backgroundColor: Color(0xFF365e7a),
+              backgroundColor: kMainColor,
               title: Text(
-                "Cart",
+                "Les Moulins La Fayette",
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 textAlign: TextAlign.center,
@@ -115,6 +115,26 @@ class _CartPageState extends State<CartPage> with RouteAware {
                   Navigator.of(context).pop();
                 },
               ),
+            bottom: PreferredSize(
+            preferredSize: Size.fromHeight(50.0),
+            child: Container(
+                    color: Colors.white,
+                    height: 50,
+                    padding: EdgeInsets.only(left: 20),
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Cart",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        )),
+                  ),
+            ),
             ),
           ),
           body: CustomScrollView(slivers: <Widget>[
@@ -140,7 +160,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
                                 style: TextStyle(fontSize: 10),
                               ),
                               Text(
-                                "      Cart is Empty",
+                                "Cart is Empty",
                                 style: TextStyle(
                                     color: Color(0xFF365e7a).withOpacity(0.4),
                                     fontSize: 20),
@@ -149,23 +169,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
                           ),
                         )
                       : Container(),
-                  Container(
-                    color: kSectionColor,
-                    height: 50.0,
-                    padding: EdgeInsets.only(left: 20),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Les Moulins La Fayette",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: Color(0xFF365e7a),
-                          ),
-                        )),
-                  ),
                 ],
               ),
             ),
@@ -243,3 +246,5 @@ class _CartPageState extends State<CartPage> with RouteAware {
     super.dispose();
   }
 }
+
+

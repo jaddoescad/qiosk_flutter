@@ -29,7 +29,7 @@ class ItemContainer extends StatelessWidget {
             item.imgUrl != null ? ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                height: 150,
+                height: 175,
                 width: double.infinity,
                 child: Image.network(
                        item.imgUrl,
