@@ -15,7 +15,7 @@ class CartItemCard extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     return Slidable(
       controller: slidableController,
-      actionPane: SlidableStrechActionPane(),
+      actionPane: SlidableDrawerDismissal(),
       actionExtentRatio: 0.25,
       child: Container(
        color: Colors.white,
