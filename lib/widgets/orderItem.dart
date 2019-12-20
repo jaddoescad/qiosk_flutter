@@ -12,7 +12,6 @@ class OrderItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final restaurant = Provider.of<Restaurant>(context);
-    debugPrint(order.orderItems.values.toString());
     return Container(
       color: Color(0xFFEAEAEA),
       child: Container(

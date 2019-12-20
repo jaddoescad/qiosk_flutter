@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iamrich/screens/AboutUs.dart';
 import '../constants.dart';
 import '../screens/authScreen.dart';
 
@@ -131,12 +130,12 @@ class ProfileNotLoggedIn extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                CupertinoPageRoute(
-                    builder: (ctx) => AboutUs()
+              // Navigator.of(context).push(
+              //   CupertinoPageRoute(
+              //       builder: (ctx) => AboutUs()
                         
-                        ),
-              );
+              //           ),
+              // );
             },
                       child: Container(
               decoration: BoxDecoration(
@@ -160,7 +159,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.only(left: 25),
                     child: Text(
-                      "About Us",
+                      "QIOSK.ca",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(

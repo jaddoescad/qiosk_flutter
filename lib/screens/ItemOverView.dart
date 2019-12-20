@@ -75,7 +75,6 @@ class _ItemOverviewState extends State<ItemOverview>
           if (!snapshot.hasData) {
             return itemFutureBuilder(item);
           } else if (snapshot.hasData) {
-            // print(snapshot.data['sections']);
             item.fromSelectionJson(snapshot.data);
             item.checkIfItemMeetsAllConditions();
             return SelectionPage();

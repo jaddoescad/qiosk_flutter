@@ -128,7 +128,6 @@ _disable = false;
                         .checkPermissionStatus(PermissionGroup.camera);
 
                     if (permission == PermissionStatus.granted) {
-                      print("here");
                       setState(() {
                         cameraPermission = true;
                       });

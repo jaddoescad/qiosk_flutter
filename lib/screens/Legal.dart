@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 import '../models/user.dart';
 import 'package:flutter/cupertino.dart';
 import '../screens/account.dart';
 import '../screens/wallet.dart';
-import '../constants.dart';
 import 'dart:math';
-import '../screens/Legal.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-class ProfileLoggedIn extends StatefulWidget {
+class Legal extends StatefulWidget {
   final showBackButton;
-  ProfileLoggedIn({this.showBackButton = false});
+  Legal({this.showBackButton = false});
   @override
-  _ProfileLoggedInState createState() => _ProfileLoggedInState();
+  _LegalState createState() => _LegalState();
 }
 
-class _ProfileLoggedInState extends State<ProfileLoggedIn> {
+class _LegalState extends State<Legal> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
@@ -32,7 +28,6 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
         brightness: Brightness.light,
         elevation: 1,
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
         title: Text(
           "Profile",
           overflow: TextOverflow.ellipsis,
@@ -48,12 +43,14 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
       ),
       body: ListView(
         children: <Widget>[
-          profileCard(context, 'Account', Account() ),
-          profileCard(context, 'Wallet', Wallet() ),
+          profileCard(context, 'Copyright', Account() ),
+          profileCard(context, 'Terms & Conditions', Account() ),
 
-          profileCard(context, 'Legal', Legal() ),
+          profileCard(context, 'Privacy Policy', Account() ),
 
-          profileCard(context, 'QIOSK.ca', Account()),
+          profileCard(context, 'Software Licenses', Account()),
+          profileCard(context, 'Pricing', Account()),
+
         ],
       ),
     );
@@ -89,10 +86,7 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
                     width: double.infinity,
                     height: 75,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        CupertinoPageRoute(builder: (ctx) => page));
-                  },
+                  onPressed: null
                 ),
             ],
           ),

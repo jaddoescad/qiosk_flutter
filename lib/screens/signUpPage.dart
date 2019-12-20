@@ -25,9 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool loader = false;
   /// Normally the signin buttons should be contained in the SignInPage
   @override
-  Widget build(BuildContext context) {
-  print(widget.cameFrom);
-  
+  Widget build(BuildContext context) {  
     final Size screenSize = MediaQuery.of(context).size;
     return ModalProgressHUD(
       inAsyncCall: loader,
