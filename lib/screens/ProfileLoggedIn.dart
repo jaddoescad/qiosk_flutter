@@ -14,7 +14,7 @@ import '../screens/Legal.dart';
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
 class ProfileLoggedIn extends StatefulWidget {
-  final showBackButton;
+  final bool showBackButton;
   ProfileLoggedIn({this.showBackButton = false});
   @override
   _ProfileLoggedInState createState() => _ProfileLoggedInState();
@@ -32,7 +32,7 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
         brightness: Brightness.light,
         elevation: 1,
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: widget.showBackButton,
         title: Text(
           "Profile",
           overflow: TextOverflow.ellipsis,
@@ -45,6 +45,19 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
           ),
         ),
         centerTitle: true,
+         leading:  widget.showBackButton ?  IconButton(
+              splashColor: Colors.transparent,
+              highlightColor:
+                  Colors.transparent, // makes highlight invisible too
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+              ),
+              onPressed: () {
+                //add to cart
+                Navigator.of(context).pop();
+              },
+            ) : null,
       ),
       body: ListView(
         children: <Widget>[

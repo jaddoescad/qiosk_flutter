@@ -27,6 +27,19 @@ class ProfileNotLoggedIn extends StatelessWidget {
             ),
           ),
           centerTitle: true,
+           leading: new IconButton(
+              splashColor: Colors.transparent,
+              highlightColor:
+                  Colors.transparent, // makes highlight invisible too
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+              ),
+              onPressed: () {
+                //add to cart
+                Navigator.of(context).pop();
+              },
+            ),
         ),
       ),
       body: Column(
