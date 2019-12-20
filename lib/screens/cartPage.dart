@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
 import 'package:iamrich/models/cart.dart';
 import '../constants.dart';
-import '../constants.dart';
 import '../screens/authScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:iamrich/widgets/cartItem.dart';

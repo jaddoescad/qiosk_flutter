@@ -34,8 +34,11 @@ class _OrderPageState extends State<OrderPage>
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55.0),
         child: AppBar(
+          iconTheme: IconThemeData(color: kMainColor),
+          brightness: Brightness.light,
+          elevation: 1,
+          backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
-          backgroundColor: kMainColor,
           title: Text(
             "Orders",
             overflow: TextOverflow.ellipsis,
@@ -44,7 +47,7 @@ class _OrderPageState extends State<OrderPage>
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 18,
-              color: Colors.white,
+              color: kMainColor,
             ),
           ),
           centerTitle: true,
