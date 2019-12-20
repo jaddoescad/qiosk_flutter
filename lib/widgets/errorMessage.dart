@@ -10,6 +10,7 @@ showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                elevation: 0,
                 title: new Text("Success"),
                 content: new Text(e.toString()),
                 actions: <Widget>[
@@ -31,6 +32,7 @@ showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                elevation: 0,
                 title: new Text("Error"),
                 content: new Text(e.toString()),
                 actions: <Widget>[

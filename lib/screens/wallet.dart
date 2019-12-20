@@ -136,6 +136,7 @@ class _WalletState extends State<Wallet> {
                   loader = true;
                 });
                 await Payments().showPaymentCard(context, paymentResponse);
+                showSuccessDialog(context, "Successfully added card");
                 setState(() {
                   loader = false;
                 });
