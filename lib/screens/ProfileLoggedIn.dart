@@ -53,7 +53,7 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
 
           profileCard(context, 'Legal', Legal() ),
 
-          profileCard(context, 'QIOSK.ca', Account()),
+          profileCard(context, 'QIOSK.ca', null),
         ],
       ),
     );
@@ -90,12 +90,16 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
                     height: 75,
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(
+                    if (page != null) {
+                   Navigator.of(context).push(
                         CupertinoPageRoute(builder: (ctx) => page));
-                  },
+                  }
+                    }
+ 
                 ),
             ],
           ),
         );
   }
+  
 }
