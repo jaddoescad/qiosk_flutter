@@ -6,7 +6,6 @@ import '../constants.dart';
 import '../models/payment.dart';
 import '../models/orders.dart';
 import '../widgets/errorMessage.dart';
-import '../constants.dart';
 import 'package:flutter/cupertino.dart';
 
 class Account extends StatelessWidget {
@@ -47,15 +46,12 @@ class Account extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          accountCard(context, "Name", user.name),
+          accountCard(context, "Name", user.name.toUpperCase()),
           accountCard(context, "Email", user.email),
           SizedBox(
             height: 20,
           ),
           signOutCard(context, 'Sign Out', user),
-          // Text(user.name),
-          // Text(user.email),
-          // SignOutButton(user: user)
         ],
       ),
     );
