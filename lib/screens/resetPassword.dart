@@ -29,20 +29,37 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     return ModalProgressHUD(
       inAsyncCall: loader,
       child: Scaffold(
-        appBar: new AppBar(
-            backgroundColor: kMainColor,
-            title: new Text('Reset Password'),
-            centerTitle: true,
-            leading: IconButton(
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-                size: 25,
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-            )),
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: kMainColor),
+          brightness: Brightness.light,
+          elevation: 1,
+          backgroundColor: Colors.white,
+          title: Text(
+            "Reset Password",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              color: kMainColor,
+            ),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent, // makes highlight invisible too
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            onPressed: () {
+              //add to cart
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
         body: (pageState == "reset")
             ? resetPassword(context, screenSize)
             : Center(
@@ -106,7 +123,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   }
 
   String _validateEmail(String value) {
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(value);
     if (!emailValid) {
       return 'The Email Address must be a valid email address.';
     }

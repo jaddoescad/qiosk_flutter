@@ -34,20 +34,38 @@ class _LoginPageState extends State<LoginPage> {
     return ModalProgressHUD(
       inAsyncCall: loader,
       child: Scaffold(
-        appBar: new AppBar(
-            backgroundColor: kMainColor,
-            title: new Text('Login'),
-            centerTitle: true,
-            leading: IconButton(
-              highlightColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+        iconTheme: IconThemeData(color: kMainColor),
+        brightness: Brightness.light,
+        elevation: 1,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Login",
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            color: kMainColor,
+          ),
+        ),
+        centerTitle: true,
+         leading:  IconButton(
               splashColor: Colors.transparent,
+              highlightColor:
+                  Colors.transparent, // makes highlight invisible too
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
-                size: 25,
+                size: 20,
               ),
-              onPressed: () => Navigator.of(context).pop(),
-            )),
+              onPressed: () {
+                //add to cart
+                Navigator.of(context).pop();
+              },
+            ) ,
+      ),
         body: Container(
           // color: Colors.red,
           height: double.infinity,
