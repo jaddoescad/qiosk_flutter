@@ -94,7 +94,6 @@ class OrderPageState extends State<OrderPage>
                 stream: Firestore.instance
                     .collection('Orders')
                     .where("userId", isEqualTo: user.uid)
-                    .where("r_id", isEqualTo: restaurant.id)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {

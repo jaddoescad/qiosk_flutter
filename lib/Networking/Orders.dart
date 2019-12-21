@@ -65,7 +65,6 @@ class OrdersNetworking {
       var updatedOrder = await Firestore.instance
           .collection('Orders')
           .where("userId", isEqualTo: user.uid)
-          .where("r_id", isEqualTo: restaurant.id)
           .snapshots()
           .listen((onData) {
         onData.documents.forEach((order) {
