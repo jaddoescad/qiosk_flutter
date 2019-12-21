@@ -236,7 +236,7 @@ _disable = false;
 
   Future<void> getMenuandOrders(rid) async {
     final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
-    final data =await RestaurantNetworking.fetchMenuandOrders(rid, firuser.uid);
+    final data =await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
 
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
     final restaurant = Provider.of<Restaurant>(context);
