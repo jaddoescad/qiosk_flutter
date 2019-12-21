@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iamrich/constants.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../constants.dart';
 import '../models/cart.dart';
 
 class CartItemCard extends StatelessWidget {

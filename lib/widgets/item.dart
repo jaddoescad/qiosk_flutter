@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/restaurant.dart';
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 import '../screens/ItemOverView.dart';
 import 'package:flutter/cupertino.dart';
 

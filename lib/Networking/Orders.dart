@@ -62,7 +62,7 @@ class OrdersNetworking {
     final user = Provider.of<User>(context);
     final restaurant = Provider.of<Restaurant>(context);
     if (user.uid != null && restaurant.id != null) {
-      var updatedOrder = await Firestore.instance
+    Firestore.instance
           .collection('Orders')
           .where("userId", isEqualTo: user.uid)
           .snapshots()

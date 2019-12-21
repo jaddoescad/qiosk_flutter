@@ -4,10 +4,6 @@ import 'package:iamrich/models/cart.dart';
 import 'package:iamrich/widgets/addCart.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 
 class ItemHeader extends StatelessWidget {
   @override

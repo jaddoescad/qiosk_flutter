@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../models/user.dart';
 import 'package:flutter/cupertino.dart';
 import '../screens/account.dart';
-import '../screens/wallet.dart';
 import 'dart:math';
 
 
@@ -18,7 +15,6 @@ class Legal extends StatefulWidget {
 class _LegalState extends State<Legal> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context, listen: false);
     return Scaffold(
       backgroundColor: kBodyBackground,
       appBar: AppBar(

@@ -19,7 +19,6 @@ import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
 import 'dart:async';
-import '../models/user.dart';
 import '../screens/profile.dart';
 import 'package:flutter/services.dart';
 
@@ -123,7 +122,7 @@ _disable = false;
                   child: Text('Please press to activate Camera'),
                   onPressed: () async {
                     bool isOpened = await PermissionHandler().openAppSettings();
-
+                    print(isOpened);
                     PermissionStatus permission = await PermissionHandler()
                         .checkPermissionStatus(PermissionGroup.camera);
 

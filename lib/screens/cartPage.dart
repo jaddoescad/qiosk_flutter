@@ -172,7 +172,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           setState(() {
             loader = true;
           });
-          final addPaymentStatus =
+          
               await Payments().showPaymentCard(context, paymentResponse);
           showSuccessDialog(context, "Successfully added card");
           setState(() {

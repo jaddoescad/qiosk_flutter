@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../models/user.dart';
 import 'package:flutter/cupertino.dart';
 import '../screens/account.dart';
 import '../screens/wallet.dart';
-import '../constants.dart';
 import 'dart:math';
 import '../screens/Legal.dart';
 
@@ -23,7 +18,6 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-    final user = Provider.of<User>(context, listen: false);
     return Scaffold(
       backgroundColor: kBodyBackground,
       key: _scaffoldKey,
