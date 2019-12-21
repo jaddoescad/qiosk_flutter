@@ -19,7 +19,7 @@ import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
-
+  
   @override
   _CartPageState createState() => _CartPageState();
 }

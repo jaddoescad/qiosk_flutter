@@ -9,23 +9,32 @@ import '../models/restaurant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderPage extends StatefulWidget {
+  const OrderPage({Key key}) : super(key: key);
   @override
-  _OrderPageState createState() => _OrderPageState();
+  OrderPageState createState() => OrderPageState();
 }
 
-class _OrderPageState extends State<OrderPage>
+class OrderPageState extends State<OrderPage>
     with WidgetsBindingObserver, RouteAware {
   Future ordersFuture;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     // ordersFuture = fetchOrders();
+    _scrollController = ScrollController();
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  scrollToTop() {
+    _scrollController.animateTo(_scrollController.position.minScrollExtent,
+        duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
   }
 
   @override
@@ -93,6 +102,7 @@ class _OrderPageState extends State<OrderPage>
                   orders.updateFirebaseData(snapshot);
 
                   return CustomScrollView(
+                    controller: _scrollController,
                     slivers: <Widget>[
                       SliverList(
                           delegate: SliverChildListDelegate([

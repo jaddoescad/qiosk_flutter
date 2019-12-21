@@ -7,7 +7,6 @@ import '../screens/account.dart';
 import '../screens/wallet.dart';
 import 'dart:math';
 
-GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
 class Legal extends StatefulWidget {
   final showBackButton;
@@ -22,7 +21,6 @@ class _LegalState extends State<Legal> {
     final user = Provider.of<User>(context, listen: false);
     return Scaffold(
       backgroundColor: kBodyBackground,
-      key: _scaffoldKey,
       appBar: AppBar(
         iconTheme: IconThemeData(color: kMainColor),
         brightness: Brightness.light,

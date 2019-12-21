@@ -11,7 +11,6 @@ import '../constants.dart';
 import 'dart:math';
 import '../screens/Legal.dart';
 
-GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
 class ProfileLoggedIn extends StatefulWidget {
   final bool showBackButton;
@@ -23,6 +22,7 @@ class ProfileLoggedIn extends StatefulWidget {
 class _ProfileLoggedInState extends State<ProfileLoggedIn> {
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
     final user = Provider.of<User>(context, listen: false);
     return Scaffold(
       backgroundColor: kBodyBackground,

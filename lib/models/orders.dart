@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:iamrich/screens/homePage.dart';
 import '../screens/QRScanner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //fetch all orders
@@ -85,6 +86,7 @@ class RestaurantOrders with ChangeNotifier {
     //sort orders here
     if (dismiss == true) {
       QRViewExampleState.myTabbedPageKey.currentState.changeMyTab();
+      HomePageState.scrollToTopKey.currentState.scrollToTop();
     }
     notifyListeners();
   }

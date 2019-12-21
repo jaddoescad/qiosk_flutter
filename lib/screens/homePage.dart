@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/Networking/Auth.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 import '../screens/menu.dart';
 import '../screens/ProfileNotLoggedIn.dart';
 import '../screens/Orders.dart';
 import '../models/user.dart';
 import '../screens/ProfileLoggedIn.dart';
 import 'package:iamrich/constants.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -24,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin , WidgetsBindingObserver{
+static final scrollToTopKey = new GlobalKey<OrderPageState>();
   CupertinoTabController tabController;
   int _currentTabIndex = 0;
 
@@ -120,7 +119,7 @@ class HomePageState extends State<HomePage>
             return Menu();
             break;
           case 1:
-            return OrderPage();
+            return OrderPage(key: scrollToTopKey);
             break;
           case 2:
             return (user.uid == null)
