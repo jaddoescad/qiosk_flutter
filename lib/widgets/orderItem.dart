@@ -126,7 +126,9 @@ class OrderItemCard extends StatelessWidget {
        Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
        ],),
        ),  
-       Divider(),
+       Divider(
+         thickness: 1,
+       ),
        Container(
        padding: EdgeInsets.only(top: 15, bottom: 15),
        margin: EdgeInsets.only(left: 15, right: 15),
@@ -141,7 +143,13 @@ class OrderItemCard extends StatelessWidget {
        crossAxisAlignment: CrossAxisAlignment.start,
        children: <Widget> [
        Text(" " + item.quantity.toString() + "  " + item.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: kMainColor),),
-       ...item.selectionTitles.values.map((selection) => Text(selection, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: kMainColor),),),
+       ...item.selectionTitles.values.map((selection) {
+         return Padding(
+           padding: const EdgeInsets.only(left: 16.0),
+           child: Text(selection['title'], overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12, color: Colors.grey),),
+         );
+       } 
+       ),
        ]
        ),
        ),
@@ -149,7 +157,9 @@ class OrderItemCard extends StatelessWidget {
        ]
        ),
        ),
-       Divider(),
+       Divider(
+         thickness: 1,
+       ),
        Container(
        padding: EdgeInsets.only(top: 15, bottom: 15),
        margin: EdgeInsets.only(left: 15, right: 15),
