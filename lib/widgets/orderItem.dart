@@ -94,28 +94,120 @@ class OrderItemCard extends StatelessWidget {
        onTap: () {
        showDialog(
        context: context,
-       builder: (_) => SimpleDialog(
-       title: Container(
-         decoration: BoxDecoration(
-           border: Border(bottom: BorderSide(color: Colors.grey, width: 0.5))
-         ),
-         child: Text("Receipt", textAlign: TextAlign.center,),),
+       builder: (_) => Dialog(
+       child: Container(
+       height: MediaQuery.of(context).size.height*0.75,
+       child: Column(
        children: <Widget>[
-       CustomScrollView(
-       slivers: <Widget>[
-         SliverToBoxAdapter(
-           child: Container(),
-           ),
-         SliverToBoxAdapter(
-           child: Container(),
-           ),
-         SliverToBoxAdapter(
-           child: Container(),
-           )
-       ],
+       Container(
+         decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey, width: 0.5))),
+         height: 50,
+         child: Center(
+           child: Text("Receipt", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+         ),
+         ),
+       Expanded(
+       flex: 1,
+       child: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+       Container(
+       padding: EdgeInsets.only(top: 15, bottom: 15),
+       margin: EdgeInsets.only(left: 15, right: 15),
+       child: Column(
+       mainAxisAlignment: MainAxisAlignment.start,
+       crossAxisAlignment: CrossAxisAlignment.start,
+       children: <Widget>[
+       Text("Order #" + order.orderId, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12, color: Colors.grey),),
+       Text(order.orderItems.keys.toString().substring(1, 11), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.grey)),
+       Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
+       ],),
+       ),  
+       Divider(),
+       Container(
+       padding: EdgeInsets.only(top: 15, bottom: 15),
+       margin: EdgeInsets.only(left: 15, right: 15),
+       child: Column(
+       mainAxisAlignment: MainAxisAlignment.start,
+       crossAxisAlignment: CrossAxisAlignment.start,
+       children: <Widget> [
+       ...order.orderItems.values.map((item) => 
+       Container(
+       child: Column(
+       mainAxisAlignment: MainAxisAlignment.start,
+       crossAxisAlignment: CrossAxisAlignment.start,
+       children: <Widget> [
+       Text(" " + item.quantity.toString() + "  " + item.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: kMainColor),),
+       ...item.selectionTitles.values.map((selection) => Text(selection, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: kMainColor),),),
+       ]
+       ),
+       ),
+       ),
+       ]
+       ),
+       ),
+       Divider(),
+       Container(
+       padding: EdgeInsets.only(top: 15, bottom: 15),
+       margin: EdgeInsets.only(left: 15, right: 15),
+       child: Column(
+       mainAxisAlignment: MainAxisAlignment.start,
+       crossAxisAlignment: CrossAxisAlignment.start,
+       children: <Widget> [
+       Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         crossAxisAlignment: CrossAxisAlignment.center,
+         children: <Widget>[
+           Text("Subtotal"),
+           Text('\$ ${order.amount.toStringAsFixed(2)}'),
+         ],
+       ),
 
+      Text(" "),
+
+       Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         crossAxisAlignment: CrossAxisAlignment.center,
+         children: <Widget>[
+           Text("Taxes"),
+           Text('\$ ${order.amount.toStringAsFixed(2)}'),
+         ],
+       ),
+
+      Text(" "),
+
+       Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         crossAxisAlignment: CrossAxisAlignment.center,
+         children: <Widget>[
+           Text("Total", style: TextStyle(fontWeight: FontWeight.bold),),
+           Text('\$ ${order.amount.toStringAsFixed(2)}'),
+         ],
+       ),
+       ]
+       ),
+       ),
+            ]
+          ),
+        ),
+       ),
+       ),
+        GestureDetector(
+            onTap: () { Navigator.pop(context); },
+            child: Container(
+              decoration: BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
+              height: 50,
+              child: Center(
+              child: Text('Close', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+              ),
+              ),
+          ),
+       ]
        )
-       ],
+       ),
        ),
        );
        },
@@ -137,42 +229,3 @@ class OrderItemCard extends StatelessWidget {
       );
     }
   }
-
-
-/*
-       Container(
-        padding: EdgeInsets.only(top: 25.0, bottom: 25.0, left: 10.0, right: 10.0),
-        margin: EdgeInsets.only(left: 15.0,),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Text(order.amount.toString(), textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a)),),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(order.orderId, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a))),
-                        ...order.orderItems.values.map((selection) => Text(selection.title, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12, color: Color(0xFF365e7a)),),
-                        ),
-                      ],
-                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text('\$ ${order.amount.toStringAsFixed(2)}', textAlign: TextAlign.right, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, color: Color(0xFF365e7a)),),
-                  ),
-                ],
-              ),
-          ],
-        ),
-      ),
-*/
