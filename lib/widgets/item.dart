@@ -18,7 +18,7 @@ class ItemContainer extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             CupertinoPageRoute(
-                builder: (ctx) => ItemOverview(fromMenuItem: item)),
+                builder: (ctx) => ItemOverview(fromMenuItem: item, itemID: item.id.toString(),)),
           );
         },
         child: Container(

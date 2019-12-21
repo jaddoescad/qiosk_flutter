@@ -7,10 +7,7 @@ import '../Networking/Payments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
-import 'package:iamrich/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../constants.dart';
-import '../models/orders.dart';
 
 class Wallet extends StatefulWidget {
   @override

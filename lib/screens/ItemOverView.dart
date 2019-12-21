@@ -9,8 +9,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
-  ItemOverview({this.fromMenuItem});
+  ItemOverview({this.fromMenuItem, this.itemID});
   final MenuItem fromMenuItem;
+  final String itemID;
 
   @override
   _ItemOverviewState createState() => _ItemOverviewState();
@@ -35,7 +36,7 @@ class _ItemOverviewState extends State<ItemOverview>
   void initState() {
     super.initState();
     itemFuture = Future.delayed(Duration.zero, () {
-      return fetchSelection(context);
+      return fetchSelection(context, widget.itemID);
     });
   }
 
@@ -70,11 +71,11 @@ class _ItemOverviewState extends State<ItemOverview>
     item.updateHeader(menuItem);
 
     return StreamBuilder(
-        stream: streamSelection(context),
+        stream: streamSelection(context, widget.itemID),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return itemFutureBuilder(item);
-          } else if (snapshot.hasData) {
+          } else {
             item.fromSelectionJson(snapshot.data);
             item.checkIfItemMeetsAllConditions();
             return SelectionPage();

@@ -5,25 +5,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../models/restaurant.dart';
 
-Future fetchSelection(context) async {
+Future fetchSelection(context, itemID) async {
   final restaurant = Provider.of<Restaurant>(context);
   
   var document = await Firestore.instance
       .collection('Restaurants')
       .document(restaurant.id)
       .collection('Selections')
-      .document('oyFRgATUnXIfR5o7dqbH')
+      .document(itemID)
       .get();
   return document.data;
 }
 
- Stream streamSelection(context)  {
+ Stream streamSelection(context, itemID)  {
     final restaurant = Provider.of<Restaurant>(context);
       return Firestore.instance
       .collection('Restaurants')
       .document(restaurant.id)
       .collection('Selections')
-      .document('oyFRgATUnXIfR5o7dqbH').snapshots();
+      .document(itemID).snapshots();
 }
 
 class Item extends ChangeNotifier {
@@ -60,6 +60,7 @@ class Item extends ChangeNotifier {
 
   checkIfItemMeetsAllConditions() {
     // var exitLoop = false;
+    if (sections?.isNotEmpty ?? false) {
     for (var section in sections) {
       final selectionsLength =
           (section.selections.where((i) => i.selected).toList()).length;
@@ -78,6 +79,7 @@ class Item extends ChangeNotifier {
       }
     }
     disableCart = false;
+    }
   }
 
   get totalPrice {
@@ -146,7 +148,10 @@ class Item extends ChangeNotifier {
   }
 
   fromSelectionJson(json) {
-    sections = getSection(json['sections']);
+   
+   if  (json.data?.containsKey('sections') ?? false) {
+    sections = getSection(json.data['sections']);
+    }
   }
 
   static List<Section> getSection(Map<dynamic, dynamic> sectionsJson) {
