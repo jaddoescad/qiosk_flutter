@@ -70,8 +70,7 @@ class _WalletState extends State<Wallet> {
           body: ListView(
             children: <Widget>[
               if (wallet.cardType != null)
-                walletCard(
-                    context, 'Card Brand', wallet.cardType.toUpperCase()),
+                walletCard(context, 'Card Brand', wallet.cardType.toUpperCase()),
               if (wallet.lastFour != null)
                 walletCard(context, 'Card Number',
                     '· · · ·   · · · ·   · · · ·   ${wallet.lastFour}'),

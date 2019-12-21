@@ -90,7 +90,7 @@ class Auth with ChangeNotifier {
         if (document.data.containsKey('source')) {
           final source = document['source'];
           payment.setCard(
-              source['id'], source['card']['brand'], source['card']['last4']);
+              source['id'], source['card']['last4'], source['card']['brand']);
           //get orders
         }
       }
