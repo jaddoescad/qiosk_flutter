@@ -66,6 +66,9 @@ class RestaurantOrders with ChangeNotifier {
       addOrder(order['orderId'], order, order['status'],
           order['amount'].toDouble(), order['date'], false);
     });
+    _orders.sort((a, b) {
+      return b.date.compareTo(a.date);
+    });
   }
 
   void addOrder(String orderId, orderJson, status, amount, date, dismiss) {
@@ -77,7 +80,8 @@ class RestaurantOrders with ChangeNotifier {
     });
 
     // _orders[orderId.toString()] = order;
-    _orders.add(order);
+    // _orders.add(order);
+    _orders.insert(0, order);
     //sort orders here
     if (dismiss == true) {
       QRViewExampleState.myTabbedPageKey.currentState.changeMyTab();
