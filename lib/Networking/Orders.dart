@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/orders.dart';
+import '../models/user.dart';
+import '../models/restaurant.dart';
 
 class OrdersNetworking {
-  static Future createOrder(
+  final firestore = Firestore.instance;
+   Future createOrder(
       orderId, cart, amount, uid, restaurantid, context, token) async {
     final _items = {};
     final status = 'preparing';
@@ -51,5 +54,25 @@ class OrdersNetworking {
       Navigator.of(context).pop();
       cart.clear();
     });
+  }
+
+  void updateOrder(context) async {
+    
+    //user restaurant id and userid
+    final user = Provider.of<User>(context);
+    final restaurant = Provider.of<Restaurant>(context);
+    if (user.uid != null && restaurant.id != null) {
+      var updatedOrder = await Firestore.instance
+          .collection('Orders')
+          .where("userId", isEqualTo: user.uid)
+          .where("r_id", isEqualTo: restaurant.id)
+          .snapshots()
+          .listen((onData) {
+        onData.documents.forEach((order) {
+          print(order.documentID);
+        });
+      });
+    }
+  
   }
 }

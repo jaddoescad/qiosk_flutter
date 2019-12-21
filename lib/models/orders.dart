@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../screens/QRScanner.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 //fetch all orders
 //create order
 //listen to change in orders
@@ -33,11 +34,8 @@ class Order {
   Map<String, OrderItem> get orderItems {
     return {..._orderItems};
   }
-  
+
   Order({this.orderId, this.status, this.amount, this.date});
-
-
-
 
   void addOrderItem(item) {
     final orderItem = OrderItem(
@@ -47,14 +45,14 @@ class Order {
         quantity: item['quantity'],
         price: item['price'].toDouble(),
         selectionTitles: item['selections']);
-        _orderItems[item['generatedId']] = orderItem;
+    _orderItems[item['generatedId']] = orderItem;
   }
 }
 
 class RestaurantOrders with ChangeNotifier {
   List<Order> _orders = [];
 
-  List< Order> get orders {
+  List<Order> get orders {
     return [..._orders];
   }
 
@@ -65,12 +63,14 @@ class RestaurantOrders with ChangeNotifier {
   void addOrders(orders) {
     _orders = [];
     orders.forEach((id, order) {
-      addOrder(order['orderId'], order, order['status'], order['amount'].toDouble(), order['date'], false);
+      addOrder(order['orderId'], order, order['status'],
+          order['amount'].toDouble(), order['date'], false);
     });
   }
 
   void addOrder(String orderId, orderJson, status, amount, date, dismiss) {
-    final order = Order(orderId: orderId, status: status, amount: amount, date: date);
+    final order =
+        Order(orderId: orderId, status: status, amount: amount, date: date);
 
     orderJson['items'].forEach((final key, final orderItem) {
       order.addOrderItem(orderItem);
@@ -80,8 +80,29 @@ class RestaurantOrders with ChangeNotifier {
     _orders.add(order);
     //sort orders here
     if (dismiss == true) {
-    QRViewExampleState.myTabbedPageKey.currentState.changeMyTab();
+      QRViewExampleState.myTabbedPageKey.currentState.changeMyTab();
     }
     notifyListeners();
+  }
+
+  void updateFirebaseData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    if (snapshot.data != null) {
+      snapshot.data.documentChanges.forEach((diff) {
+        if (diff.type == DocumentChangeType.modified) {
+          snapshot.data.documents.forEach((order) {
+            final orderToUpdateIndex = _orders
+                .indexWhere((i) => i.orderId == order.documentID.toString());
+            if (orderToUpdateIndex != null) {
+              _orders[orderToUpdateIndex].status = order.data['status'];
+              notifyListeners();
+            }
+            // print(doc.documentID);
+            //addOrder(order.documentID.toString(), order, order['status'], order['amount'].toDouble(), order['date'], false);
+
+            //update document
+          });
+        }
+      });
+    }
   }
 }
