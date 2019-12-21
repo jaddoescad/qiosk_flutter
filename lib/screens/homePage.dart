@@ -129,46 +129,6 @@ static final scrollToTopKey = new GlobalKey<OrderPageState>();
         }
         return null;
       },
-      // bottomNavigationBar: Container(
-      //   decoration: new BoxDecoration(color: kMainColor, boxShadow: [
-      //     new BoxShadow(
-      //       color: Colors.grey,
-      //       blurRadius: 4.0,
-      //     ),
-      //   ]),
-      //   height: 49,
-      //   child: TabBar(
-      //     controller: tabController,
-      //     indicatorColor: Colors.transparent,
-      //     tabs: <Widget>[
-      //       Tab(
-      //           icon: ImageIcon(
-      //         AssetImage("assets/images/home.png"),
-      //         size: 27,
-      //       )),
-      //       Tab(
-      //           icon: ImageIcon(
-      //         AssetImage("assets/images/invoice.png"),
-      //         size: 27,
-      //       )),
-      //       Tab(
-      //           icon: ImageIcon(
-      //         AssetImage("assets/images/user.png"),
-      //         size: 27,
-      //       )),
-      //     ],
-      //   ),
-      // ),
-      // body: TabBarView(
-      //   controller: tabController, children: <Widget>[
-
-      //   Tab(child: Menu()),
-      //   Tab(child: OrderPage()),
-      //   Tab(
-      //       child: (user.uid == null)
-      //           ? ProfileNotLoggedIn()
-      //           : ProfileLoggedIn())
-      // ])
     );
   }
 }

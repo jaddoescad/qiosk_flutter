@@ -3,9 +3,6 @@ import 'package:iamrich/models/cart.dart';
 import 'package:iamrich/screens/QRScanner.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 import '../models/restaurant.dart';
 import '../widgets/itemList.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,7 +29,6 @@ class _MenuState extends State<Menu> with WidgetsBindingObserver, RouteAware{
   @override
   Widget build(BuildContext context) {
     final restaurant = Provider.of<Restaurant>(context);
-
             return menuPage(restaurant, context);
         }
   }
@@ -55,7 +51,8 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
             child: Text(section.title, style: TextStyle(fontWeight: FontWeight.w400),),
           ),
         ),
-      ));
+      ),
+      );
     });
 
 return DefaultTabController(
@@ -68,8 +65,8 @@ return DefaultTabController(
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(icon: ImageIcon(AssetImage("assets/images/camera.png"), size: 30, color: kMainColor,), onPressed: () {
+                cart.clear();
                 Navigator.of(context).pushReplacement(
-                  
                   CupertinoPageRoute(
                     fullscreenDialog: true,
                     builder: (ctx) => QRViewExample()),

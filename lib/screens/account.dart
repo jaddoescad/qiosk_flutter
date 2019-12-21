@@ -7,6 +7,7 @@ import '../models/payment.dart';
 import '../models/orders.dart';
 import '../widgets/errorMessage.dart';
 import 'package:flutter/cupertino.dart';
+import '../models/cart.dart';
 
 class Account extends StatelessWidget {
   @override
@@ -75,6 +76,8 @@ class SignOutButton extends StatelessWidget {
           await FirebaseAuth.instance.signOut();
           final payment = Provider.of<PaymentModel>(context);
           final orders = Provider.of<RestaurantOrders>(context);
+          final cart = Provider.of<Cart>(context);
+          cart.clear();
           payment.clear();
           orders.clear();
           user.changeUID(null, null, null, null);
