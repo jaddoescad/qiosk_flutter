@@ -86,7 +86,9 @@ class RestaurantOrders with ChangeNotifier {
     //sort orders here
     if (dismiss == true) {
       QRViewExampleState.myTabbedPageKey.currentState.changeMyTab();
+      if (HomePageState.scrollToTopKey.currentState != null) {
       HomePageState.scrollToTopKey.currentState.scrollToTop();
+      }
     }
     notifyListeners();
   }
