@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/models/cart.dart';
+import 'package:iamrich/screens/QRScanner.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../constants.dart';
@@ -67,7 +68,12 @@ return DefaultTabController(
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(icon: ImageIcon(AssetImage("assets/images/camera.png"), size: 30, color: kMainColor,), onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(
+                  
+                  CupertinoPageRoute(
+                    fullscreenDialog: true,
+                    builder: (ctx) => QRViewExample()),
+                );
               }                   
             ),
         actions: <Widget>[

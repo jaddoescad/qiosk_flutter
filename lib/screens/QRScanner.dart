@@ -249,7 +249,7 @@ _disable = false;
   }
 
   void goToHomePage() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       CupertinoPageRoute(
           builder: (ctx) => WillPopScope(
               onWillPop: () async {

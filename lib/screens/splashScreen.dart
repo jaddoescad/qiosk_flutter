@@ -18,7 +18,7 @@ class _Splash extends State<Splash> {
         const Duration(seconds: 3),
         () => 
         
-        Navigator.push(context, FadeRoute(page: QRViewExample()))
+        Navigator.pushReplacement(context, FadeRoute(page: QRViewExample()))
             
             );
   }

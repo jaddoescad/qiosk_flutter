@@ -79,6 +79,8 @@ class Item extends ChangeNotifier {
       }
     }
     disableCart = false;
+    } else {
+      disableCart = false;
     }
   }
 
