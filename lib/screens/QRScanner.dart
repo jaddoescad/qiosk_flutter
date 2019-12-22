@@ -87,7 +87,10 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         print('error ${error.toString()}');
         showErrorDialog(context, 'there was an error: ${error.toString()}');
         // startImageStream();
-        setState(() => _isloading = false);
+        setState(() {
+          _isloading = false;
+          _disable = false;
+        });
       }
     }
   }
@@ -222,15 +225,15 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                   Opacity(
                     opacity: 1,
                     child: Container(
-                      height: MediaQuery.of(context).size.width/2,
-                      width: MediaQuery.of(context).size.width/2,
+                      height: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width / 2,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                         image: AssetImage('assets/images/Scan.png'),
                       )),
                     ),
                   ),
-                                    Padding(
+                  Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text('Scan To Order',
                         style: TextStyle(
