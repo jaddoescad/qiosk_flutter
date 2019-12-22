@@ -260,6 +260,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                                            bottomLeft: const Radius.circular(20.0),
                       bottomRight: const Radius.circular(20.0))
               ),
+              constraints: BoxConstraints(minWidth: 250, maxWidth: 250),
               height: MediaQuery.of(context).size.width/1.5,
               width: MediaQuery.of(context).size.width/1.5,
               child: Padding(
