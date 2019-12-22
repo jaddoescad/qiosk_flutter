@@ -64,9 +64,9 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   Future _readBarcode(qrValue) async {
     if (_isloading == false && _disable == false) {
       setState(() {
-_isloading = true;
-_disable = true;
-      } );
+        _isloading = true;
+        _disable = true;
+      });
       try {
         await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -79,8 +79,8 @@ _disable = true;
             context, 'there was an error: ${error.message.toString()}');
         // startImageStream();
         setState(() {
-_isloading = false;
-_disable = false;
+          _isloading = false;
+          _disable = false;
         });
       } catch (error) {
         print('error ${error.toString()}');
@@ -203,7 +203,10 @@ _disable = false;
                       _disable = true;
                     });
                     Navigator.of(context).push(
-                      CupertinoPageRoute(builder: (ctx) {
+                      CupertinoPageRoute(
+                       fullscreenDialog: true, 
+                        builder: (ctx) {
+                                            
                         return Profile();
                       }),
                     );
@@ -212,16 +215,26 @@ _disable = false;
               ),
             ),
             Center(
-              child: Opacity(
-                opacity: 0.7,
-                child: Container(
-                  height: 200,
-                  width: 200,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('assets/images/Scan.png'),
-                  )),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Opacity(
+                    opacity: 1,
+                    child: Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage('assets/images/Scan.png'),
+                      )),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text('Scan To Order', style: TextStyle(fontSize: 15, color: Colors.white, letterSpacing: 4, fontWeight: FontWeight.w600)),
+                  )
+                ],
               ),
             ),
           ]),
@@ -235,7 +248,8 @@ _disable = false;
 
   Future<void> getMenuandOrders(rid) async {
     final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
-    final data =await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
+    final data =
+        await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
 
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
     final restaurant = Provider.of<Restaurant>(context);

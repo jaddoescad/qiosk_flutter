@@ -36,7 +36,7 @@ class ProfileNotLoggedIn extends StatelessWidget {
               highlightColor:
                   Colors.transparent, // makes highlight invisible too
               icon: Icon(
-                Icons.arrow_back_ios,
+                Icons.close,
                 size: 20,
               ),
               onPressed: () {
