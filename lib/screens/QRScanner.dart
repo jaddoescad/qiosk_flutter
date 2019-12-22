@@ -13,7 +13,6 @@ import '../models/orders.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../Networking/Restaurant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/errorMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,6 +20,7 @@ import 'dart:core';
 import 'dart:async';
 import '../screens/profile.dart';
 import 'package:flutter/services.dart';
+import '../widgets/Loader.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -247,41 +247,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         inAsyncCall: _isloading,
         opacity: 0.2,
         color: Colors.white,
-        progressIndicator: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Center(
-            child: Container(
-              decoration: BoxDecoration(
-                              color: Colors.white,
-
-                borderRadius: new BorderRadius.only(
-                      topLeft: const Radius.circular(20.0),
-                      topRight: const Radius.circular(20.0),
-                                           bottomLeft: const Radius.circular(20.0),
-                      bottomRight: const Radius.circular(20.0))
-              ),
-              constraints: BoxConstraints(minWidth: 250, maxWidth: 250),
-              height: MediaQuery.of(context).size.width/1.5,
-              width: MediaQuery.of(context).size.width/1.5,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(
-                      strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(kMainColor)),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
-                      child: Text(loaderText, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ));
+        progressIndicator: Loader(context: context, loaderText: loaderText));
   }
 
   Future<void> getMenuandOrders(rid) async {
