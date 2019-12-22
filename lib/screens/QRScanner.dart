@@ -35,6 +35,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   bool _isloading = false;
   bool _disable = false;
+  final loaderText = 'Fetching Menu...';
   BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
   final _scanKey = GlobalKey<CameraMlVisionState>();
 
@@ -204,11 +205,10 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                     });
                     Navigator.of(context).push(
                       CupertinoPageRoute(
-                       fullscreenDialog: true, 
-                        builder: (ctx) {
-                                            
-                        return Profile();
-                      }),
+                          fullscreenDialog: true,
+                          builder: (ctx) {
+                            return Profile();
+                          }),
                     );
                   }
                 },
@@ -222,17 +222,22 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                   Opacity(
                     opacity: 1,
                     child: Container(
-                      height: 200,
-                      width: 200,
+                      height: MediaQuery.of(context).size.width/2,
+                      width: MediaQuery.of(context).size.width/2,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                         image: AssetImage('assets/images/Scan.png'),
                       )),
                     ),
                   ),
-                  Padding(
+                                    Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text('Scan To Order', style: TextStyle(fontSize: 15, color: Colors.white, letterSpacing: 4, fontWeight: FontWeight.w600)),
+                    child: Text('Scan To Order',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                            letterSpacing: 4,
+                            fontWeight: FontWeight.w600)),
                   )
                 ],
               ),
@@ -240,10 +245,42 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
           ]),
         ),
         inAsyncCall: _isloading,
-        opacity: 0.5,
+        opacity: 0.2,
         color: Colors.white,
-        progressIndicator: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(kMainColor)));
+        progressIndicator: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                              color: Colors.white,
+
+                borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(20.0),
+                      topRight: const Radius.circular(20.0),
+                                           bottomLeft: const Radius.circular(20.0),
+                      bottomRight: const Radius.circular(20.0))
+              ),
+              height: MediaQuery.of(context).size.width/1.5,
+              width: MediaQuery.of(context).size.width/1.5,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(
+                      strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(kMainColor)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Text(loaderText, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 
   Future<void> getMenuandOrders(rid) async {
@@ -267,9 +304,9 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
           builder: (ctx) => WillPopScope(
               onWillPop: () async {
                 // if (Navigator.of(context).userGestureInProgress)
-                  return false;
+                return false;
                 // else
-                  // return true;
+                // return true;
               },
               child: HomePage(key: myTabbedPageKey))),
     );
