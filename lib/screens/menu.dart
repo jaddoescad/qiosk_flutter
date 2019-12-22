@@ -66,11 +66,14 @@ return DefaultTabController(
         centerTitle: true,
         leading: IconButton(icon: ImageIcon(AssetImage("assets/images/camera.png"), size: 30, color: kMainColor,), onPressed: () {
                 cart.clear();
-                Navigator.of(context).pushReplacement(
-                  CupertinoPageRoute(
-                    fullscreenDialog: true,
-                    builder: (ctx) => QRViewExample()),
-                );
+                Navigator.pop(context);
+                // Navigator.popAndPushNamed(context, QRViewExample.routeName);
+                // Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(QRViewExample.routeName, (Route<dynamic> route) => false);
+                // Navigator.of(context).pushReplacement(
+                //   CupertinoPageRoute(
+                //     fullscreenDialog: true,
+                //     builder: (ctx) => QRViewExample()),
+                // );
               }                   
             ),
         actions: <Widget>[

@@ -17,6 +17,7 @@ import './models/orders.dart';
 import './models/payment.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 import 'package:camera/camera.dart';
+import './screens/QRScanner.dart';
 
 import 'constants.dart';
 import 'screens/splashScreen.dart';
@@ -87,7 +88,7 @@ class MyAppState extends State<MyApp> {
         home: Splash(),
         navigatorObservers: [routeObserver],
         routes: {
-          // QRViewExample.routeName: (ctx) => QRViewExample(),
+          QRViewExample.routeName: (ctx) => QRViewExample(),
           ItemOverview.routeName: (ctx) => ItemOverview(),
           HomePage.routeName: (ctx) => HomePage(),
           CartPage.routeName: (ctx) => CartPage(),

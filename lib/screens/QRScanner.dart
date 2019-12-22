@@ -262,14 +262,14 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   }
 
   void goToHomePage() {
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
       CupertinoPageRoute(
           builder: (ctx) => WillPopScope(
               onWillPop: () async {
-                if (Navigator.of(context).userGestureInProgress)
+                // if (Navigator.of(context).userGestureInProgress)
                   return false;
-                else
-                  return true;
+                // else
+                  // return true;
               },
               child: HomePage(key: myTabbedPageKey))),
     );
