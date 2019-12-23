@@ -5,6 +5,7 @@ import '../widgets/ItemOverviewWidgets.dart';
 import '../models/Item.dart';
 import '../main.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../widgets/Loader.dart';
 
 class ItemOverview extends StatefulWidget {
   static const routeName = '/ItemOverview';
@@ -20,6 +21,7 @@ class _ItemOverviewState extends State<ItemOverview>
     with WidgetsBindingObserver, RouteAware {
   Future itemFuture;
   bool loader = false;
+  final loaderText = 'Fetching Item...';
 
   interceptReturn() {
     if (loader == true) {
@@ -97,6 +99,7 @@ class _ItemOverviewState extends State<ItemOverview>
           return WillPopScope(
             onWillPop: null,
             child: ModalProgressHUD(
+              progressIndicator: Loader(context: context, loaderText: loaderText),
               child: SelectionPage(),
               inAsyncCall: loader,
             ),

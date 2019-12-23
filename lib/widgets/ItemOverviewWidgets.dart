@@ -403,6 +403,7 @@ class SingleCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
+      activeColor: kMainColor,
       value: selection.selected,
       onChanged: (bool value) {},
     );
@@ -417,6 +418,7 @@ class SingleRadio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Radio(
+      activeColor: kMainColor,
       groupValue: section.radioSelected,
       value: selection.id,
       onChanged: (selected) {},

@@ -7,6 +7,7 @@ import '../Networking/Payments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
+import '../widgets/Loader.dart';
 
 class Wallet extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class Wallet extends StatefulWidget {
 }
 
 class _WalletState extends State<Wallet> {
+  final loaderText = 'Adding Payment Card...';
   bool loader = false;
   interceptReturn() {
     if (loader != true) {
@@ -30,6 +32,7 @@ class _WalletState extends State<Wallet> {
     final wallet = Provider.of<PaymentModel>(context, listen: false);
 
     return ModalProgressHUD(
+      progressIndicator: Loader(context: context, loaderText: loaderText),
       inAsyncCall: loader,
       child: WillPopScope(
         onWillPop: interceptReturn(),

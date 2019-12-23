@@ -79,13 +79,13 @@ class Payments {
           resp.data['sourceId'],
           amount);
       if (intentResponse.status == PaymentResponseStatus.succeeded) {
-        print('success');
-        await OrdersNetworking().createOrder(
-            orderId, cart, amount, uid, rid, context, token);
+         print('success');
+         await OrdersNetworking().createOrder(
+             orderId, cart, amount, uid, rid, context, token);
       } else if (intentResponse.status == PaymentResponseStatus.failed) {
-        throw ('internal error ${intentResponse.errorMessage}');
+         throw ('internal error ${intentResponse.errorMessage}');
       } else {
-        throw ('failed to confirm payment');
+         throw ('failed to confirm payment');
       }
     }
   }

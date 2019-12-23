@@ -13,7 +13,7 @@ class OrderItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final restaurant = Provider.of<Restaurant>(context);
     return Container(
-      color: Color(0xFFEAEAEA),
+      color: kBodyBackground,
       child: Container(
        margin: EdgeInsets.only(top: 15.0,),
        color: Colors.white,
@@ -22,15 +22,13 @@ class OrderItemCard extends StatelessWidget {
        order.status == "preparing" ? Container(
        padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
          child: Column(children: <Widget>[
-           Text("Preparing Order ...", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold)),
+           Text("Preparing Order...", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold)),
            Text(" "),
            Container(
-           decoration: BoxDecoration(
-           border: Border(top: BorderSide(color: kMainColor, width: 1), bottom: BorderSide(color: kMainColor, width: 1))
-           ),
+           padding: EdgeInsets.only(left: 15, right: 15),
            width: double.infinity,
            child: LinearProgressIndicator(
-           backgroundColor: Colors.white,
+           backgroundColor: Color(0xFFececec),
            valueColor: AlwaysStoppedAnimation<Color>(kMainColor),
            ),
            ),

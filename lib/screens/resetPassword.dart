@@ -3,6 +3,7 @@ import '../constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Auth.dart';
 import '../widgets/errorMessage.dart';
+import '../widgets/Loader.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   static const routeName = '/resetPassword';
@@ -17,6 +18,7 @@ class ResetPasswordPage extends StatefulWidget {
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   var authHandler = Auth();
   String pageState = "reset";
+  final loaderText = 'Resetting Password';
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   bool loader = false;
@@ -27,6 +29,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return ModalProgressHUD(
+      progressIndicator: Loader(context: context, loaderText: loaderText),
       inAsyncCall: loader,
       child: Scaffold(
         backgroundColor: Colors.white,

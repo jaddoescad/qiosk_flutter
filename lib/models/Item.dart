@@ -168,7 +168,7 @@ sections.map((section) {
           id: id.toString(),
           max: section['max'],
           min: section['min'],
-          order: section['order'],
+          order: section.containsKey('order') ? section['order'] : null,
           type: section['type'],
           title: section['title'],
           selections: getSelection(section['selections'])));
@@ -182,6 +182,7 @@ sections.map((section) {
     selectionsJson.forEach((id, selection) {
       selectionArray.add(Selection(
           id: id.toString(),
+          order: selection.containsKey('order') ? selection['order'] : null,
           title: selection['title'],
           price: selection['price'].toDouble()));
     });

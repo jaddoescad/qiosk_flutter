@@ -16,6 +16,7 @@ import '../models/user.dart';
 import '../models/restaurant.dart';
 import '../widgets/errorMessage.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
+import '../widgets/Loader.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
@@ -78,9 +79,11 @@ class _CartPageState extends State<CartPage> with RouteAware {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final loaderText = 'Making Payment...';
     return WillPopScope(
       onWillPop: interceptReturn(),
       child: ModalProgressHUD(
+        progressIndicator: Loader(context: context, loaderText: loaderText),
         inAsyncCall: loader,
         child: Scaffold(
           backgroundColor: Colors.white,
@@ -183,13 +186,13 @@ class _CartPageState extends State<CartPage> with RouteAware {
           showErrorDialog(context, 'there was an error: ${error.toString()}');
         }
       } else if (page == PageToGo.Checkout) {
-        setState(() {
-          loader = true;
+          setState(() {
+            loader = true;
         });
         await pay(user, cart);
-        setState(() {
-          loader = false;
-        });
+         setState(() {
+           loader = false;
+         });
       }
     });
   }
