@@ -183,13 +183,13 @@ class _CartPageState extends State<CartPage> with RouteAware {
           showErrorDialog(context, 'there was an error: ${error.toString()}');
         }
       } else if (page == PageToGo.Checkout) {
-        setState(() {
-          loader = true;
+          setState(() {
+            loader = true;
         });
         await pay(user, cart);
-        setState(() {
-          loader = false;
-        });
+         setState(() {
+           loader = false;
+         });
       }
     });
   }

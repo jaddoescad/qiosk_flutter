@@ -41,7 +41,6 @@ class OrderPageState extends State<OrderPage>
   Widget build(BuildContext context) {
     final orders = Provider.of<RestaurantOrders>(context);
     final user = Provider.of<User>(context);
-    final restaurant = Provider.of<Restaurant>(context);
     return Scaffold(
         backgroundColor: kBodyBackground,
         appBar: PreferredSize(
@@ -66,7 +65,7 @@ class OrderPageState extends State<OrderPage>
             centerTitle: true,
           ),
         ),
-        body: orders.orders.asMap().length < 1 && user.uid == null && restaurant.id == null
+        body: orders.orders.asMap().length < 1 || user.uid == null
             ? Container(
                 color: Colors.white,
                 constraints: BoxConstraints.expand(),
@@ -74,15 +73,6 @@ class OrderPageState extends State<OrderPage>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    ImageIcon(
-                      AssetImage("assets/images/invoice.png"),
-                      size: 110,
-                      color: kMainColor.withOpacity(0.4),
-                    ),
-                    Text(
-                      "",
-                      style: TextStyle(fontSize: 10),
-                    ),
                     Text(
                       "No Orders",
                       style: TextStyle(

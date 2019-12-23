@@ -25,11 +25,14 @@ class Restaurant extends ChangeNotifier {
     sectionsJson.forEach((final id, final section) {
       sectionArray.add(Section(
           id: id.toString(),
+          order: section.containsKey('order') ? section['order'] : null,
           title: section['title'] ,
           items: getItem(section['items'])
       ));
     });
+    print(sectionArray[0].order);
     sectionArray = sortArray(sectionArray);
+    print(sectionArray[0].order);
     return sectionArray;
   }
 
@@ -38,6 +41,7 @@ class Restaurant extends ChangeNotifier {
     itemsJson.forEach((final id, final item) {
       itemArray.add(MenuItem(
           id: id.toString(),
+          order: item.containsKey('order') ? item['order'] : null,
           title: item['title'] ,
           description: item['description'],
           price: item['price'].toDouble(),
