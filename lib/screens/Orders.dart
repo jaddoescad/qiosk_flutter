@@ -43,6 +43,7 @@ class OrderPageState extends State<OrderPage>
     final user = Provider.of<User>(context);
     final restaurant = Provider.of<Restaurant>(context);
     return Scaffold(
+        backgroundColor: kBodyBackground,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(55.0),
           child: AppBar(
