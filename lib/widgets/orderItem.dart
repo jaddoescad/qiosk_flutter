@@ -22,7 +22,7 @@ class OrderItemCard extends StatelessWidget {
        order.status == "preparing" ? Container(
        padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
          child: Column(children: <Widget>[
-           Text("Preparing Order ...", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold)),
+           Text("Preparing Order...", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold)),
            Text(" "),
            Container(
            padding: EdgeInsets.only(left: 15, right: 15),

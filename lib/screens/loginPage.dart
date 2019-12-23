@@ -8,6 +8,7 @@ import '../widgets/errorMessage.dart';
 import 'package:flutter/cupertino.dart';
 import '../screens/resetPassword.dart';
 import '../models/goToCheckout.dart';
+import '../widgets/Loader.dart';
 
 typedef void ChangeAuthPage(String pageString);
 
@@ -26,12 +27,14 @@ class _LoginPageState extends State<LoginPage> {
   _LoginData _data = new _LoginData();
   bool loader = false;
   var authHandler = Auth(); 
+  final loaderText = 'Logging In...';
 
   /// Normally the signin buttons should be contained in the SignInPage
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return ModalProgressHUD(
+      progressIndicator: Loader(context: context, loaderText: loaderText),
       inAsyncCall: loader,
       child: Scaffold(
         backgroundColor: Colors.white,

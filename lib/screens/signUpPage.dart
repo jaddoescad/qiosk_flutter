@@ -5,6 +5,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../Networking/Auth.dart';
 import '../models/goToCheckout.dart';
 import '../widgets/errorMessage.dart';
+import '../widgets/Loader.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
@@ -18,7 +19,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
- 
+   final loaderText = 'Signing Up...';
   _SignUpData _data = new _SignUpData();
   var authHandler = Auth();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
@@ -28,6 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {  
     final Size screenSize = MediaQuery.of(context).size;
     return ModalProgressHUD(
+      progressIndicator: Loader(context: context, loaderText: loaderText),
       inAsyncCall: loader,
           child: Scaffold(
                backgroundColor: Colors.white,

@@ -5,7 +5,6 @@ import '../models/orders.dart';
 import '../widgets/orderItem.dart';
 import '../constants.dart';
 import '../models/user.dart';
-import '../models/restaurant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderPage extends StatefulWidget {
