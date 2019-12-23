@@ -36,6 +36,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
     final goToCheckout = Provider.of<GoToCheckout>(context);
     final cart = Provider.of<Cart>(context);
     final user = Provider.of<User>(context);
+    
 
     FirebaseAuth.instance.currentUser().then((firebaseUser) async {
       if (firebaseUser == null) {
@@ -77,6 +78,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
+
     final cart = Provider.of<Cart>(context);
     return WillPopScope(
       onWillPop: interceptReturn(),
