@@ -40,6 +40,7 @@ dependencies:
   camera: ^0.5.7+2
   firebase_ml_vision: ^0.9.3+5
   flutter_statusbarcolor: ^0.2.3
+  stripe_payment: ^1.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
