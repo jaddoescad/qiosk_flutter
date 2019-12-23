@@ -56,6 +56,7 @@ class Item extends ChangeNotifier {
     itemCount = 1;
     selectionPrice = 0;
     disableCart = true;
+    notifyListeners();
   }
 
   checkIfItemMeetsAllConditions() {
@@ -96,8 +97,9 @@ class Item extends ChangeNotifier {
   }
 
   selectRadio(selection, section) {
-    section.selections.map((_selection) {
-      _selection.selected = false;
+    
+    section.selections.asMap().forEach((index, _selection) {
+      section.selections[index].selected = false;
     });
     selection.selected = true;
     section.radioSelected = selection.id;
@@ -155,7 +157,6 @@ sections.map((section) {
   }
 
   fromSelectionJson(json) {
-   
    if  (json.data?.containsKey('sections') ?? false) {
     sections = getSection(json.data['sections']);
     }

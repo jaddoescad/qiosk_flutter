@@ -18,7 +18,7 @@ import './models/payment.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 import 'package:camera/camera.dart';
 import './screens/QRScanner.dart';
-
+import 'package:stripe_payment/stripe_payment.dart';
 import 'constants.dart';
 import 'screens/splashScreen.dart';
 
@@ -47,6 +47,11 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
+    StripePayment.setOptions(StripeOptions(
+      publishableKey: 'pk_test_3pnCHeZmNkaGk0lwKa9FRKln',
+      // merchantId: 'MERCHANT_ID',
+      // androidPayMode: 'test',
+    ));
   }
 
   @override

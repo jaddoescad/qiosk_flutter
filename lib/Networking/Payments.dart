@@ -6,9 +6,10 @@ import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../Networking/Orders.dart';
 import '../models/payment.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 enum PageToGo { Checkout, AddCard, Auth }
-enum AddPaymentStatus {Success, Failed}
+enum AddPaymentStatus { Success, Failed }
 
 class Payments {
   Future showPaymentCard(context, paymentResponse) async {
@@ -27,8 +28,11 @@ class Payments {
     HttpsCallable callable = cf.getHttpsCallable(
       functionName: 'addPaymentSource',
     );
-    var resp =
-        await callable.call(<String, dynamic>{'token': token, 'uid': user.uid, 'stripeId': user.stripeId});
+    var resp = await callable.call(<String, dynamic>{
+      'token': token,
+      'uid': user.uid,
+      'stripeId': user.stripeId
+    });
 
     if (resp.data.containsKey('error')) {
       print('error');
@@ -36,7 +40,7 @@ class Payments {
       throw (resp.data['error']);
     } else {
       final card = resp.data['source'];
-      payment.setCard(card['id'], card['card']['last4'], card['card']['brand'] );
+      payment.setCard(card['id'], card['card']['last4'], card['card']['brand']);
     }
   }
 
@@ -74,19 +78,24 @@ class Payments {
     if (resp.data.containsKey('error')) {
       throw ('there was an error processing the payment ${resp.data['error'].toString()}');
     } else {
-      var intentResponse = await FlutterStripePayment.confirmPaymentIntent(
-          resp.data['response']['client_secret'],
-          resp.data['sourceId'],
-          amount);
-      if (intentResponse.status == PaymentResponseStatus.succeeded) {
-         print('success');
-         await OrdersNetworking().createOrder(
-             orderId, cart, amount, uid, rid, context, token);
-      } else if (intentResponse.status == PaymentResponseStatus.failed) {
-         throw ('internal error ${intentResponse.errorMessage}');
-      } else {
-         throw ('failed to confirm payment');
-      }
+      StripePayment.confirmPaymentIntent(
+        PaymentIntent(
+          clientSecret: resp.data['response']['client_secret'],
+          paymentMethodId: resp.data['sourceId'],
+        ),
+      ).then((paymentIntent) async {
+        print(paymentIntent.status);
+        if (paymentIntent.status == 'succeeded') {
+          await OrdersNetworking()
+              .createOrder(orderId, cart, amount, uid, rid, context, token);
+        } else {
+          throw ('error processing payment');
+          print(paymentIntent.status);
+        }
+      }).catchError((setError) {
+        print(setError.toString());
+        throw (setError.toString());
+      });
     }
   }
 }

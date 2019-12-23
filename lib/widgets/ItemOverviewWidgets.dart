@@ -9,6 +9,7 @@ class ItemHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context);
+    print("here");
     return Column(
       children: <Widget>[
         item.imgUrl.isNotEmpty
@@ -145,6 +146,7 @@ class SelectionCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context);
+    print('here');
     final buttonTextColor =
         item.disableCart ? Colors.white.withOpacity(0.75) : Colors.white;
 
@@ -279,50 +281,58 @@ class ItemCounter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.remove,
-                      color: kMainColor,
-                    ),
-                    counterButtonContainer()
-                  ],
-                ),
-                onTap: () {
-                  item.decrement();
-                }),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.remove,
+                        color: kMainColor,
+                        size: 25,
+                      ),
+                      counterButtonContainer()
+                    ],
+                  ),
+                  onTap: () {
+                    item.decrement();
+                  }),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 '${item.itemCount}',
-                style: TextStyle(color: kMainColor),
+                style: TextStyle(color: kMainColor, fontWeight: FontWeight.w600, fontSize: 16),
               ),
             ),
-            InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                child: Stack(alignment: Alignment.center, children: <Widget>[
-                  counterButtonContainer(),
-                  Icon(
-                    Icons.add,
-                    color: kMainColor,
-                  )
-                ]),
-                onTap: () {
-                  item.increment();
-                })
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Stack(alignment: Alignment.center, children: <Widget>[
+                    counterButtonContainer(),
+                    Icon(
+                      Icons.add,
+                      color: kMainColor,
+                      size: 25,
+                    )
+                  ]),
+                  onTap: () {
+                    item.increment();
+                  }),
+            )
           ]),
     );
   }
 
   Container counterButtonContainer() {
     return Container(
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: kMainColor, width: 2)));
