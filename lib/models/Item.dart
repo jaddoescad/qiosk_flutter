@@ -56,7 +56,6 @@ class Item extends ChangeNotifier {
     itemCount = 1;
     selectionPrice = 0;
     disableCart = true;
-    notifyListeners();
   }
 
   checkIfItemMeetsAllConditions() {

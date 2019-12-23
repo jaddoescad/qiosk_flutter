@@ -66,7 +66,7 @@ class Auth with ChangeNotifier {
 
       throw (resp.data['error']);
     } else {
-      print('here');
+
       print(resp.data['user']['uid']);
       userProvider.changeUID(
           resp.data['user']['uid'],

@@ -287,9 +287,9 @@ PODS:
   - Flutter (1.0.0)
   - flutter_statusbarcolor (0.0.1):
     - Flutter
-  - flutter_stripe_payment (0.0.7):
+  - flutter_stripe_payment (0.0.8):
     - Flutter
-    - Stripe (= 18.2.0)
+    - Stripe (= 18.3.0)
   - GoogleAPIClientForREST/Core (1.3.10):
     - GTMSessionFetcher (>= 1.1.7)
   - GoogleAPIClientForREST/Vision (1.3.10):
@@ -367,7 +367,7 @@ PODS:
   - permission_handler (4.0.0):
     - Flutter
   - Protobuf (3.11.2)
-  - Stripe (18.2.0)
+  - Stripe (18.3.0)
   - stripe_payment (1.0.0):
     - Flutter
     - Stripe (>= 18.0.0)
@@ -480,7 +480,7 @@ SPEC CHECKSUMS:
   FirebaseMLVisionBarcodeModel: 96ef18a75ecdf867244ef2e75c8c1f01517667dc
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
-  flutter_stripe_payment: c9cb03de12168a179e43310819856f121c4d1ba9
+  flutter_stripe_payment: d82d252f3e0500536bfe3b09ad9a0d3a7116274a
   GoogleAPIClientForREST: 4acfffd77f1c3c8741b6be9eaed0e603278efbde
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
@@ -495,9 +495,9 @@ SPEC CHECKSUMS:
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   permission_handler: 0fb88b8a3c23e31e5de45b8f1bb8b7de28cf8941
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
-  Stripe: a468d5f39703807e840fdfed39572ffad0aaf053
+  Stripe: 35b9a54e698c82163d2ef105187a996d009fd386
   stripe_payment: 1baf1bbf556f7a35c210dc9e2eccf2075947b6be
 
-PODFILE CHECKSUM: da9e256bafd948a01c34e256b986b37a22aa8bb6
+PODFILE CHECKSUM: 16a5cbc7dabca9c0ae88f70e95003c230c03c1bf
 
 COCOAPODS: 1.8.4

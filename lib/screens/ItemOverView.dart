@@ -71,6 +71,7 @@ class _ItemOverviewState extends State<ItemOverview>
         description: widget.fromMenuItem.description,
         imgUrl: widget.fromMenuItem.imgUrl,
         title: widget.fromMenuItem.title.toString());
+        
     item.updateHeader(menuItem);
 
     return StreamBuilder(
@@ -79,7 +80,7 @@ class _ItemOverviewState extends State<ItemOverview>
           if (!snapshot.hasData) {
             return itemFutureBuilder(item);
           } else {
-            print('here');
+
             item.fromSelectionJson(snapshot.data);
             item.checkIfItemMeetsAllConditions();
             return SelectionPage();

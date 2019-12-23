@@ -78,7 +78,7 @@ class Payments {
     if (resp.data.containsKey('error')) {
       throw ('there was an error processing the payment ${resp.data['error'].toString()}');
     } else {
-      StripePayment.confirmPaymentIntent(
+      await StripePayment.confirmPaymentIntent(
         PaymentIntent(
           clientSecret: resp.data['response']['client_secret'],
           paymentMethodId: resp.data['sourceId'],
@@ -86,8 +86,8 @@ class Payments {
       ).then((paymentIntent) async {
         print(paymentIntent.status);
         if (paymentIntent.status == 'succeeded') {
-          await OrdersNetworking()
-              .createOrder(orderId, cart, amount, uid, rid, context, token);
+          print('payment succeeded');
+          await OrdersNetworking().createOrder(orderId, cart, amount, uid, rid, context, token);
         } else {
           throw ('error processing payment');
           print(paymentIntent.status);
