@@ -9,6 +9,7 @@ class ItemHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context);
+    print("here");
     return Column(
       children: <Widget>[
         item.imgUrl.isNotEmpty
@@ -145,6 +146,7 @@ class SelectionCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context);
+    print('here');
     final buttonTextColor =
         item.disableCart ? Colors.white.withOpacity(0.75) : Colors.white;
 

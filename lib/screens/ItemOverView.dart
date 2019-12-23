@@ -54,13 +54,15 @@ class _ItemOverviewState extends State<ItemOverview>
   @override
   void didPop() {
     super.didPop();
-    final item = Provider.of<Item>(context);
-    item.reset();
+    // final item = Provider.of<Item>(context);
+    // item.reset();
   }
 
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context, listen: false);
+    item.reset();
+
     final menuItem = Item(
         id: widget.fromMenuItem.id,
         basePrice: widget.fromMenuItem.price,
@@ -75,10 +77,12 @@ class _ItemOverviewState extends State<ItemOverview>
           if (!snapshot.hasData) {
             return itemFutureBuilder(item);
           } else {
+            print('here');
             item.fromSelectionJson(snapshot.data);
             item.checkIfItemMeetsAllConditions();
             return SelectionPage();
           }
+          
         });
   }
 

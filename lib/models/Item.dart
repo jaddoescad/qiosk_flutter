@@ -56,6 +56,7 @@ class Item extends ChangeNotifier {
     itemCount = 1;
     selectionPrice = 0;
     disableCart = true;
+    notifyListeners();
   }
 
   checkIfItemMeetsAllConditions() {
@@ -156,7 +157,6 @@ sections.map((section) {
   }
 
   fromSelectionJson(json) {
-   
    if  (json.data?.containsKey('sections') ?? false) {
     sections = getSection(json.data['sections']);
     }
