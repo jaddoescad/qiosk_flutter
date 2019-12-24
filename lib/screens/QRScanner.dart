@@ -68,11 +68,12 @@ class QRViewExampleState extends State<QRViewExample>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (_settingsOpen == true) {
+
+      if (state == AppLifecycleState.resumed) {
+      if (_settingsOpen == true) {
       setState(() {
         _settingsOpen = false;
       });
-      if (state == AppLifecycleState.resumed) {
         _permissionHandler
             .checkPermissionStatus(PermissionGroup.camera)
             .then((result) {
@@ -150,6 +151,7 @@ class QRViewExampleState extends State<QRViewExample>
                     PermissionHandler()
                         .openAppSettings()
                         .then((bool hasOpened) async {
+                          print(hasOpened);
                       if (hasOpened) {
                         setState(() {
                           _settingsOpen = true;
