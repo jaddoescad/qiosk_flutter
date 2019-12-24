@@ -20,7 +20,7 @@ class ItemOverview extends StatefulWidget {
 class _ItemOverviewState extends State<ItemOverview>
     with WidgetsBindingObserver, RouteAware {
   Future itemFuture;
-  bool loader = false;
+  bool loader = true;
   final loaderText = 'Fetching Item...';
 
   interceptReturn() {
