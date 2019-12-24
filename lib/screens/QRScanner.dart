@@ -28,13 +28,15 @@ class QRViewExample extends StatefulWidget {
   QRViewExampleState createState() => QRViewExampleState();
 }
 
-class QRViewExampleState extends State<QRViewExample> with RouteAware {
+class QRViewExampleState extends State<QRViewExample>
+    with RouteAware, WidgetsBindingObserver {
   static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
 
   bool _isloading = false;
   bool _disable = false;
+  bool _settingsOpen = false;
   final loaderText = 'Fetching Menu...';
   BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
   final _scanKey = GlobalKey<CameraMlVisionState>();
@@ -42,13 +44,15 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     try {
       Auth().checkIfUserExists(context);
     } catch (e) {
       print(e);
     }
-     _permissionHandler
-        .checkPermissionStatus(PermissionGroup.camera).then((result) {
+    _permissionHandler
+        .checkPermissionStatus(PermissionGroup.camera)
+        .then((result) {
       if (result == PermissionStatus.granted) {
         setState(() {
           cameraPermission = true;
@@ -62,6 +66,31 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     });
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_settingsOpen == true) {
+      setState(() {
+        _settingsOpen = false;
+      });
+      if (state == AppLifecycleState.resumed) {
+        _permissionHandler
+            .checkPermissionStatus(PermissionGroup.camera)
+            .then((result) {
+          if (result == PermissionStatus.granted) {
+            setState(() {
+              cameraPermission = true;
+            });
+            // permission was granted
+          } else {
+            setState(() {
+              cameraPermission = false;
+            });
+          }
+        });
+      }
+    }
+  }
+
   Future _readBarcode(qrValue) async {
     if (_isloading == false && _disable == false) {
       setState(() {
@@ -69,6 +98,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         _disable = true;
       });
       try {
+        print(qrValue);
         await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
         Future.delayed(const Duration(milliseconds: 500), () {
           goToHomePage();
@@ -76,7 +106,8 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
         // setState(() => _isloading = false);
       } catch (error) {
         print('error ${error.toString()}');
-        await showErrorDialog(context, 'there was an error: ${error.toString()}');
+        await showErrorDialog(
+            context, 'there was an error: ${error.toString()}');
         // startImageStream();
         setState(() {
           _isloading = false;
@@ -116,21 +147,28 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
                 child: FlatButton(
                   child: Text('Please press to activate Camera'),
                   onPressed: () async {
-                    bool isOpened = await PermissionHandler().openAppSettings();
-                    print(isOpened);
-                    PermissionStatus permission = await PermissionHandler()
-                        .checkPermissionStatus(PermissionGroup.camera);
+                    PermissionHandler()
+                        .openAppSettings()
+                        .then((bool hasOpened) async {
+                      if (hasOpened) {
+                        setState(() {
+                          _settingsOpen = true;
+                        });
+                      }
+                      //   PermissionStatus permission = await PermissionHandler()
+                      //       .checkPermissionStatus(PermissionGroup.camera);
 
-                    if (permission == PermissionStatus.granted) {
-                      setState(() {
-                        cameraPermission = true;
-                      });
-                      // permission was granted
-                    } else {
-                      setState(() {
-                        cameraPermission = false;
-                      });
-                    }
+                      //   if (permission == PermissionStatus.granted) {
+                      //     setState(() {
+                      //       cameraPermission = true;
+                      //     });
+                      //     // permission was granted
+                      //   } else {
+                      //     setState(() {
+                      //       cameraPermission = false;
+                      //     });
+                      //   }
+                    });
                   },
                 ),
               ),
@@ -275,7 +313,9 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   void dispose() {
-    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     routeObserver.unsubscribe(this);
+
+    super.dispose();
   }
 }
