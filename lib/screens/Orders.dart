@@ -32,8 +32,10 @@ class OrderPageState extends State<OrderPage>
   }
 
   scrollToTop() {
-    _scrollController.animateTo(_scrollController.position.minScrollExtent,
-        duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(_scrollController.position.minScrollExtent,
+          duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+    }
   }
 
   @override
@@ -87,7 +89,6 @@ class OrderPageState extends State<OrderPage>
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-
                   orders.updateFirebaseData(snapshot);
 
                   return CustomScrollView(
@@ -95,7 +96,9 @@ class OrderPageState extends State<OrderPage>
                     slivers: <Widget>[
                       SliverList(
                           delegate: SliverChildListDelegate([
-                        ...orders.orders.asMap().values
+                        ...orders.orders
+                            .asMap()
+                            .values
                             .toList()
                             .map((order) => OrderItemCard(order: order))
                       ]))
@@ -103,12 +106,4 @@ class OrderPageState extends State<OrderPage>
                   );
                 }));
   }
-
-
 }
-
-//                 builder: (BuildContext context,
-//                     AsyncSnapshot<QuerySnapshot> snapshot) {
-//                   if (snapshot.hasData) {
-//                     print(snapshot.data);
-//                   }

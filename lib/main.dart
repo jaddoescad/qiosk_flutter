@@ -87,8 +87,6 @@ class MyAppState extends State<MyApp> {
         theme: ThemeData(
           fontFamily: 'Avenir',
           primaryColor: kMainColor,
-          
-
         ),
         home: Splash(),
         navigatorObservers: [routeObserver],

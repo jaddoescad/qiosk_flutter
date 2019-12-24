@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/restaurant.dart';
+import '../widgets/CustomLinearProgressIndicator.dart';
 
 class OrderItemCard extends StatelessWidget {
   OrderItemCard({this.order});
@@ -12,6 +13,7 @@ class OrderItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final restaurant = Provider.of<Restaurant>(context);
+    AnimationController controller;
     return Container(
       color: kBodyBackground,
       child: Container(
@@ -27,7 +29,7 @@ class OrderItemCard extends StatelessWidget {
            Container(
            padding: EdgeInsets.only(left: 15, right: 15),
            width: double.infinity,
-           child: LinearProgressIndicator(
+           child: CustomLinearProgressIndicator(
            backgroundColor: Color(0xFFececec),
            valueColor: AlwaysStoppedAnimation<Color>(kMainColor),
            ),
