@@ -99,8 +99,8 @@ class QRViewExampleState extends State<QRViewExample>
         _disable = true;
       });
       try {
-        print(qrValue);
-        await getMenuandOrders("KYnIcMxo6RaLMeIlhh9u");
+        print(qrValue.split("/")[qrValue.split("/").length - 2]);
+        await getMenuandOrders(qrValue.split("/")[qrValue.split("/").length - 2]);
         Future.delayed(const Duration(milliseconds: 500), () {
           goToHomePage();
         });
