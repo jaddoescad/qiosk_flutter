@@ -32,8 +32,8 @@ void showSuccessDialog(context, e) {
       });
 }
 
-void showErrorDialog(context, e) {
-  showDialog(
+Future<Null> showErrorDialog(context, e) async {
+  return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

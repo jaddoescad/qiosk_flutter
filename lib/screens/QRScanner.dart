@@ -74,18 +74,9 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
           goToHomePage();
         });
         // setState(() => _isloading = false);
-      } on CloudFunctionsException catch (error) {
-        print('error ${error.message}');
-        showErrorDialog(
-            context, 'there was an error: ${error.message.toString()}');
-        // startImageStream();
-        setState(() {
-          _isloading = false;
-          _disable = false;
-        });
       } catch (error) {
         print('error ${error.toString()}');
-        showErrorDialog(context, 'there was an error: ${error.toString()}');
+        await showErrorDialog(context, 'there was an error: ${error.toString()}');
         // startImageStream();
         setState(() {
           _isloading = false;

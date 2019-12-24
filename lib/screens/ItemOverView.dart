@@ -104,7 +104,8 @@ class _ItemOverviewState extends State<ItemOverview>
           return WillPopScope(
             onWillPop: null,
             child: ModalProgressHUD(
-              progressIndicator: Loader(context: context, loaderText: loaderText),
+              opacity: 0,
+              // progressIndicator: Loader(context: context, loaderText: loaderText),
               child: SelectionPage(),
               inAsyncCall: loader,
             ),
