@@ -47,9 +47,9 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
     } catch (e) {
       print(e);
     }
-    _permissionHandler
-        .requestPermissions([PermissionGroup.camera]).then((result) {
-      if (result[PermissionGroup.camera] == PermissionStatus.granted) {
+     _permissionHandler
+        .checkPermissionStatus(PermissionGroup.camera).then((result) {
+      if (result == PermissionStatus.granted) {
         setState(() {
           cameraPermission = true;
         });
@@ -117,7 +117,7 @@ class QRViewExampleState extends State<QRViewExample> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    return mounted
+    return mounted && cameraPermission
         ? qrScannerView()
         : Scaffold(
             body: Container(
