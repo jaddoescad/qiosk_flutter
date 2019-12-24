@@ -27,6 +27,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> with RouteAware {
   bool loader = false;
+  var loaderText = 'Logging In...';
   @override
   void didPush() {
     // Route was pushed onto navigator and is now topmost route.
@@ -81,7 +82,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
   Widget build(BuildContext context) {
 
     final cart = Provider.of<Cart>(context);
-    final loaderText = 'Making Payment...';
     return WillPopScope(
       onWillPop: interceptReturn(),
       child: ModalProgressHUD(
@@ -172,6 +172,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
                 )));
       } else if (page == PageToGo.AddCard) {
         try {
+          loaderText = 'Adding Payment Card...';
           PaymentResponse paymentResponse = await FlutterStripePayment.addPaymentMethod();
 
           setState(() {
@@ -188,6 +189,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           showErrorDialog(context, 'there was an error: ${error.toString()}');
         }
       } else if (page == PageToGo.Checkout) {
+          loaderText = 'Placing Order...';
           setState(() {
             loader = true;
         });

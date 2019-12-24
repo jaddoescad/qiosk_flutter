@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/screens/QRScanner.dart';
 import '../util/helper.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class Splash extends StatefulWidget {
@@ -11,16 +12,20 @@ class Splash extends StatefulWidget {
 }
 
 class _Splash extends State<Splash> {
+  final PermissionHandler _permissionHandler = PermissionHandler();
+
   @override
   void initState() {
     super.initState();
     new Future.delayed(
         const Duration(seconds: 3),
-        () => 
-        
-        Navigator.pushReplacement(context, FadeRoute(page: QRViewExample()))
-            
-            );
+        () {
+           _permissionHandler
+         .requestPermissions([PermissionGroup.camera]).then((result) {
+        Navigator.pushReplacement(context, FadeRoute(page: QRViewExample()));
+         });
+         
+        });
   }
 
   @override
