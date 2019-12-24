@@ -17,6 +17,7 @@ import '../models/restaurant.dart';
 import '../widgets/errorMessage.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 import '../widgets/Loader.dart';
+import '../models/taxes.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
@@ -156,7 +157,49 @@ class _CartPageState extends State<CartPage> with RouteAware {
                     .toList()
                     .map((item) => CartItemCard(item: item)),
               ]),
-            )
+            ),
+           SliverToBoxAdapter(
+             child: cart.items.values.toList().length > 0 ? Container(
+                padding: EdgeInsets.only(top: 15, bottom: 15),
+                margin: EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget> [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Subtotal"),
+                    Text('\$ ${cart.totalAmount.toStringAsFixed(2)}'),
+                  ],
+                ),
+
+                Text(" "),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Taxes"),
+                    Text('\$ ${Taxes().applyTax(cart.totalAmount).toStringAsFixed(2)}'),
+                  ],
+                ),
+
+                Text(" "),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Total", style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text('\$ ${Taxes().getTotal(cart.totalAmount).toStringAsFixed(2)}'),
+                  ],
+                ),
+                ]
+                ),
+                ) : Container(),
+           ),
           ]),
         ),
       ),
@@ -207,8 +250,11 @@ class _CartPageState extends State<CartPage> with RouteAware {
     try {
       await Payments.pay(
           user.uid,
+          user.stripeId,
           DateTime.now().millisecondsSinceEpoch.toString(),
           cart.totalAmount,
+          Taxes().applyTax(cart.totalAmount),
+          Taxes().getTotal(cart.totalAmount),
           "CAD",
           cart,
           restaurant.id,
