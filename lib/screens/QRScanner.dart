@@ -108,7 +108,7 @@ class QRViewExampleState extends State<QRViewExample>
       } catch (error) {
         print('error ${error.toString()}');
         await showErrorDialog(
-            context, 'there was an error: ${error.toString()}');
+            context, '${error.toString()}');
         // startImageStream();
         setState(() {
           _isloading = false;

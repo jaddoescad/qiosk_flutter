@@ -198,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
       _formKey.currentState.save(); 
       
       // Save our form now.
-      try{
+      try {
       await authHandler
           .handleSignInEmail(_data.email, _data.password, context)
           .then((FirebaseUser user) async {
