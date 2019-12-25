@@ -25,18 +25,21 @@ class Auth with ChangeNotifier {
     assert(user.uid == currentUser.uid);
     print('signInEmail succeeded: $user');
     await checkIfUserExists(context);
-    await getOrders(context);
+    // await getOrders(context);
     //download orders
 
     return user;
   }
 
-  Future<void> getOrders(context) async {
-    final user = Provider.of<User>(context);
-    final restaurant = Provider.of<Restaurant>(context);
+  Future<bool> getOrders(context, user, restaurant, restaurantOrders) async {
+
+
     final data = await RestaurantNetworking.fetchOrders(restaurant.id, user.uid);
-    final restaurantOrders = Provider.of<RestaurantOrders>(context);
+    print(data);
+    // print('hek');
     restaurantOrders.addOrders(data);
+    // print('helo');
+    return true;
   }
 
   Future<void> sendPasswordResetEmail(String email) async {

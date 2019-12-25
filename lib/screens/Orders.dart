@@ -6,10 +6,13 @@ import '../widgets/orderItem.dart';
 import '../constants.dart';
 import '../models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../Networking/Auth.dart';
+import '../models/restaurant.dart';
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({Key key, this.showBackButton = false}) : super(key: key);
+  const OrderPage({Key key, this.showBackButton = false, this.loadOrders = false}) : super(key: key);
   final showBackButton;
+  final bool loadOrders;
   @override
   OrderPageState createState() => OrderPageState();
 }
@@ -22,8 +25,18 @@ class OrderPageState extends State<OrderPage>
   @override
   void initState() {
     super.initState();
-    // ordersFuture = fetchOrders();
     _scrollController = ScrollController();
+
+     Future.delayed(Duration.zero, () {
+
+    final user = Provider.of<User>(context);
+    final restaurant = Provider.of<Restaurant>(context);
+    final restaurantOrders = Provider.of<RestaurantOrders>(context);
+    Auth().getOrders(context, user, restaurant, restaurantOrders).then((onValue) {
+      print('done');
+    });
+     });
+
   }
 
   @override
@@ -82,44 +95,53 @@ class OrderPageState extends State<OrderPage>
             centerTitle: true,
           ),
         ),
-        body: orders.orders.asMap().length < 1 || user.uid == null
-            ? Container(
-                color: Colors.white,
-                constraints: BoxConstraints.expand(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "No Orders",
-                      style: TextStyle(
-                          color: kMainColor.withOpacity(0.4), fontSize: 20),
-                    ),
-                  ],
-                ),
-              )
-            : StreamBuilder<QuerySnapshot>(
+        body: StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance
                     .collection('Orders')
                     .where("userId", isEqualTo: user.uid)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  orders.updateFirebaseData(snapshot);
 
-                  return CustomScrollView(
-                    controller: _scrollController,
-                    slivers: <Widget>[
-                      SliverList(
-                          delegate: SliverChildListDelegate([
-                        ...orders.orders
-                            .asMap()
-                            .values
-                            .toList()
-                            .map((order) => OrderItemCard(order: order))
-                      ]))
-                    ],
-                  );
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    print(snapshot.connectionState);
+                  }
+                  orders.updateFirebaseData(snapshot);
+                  return ordersView(orders);
                 }));
+  }
+
+  Container noOrders() {
+    return Container(
+              color: Colors.white,
+              constraints: BoxConstraints.expand(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "No Orders",
+                    style: TextStyle(
+                        color: kMainColor.withOpacity(0.4), fontSize: 20),
+                  ),
+                ],
+              ),
+            );
+  }
+
+  CustomScrollView ordersView(RestaurantOrders orders) {
+    return CustomScrollView(
+                  controller: _scrollController,
+                  slivers: <Widget>[
+                    SliverList(
+                        delegate: SliverChildListDelegate([
+                      ...orders.orders
+                          .asMap()
+                          .values
+                          .toList()
+                          .map((order) => OrderItemCard(order: order))
+                    ]))
+                  ],
+                );
   }
 }

@@ -67,7 +67,7 @@ class OrderItemCard extends StatelessWidget {
        Row(
        mainAxisAlignment: MainAxisAlignment.spaceBetween,
        children: <Widget>[
-       Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
+      //  Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
        Text('\$ ${order.total.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor))
        ],)
        ],),

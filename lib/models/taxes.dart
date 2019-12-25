@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class Taxes extends ChangeNotifier {
   double _taxRate;
 
-  // Taxes({this.taxRate});
 
   void setTaxRate(rate) {
     _taxRate = rate['taxRate'];
