@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/models/Item.dart';
 import 'package:iamrich/models/cart.dart';
 import 'package:iamrich/models/restaurant.dart';
+import 'package:iamrich/models/taxes.dart';
 import 'package:iamrich/screens/splashScreen.dart';
 import 'package:provider/provider.dart';
 import './screens/cartPage.dart';
@@ -42,7 +43,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  
   @override
   void initState() {
     super.initState();
@@ -56,9 +56,11 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => Taxes(),
+        ),
         ChangeNotifierProvider(
           create: (_) => Restaurant(),
         ),

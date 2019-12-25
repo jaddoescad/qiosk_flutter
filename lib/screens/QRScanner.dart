@@ -21,6 +21,7 @@ import 'dart:async';
 import '../screens/profile.dart';
 import 'package:flutter/services.dart';
 import '../widgets/Loader.dart';
+import '../models/taxes.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -286,17 +287,22 @@ class QRViewExampleState extends State<QRViewExample>
 
   Future<void> getMenuandOrders(rid) async {
     final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
-    final data =
-        await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
+    final data = await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
+    //get tax rate
 
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
     final restaurant = Provider.of<Restaurant>(context);
+    final tax = Provider.of<Taxes>(context);
+
 
     final menu = data[0];
     final _orders = data[1];
+    final taxRate = data[2];
 
+    tax.setTaxRate(taxRate);
     restaurant.loadRestaurant(rid, menu);
     restaurantOrders.addOrders(_orders);
+
   }
 
   void goToHomePage() {

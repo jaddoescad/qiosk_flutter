@@ -15,6 +15,7 @@ class CartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     final user = Provider.of<User>(context);
+    final taxes = Provider.of<Taxes>(context);
 
     return Container(
       height: 75,
@@ -29,7 +30,7 @@ class CartButton extends StatelessWidget {
       ),
       child: RaisedButton(
         elevation: 0,
-        child: new CartButtonChildren(title: title, price: Taxes().getTotal(cart.totalAmount).toStringAsFixed(2)),
+        child: new CartButtonChildren(title: title, price: taxes.getTotal(cart.totalAmount).toStringAsFixed(2)),
         color: kMainColor,
         onPressed:  () {func(context, user, cart);},
       ),

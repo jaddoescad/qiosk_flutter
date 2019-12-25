@@ -15,7 +15,7 @@ Future<bool> fetchSelection(context, itemID) async {
       .collection('Selections')
       .document(itemID)
       .get();
-  await Future.delayed(const Duration(milliseconds: 1000), () {
+  await Future.delayed(const Duration(milliseconds: 700), () {
     if (document.exists) {
       item.fromSelectionJson(document);
       item.checkIfItemMeetsAllConditions();

@@ -12,7 +12,7 @@ static Future fetchMenuandOrders(rid, uid) async {
         if (resp.data.containsKey('error')) {
           throw(resp.data['error']);
         } else {
-          return [resp.data['menu'], resp.data['orders']];
+          return [resp.data['menu'], resp.data['orders'], resp.data['tax']];
         }
   } 
 

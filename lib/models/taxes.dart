@@ -1,15 +1,23 @@
-class Taxes {
-  double taxRate;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-  Taxes({this.taxRate = 0.13});
+class Taxes extends ChangeNotifier {
+  double _taxRate;
+
+  // Taxes({this.taxRate});
+
+  void setTaxRate(rate) {
+    _taxRate = rate['taxRate'];
+    print(_taxRate);
+  }
 
   double applyTax(subtotal) {
-    subtotal = subtotal*taxRate;
+    subtotal = subtotal*_taxRate;
     return subtotal;
   }
 
   double getTotal(subtotal) {
-    subtotal = subtotal + subtotal*taxRate;
+    subtotal = subtotal + subtotal*_taxRate;
     return subtotal;
   }
 }

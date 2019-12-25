@@ -83,6 +83,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
   Widget build(BuildContext context) {
 
     final cart = Provider.of<Cart>(context);
+    final taxes = Provider.of<Taxes>(context);
+
     return WillPopScope(
       onWillPop: interceptReturn(),
       child: ModalProgressHUD(
@@ -182,7 +184,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text("Taxes"),
-                    Text('\$ ${Taxes().applyTax(cart.totalAmount).toStringAsFixed(2)}'),
+                    Text('\$ ${taxes.applyTax(cart.totalAmount).toStringAsFixed(2)}'),
                   ],
                 ),
 
@@ -193,7 +195,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text("Total", style: TextStyle(fontWeight: FontWeight.bold),),
-                    Text('\$ ${Taxes().getTotal(cart.totalAmount).toStringAsFixed(2)}'),
+                    Text('\$ ${taxes.getTotal(cart.totalAmount).toStringAsFixed(2)}'),
                   ],
                 ),
                 ]
@@ -246,6 +248,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
 
   Future pay(user, Cart cart) async {
     final restaurant = Provider.of<Restaurant>(context);
+    final taxes = Provider.of<Taxes>(context);
+
 
     try {
       await Payments.pay(
@@ -253,8 +257,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
           user.stripeId,
           DateTime.now().millisecondsSinceEpoch.toString(),
           cart.totalAmount,
-          Taxes().applyTax(cart.totalAmount),
-          Taxes().getTotal(cart.totalAmount),
+          taxes.applyTax(cart.totalAmount),
+          taxes.getTotal(cart.totalAmount),
           "CAD",
           cart,
           restaurant.id,
