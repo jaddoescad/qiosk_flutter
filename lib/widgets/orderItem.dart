@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iamrich/constants.dart';
-import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:flutter/cupertino.dart';
-import '../models/restaurant.dart';
 import '../widgets/CustomLinearProgressIndicator.dart';
 import '../models/orders.dart';
 
@@ -13,8 +11,6 @@ class OrderItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final restaurant = Provider.of<Restaurant>(context);
-    AnimationController controller;
     return Container(
       color: kBodyBackground,
       child: Container(

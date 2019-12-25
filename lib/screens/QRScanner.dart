@@ -22,6 +22,7 @@ import 'package:flutter/services.dart';
 import '../widgets/Loader.dart';
 import '../models/taxes.dart';
 import '../screens/Orders.dart';
+import '../models/orders.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -158,19 +159,6 @@ class QRViewExampleState extends State<QRViewExample>
                           _settingsOpen = true;
                         });
                       }
-                      //   PermissionStatus permission = await PermissionHandler()
-                      //       .checkPermissionStatus(PermissionGroup.camera);
-
-                      //   if (permission == PermissionStatus.granted) {
-                      //     setState(() {
-                      //       cameraPermission = true;
-                      //     });
-                      //     // permission was granted
-                      //   } else {
-                      //     setState(() {
-                      //       cameraPermission = false;
-                      //     });
-                      //   }
                     });
                   },
                 ),
@@ -243,9 +231,12 @@ class QRViewExampleState extends State<QRViewExample>
                       CupertinoPageRoute(
                           fullscreenDialog: true,
                           builder: (ctx) {
-                            return OrderPage(showBackButton: true,);
+                            return OrderPage(showBackButton: true, loadOrders: true);
                           }),
-                    );
+                    ).then((onValue){
+                      final orders = Provider.of<RestaurantOrders>(context);
+                      orders.clear();
+                    });
                   }
                 },
               ),

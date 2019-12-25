@@ -22,6 +22,7 @@ import './screens/QRScanner.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'constants.dart';
 import 'screens/splashScreen.dart';
+import './Networking/Auth.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -46,6 +47,12 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    try {
+      Auth().checkIfUserExists(context);
+    } catch (e) {
+      //dp not out alertdialog here
+      print(e);
+    }
     FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
     StripePayment.setOptions(StripeOptions(
       publishableKey: 'pk_test_3pnCHeZmNkaGk0lwKa9FRKln',
