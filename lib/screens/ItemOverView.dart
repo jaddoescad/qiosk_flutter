@@ -63,7 +63,7 @@ class _ItemOverviewState extends State<ItemOverview>
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context, listen: false);
-    item.reset();
+    // item.reset();
 
     final menuItem = Item(
         id: widget.fromMenuItem.id,
@@ -71,22 +71,9 @@ class _ItemOverviewState extends State<ItemOverview>
         description: widget.fromMenuItem.description,
         imgUrl: widget.fromMenuItem.imgUrl,
         title: widget.fromMenuItem.title.toString());
-        
+
     item.updateHeader(menuItem);
-
-    return StreamBuilder(
-        stream: streamSelection(context, widget.itemID),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return itemFutureBuilder(item);
-          } else {
-
-            item.fromSelectionJson(snapshot.data);
-            item.checkIfItemMeetsAllConditions();
-            return SelectionPage();
-          }
-          
-        });
+    return itemFutureBuilder(item);
   }
 
   FutureBuilder itemFutureBuilder(Item item) {
@@ -94,12 +81,14 @@ class _ItemOverviewState extends State<ItemOverview>
         future: itemFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            item.fromSelectionJson(snapshot.data);
+            item.fromSelectionJson(snapshot);
             item.checkIfItemMeetsAllConditions();
             return SelectionPage();
           } else if (snapshot.hasError) {
-            //work on this later
             return Text("${snapshot.error}");
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            item.disableCart = false;
+            return SelectionPage();
           }
           return WillPopScope(
             onWillPop: null,
