@@ -84,7 +84,7 @@ class SignOutButton extends StatelessWidget {
           Navigator.of(context).pop();
         } catch (error) {
           print(error);
-          showErrorDialog(context, 'there was an error: ${error.toString()}');
+          showErrorDialog(context, 'Sign Out Was Not Successful');
         }
       },
     );
@@ -165,7 +165,7 @@ Container signOutCard(BuildContext context, String title, User user) {
             } catch (error) {
               print(error);
               showErrorDialog(
-                  context, 'there was an error: ${error.toString()}');
+                  context, 'Sign Out Was Not Successful');
             }
           },
         ),

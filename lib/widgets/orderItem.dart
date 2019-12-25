@@ -68,7 +68,7 @@ class OrderItemCard extends StatelessWidget {
        mainAxisAlignment: MainAxisAlignment.spaceBetween,
        children: <Widget>[
        Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
-       Text('\$ ${order.amount.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor))
+       Text('\$ ${order.total.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor))
        ],)
        ],),
        ),  
@@ -172,7 +172,7 @@ class OrderItemCard extends StatelessWidget {
          crossAxisAlignment: CrossAxisAlignment.center,
          children: <Widget>[
            Text("Subtotal"),
-           Text('\$ ${order.amount.toStringAsFixed(2)}'),
+           Text('\$ ${order.subtotal.toStringAsFixed(2)}'),
          ],
        ),
 
@@ -183,7 +183,7 @@ class OrderItemCard extends StatelessWidget {
          crossAxisAlignment: CrossAxisAlignment.center,
          children: <Widget>[
            Text("Taxes"),
-           Text('\$ ${order.amount.toStringAsFixed(2)}'),
+           Text('\$ ${order.taxes.toStringAsFixed(2)}'),
          ],
        ),
 
@@ -194,7 +194,7 @@ class OrderItemCard extends StatelessWidget {
          crossAxisAlignment: CrossAxisAlignment.center,
          children: <Widget>[
            Text("Total", style: TextStyle(fontWeight: FontWeight.bold),),
-           Text('\$ ${order.amount.toStringAsFixed(2)}'),
+           Text('\$ ${order.total.toStringAsFixed(2)}'),
          ],
        ),
        ]

@@ -28,7 +28,9 @@ class OrderItem {
 class Order {
   String orderId;
   String status;
-  double amount;
+  double subtotal;
+  double taxes;
+  double total;
   int date;
 
   Map<String, OrderItem> _orderItems = {};
@@ -36,7 +38,7 @@ class Order {
     return {..._orderItems};
   }
 
-  Order({this.orderId, this.status, this.amount, this.date});
+  Order({this.orderId, this.status, this.subtotal, this.taxes, this.total, this.date});
 
   void addOrderItem(item) {
     final orderItem = OrderItem(
@@ -65,16 +67,16 @@ class RestaurantOrders with ChangeNotifier {
     _orders = [];
     orders.forEach((id, order) {
       addOrder(order['orderId'], order, order['status'],
-          order['amount'].toDouble(), order['date'], false);
+          order['subtotal'].toDouble(), order['taxes'].toDouble(), order['total'].toDouble(), order['date'], false);
     });
     _orders.sort((a, b) {
       return b.date.compareTo(a.date);
     });
   }
 
-  void addOrder(String orderId, orderJson, status, amount, date, dismiss) {
+  void addOrder(String orderId, orderJson, status, subtotal, taxes, total, date, dismiss) {
     final order =
-        Order(orderId: orderId, status: status, amount: amount, date: date);
+        Order(orderId: orderId, status: status, subtotal: subtotal, taxes: taxes, total: total, date: date);
 
     orderJson['items'].forEach((final key, final orderItem) {
       order.addOrderItem(orderItem);
@@ -104,10 +106,6 @@ class RestaurantOrders with ChangeNotifier {
               _orders[orderToUpdateIndex].status = order.data['status'];
               notifyListeners();
             }
-            // print(doc.documentID);
-            //addOrder(order.documentID.toString(), order, order['status'], order['amount'].toDouble(), order['date'], false);
-
-            //update document
           });
         }
       });

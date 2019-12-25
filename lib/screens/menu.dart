@@ -56,25 +56,18 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
       ),
     );
   });
-  Dialog backToScannerDialog = Dialog(
+  
+  AlertDialog backToScannerDialog = AlertDialog(
+    title: Text("End Your Session?"),
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0)), //this right here
-    child: Container(
-      height: 300.0,
-      width: 300.0,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(15.0),
-            child: Text(
-              'Are you sure you want to go back to Scanner, this will end your session',
-              style: TextStyle(color: Colors.red),
+    content: Container(
+      child: Text(
+              'Are you sure you want to go back to Scanner? This will end your session.', textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 18, color: kMainColor),
             ),
-          ),
-          Padding(padding: EdgeInsets.only(top: 50.0)),
-          Row(
-            children: <Widget>[
+    ),
+    actions: <Widget> [
               FlatButton(
                   onPressed: () {
                     // Navigator.of(context).pop();
@@ -84,8 +77,9 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
                   },
                   child: Text(
                     'Yes',
-                    style: TextStyle(color: Colors.purple, fontSize: 18.0),
+                    style: TextStyle(color: kMainColor, fontSize: 18.0),
                   )),
+
               FlatButton(
                   onPressed: () {
                     // Navigator.of(context).pop();
@@ -94,14 +88,11 @@ DefaultTabController menuPage(Restaurant restaurant, context) {
                   },
                   child: Text(
                     'No',
-                    style: TextStyle(color: Colors.purple, fontSize: 18.0),
+                    style: TextStyle(color: kMainColor, fontSize: 18.0),
                   )),
             ],
-          )
-        ],
-      ),
-    ),
-  );
+          );
+          
   return DefaultTabController(
     length: restaurant.sections.length,
     child: Scaffold(

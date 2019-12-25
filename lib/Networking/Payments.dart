@@ -61,7 +61,7 @@ class Payments {
     return goToPage;
   }
 
-  static Future pay(uid, orderId, amount, currency, cart, rid, context) async {
+  static Future pay(uid, stripeId, orderId, subtotal, taxes, total, currency, cart, rid, context) async {
     final token = Provider.of<PaymentModel>(context).token;
 
     CloudFunctions cf = CloudFunctions();
@@ -70,9 +70,10 @@ class Payments {
     );
     var resp = await callable.call(<String, dynamic>{
       'uid': uid.toString(),
+      'stripeId': stripeId,
       'orderId': orderId,
       'token': token,
-      'amount': amount
+      'amount': total,
     });
 
     if (resp.data.containsKey('error')) {
@@ -87,7 +88,7 @@ class Payments {
         print(paymentIntent.status);
         if (paymentIntent.status == 'succeeded') {
           print('payment succeeded');
-          await OrdersNetworking().createOrder(orderId, cart, amount, uid, rid, context, token);
+          await OrdersNetworking().createOrder(orderId, cart, subtotal, taxes, total, uid, rid, context, token);
         } else {
           throw ('error processing payment');
           print(paymentIntent.status);
