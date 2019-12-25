@@ -262,7 +262,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
           "CAD",
           cart,
           restaurant.id,
-          context);
+          context,
+          restaurant.title);
     } catch (error) {
       print('error paying : $error');
       showErrorDialog(context, 'there was an error: ${error.toString()}');

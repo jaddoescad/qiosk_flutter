@@ -31,6 +31,7 @@ class Order {
   double subtotal;
   double taxes;
   double total;
+  String rname;
   int date;
 
   Map<String, OrderItem> _orderItems = {};
@@ -38,7 +39,7 @@ class Order {
     return {..._orderItems};
   }
 
-  Order({this.orderId, this.status, this.subtotal, this.taxes, this.total, this.date});
+  Order({this.orderId, this.status, this.subtotal, this.taxes, this.total, this.date, this.rname});
 
   void addOrderItem(item) {
     final orderItem = OrderItem(
@@ -48,6 +49,7 @@ class Order {
         quantity: item['quantity'],
         price: item['price'].toDouble(),
         selectionTitles: item['selections']);
+
     _orderItems[item['generatedId']] = orderItem;
   }
 }
@@ -66,7 +68,7 @@ class RestaurantOrders with ChangeNotifier {
   void addOrders(orders) {
     _orders = [];
     orders.forEach((id, order) {
-      addOrder(order['orderId'], order, order['status'],
+      addOrder(order['orderId'], order['r_name'],order, order['status'],
           order['subtotal'].toDouble(), order['taxes'].toDouble(), order['total'].toDouble(), order['date'], false);
     });
     _orders.sort((a, b) {
@@ -74,9 +76,9 @@ class RestaurantOrders with ChangeNotifier {
     });
   }
 
-  void addOrder(String orderId, orderJson, status, subtotal, taxes, total, date, dismiss) {
+  void addOrder(String orderId, rname, orderJson, status, subtotal, taxes, total, date, dismiss) {
     final order =
-        Order(orderId: orderId, status: status, subtotal: subtotal, taxes: taxes, total: total, date: date);
+        Order(orderId: orderId, status: status, subtotal: subtotal, taxes: taxes, total: total, date: date, rname: rname);
 
     orderJson['items'].forEach((final key, final orderItem) {
       order.addOrderItem(orderItem);

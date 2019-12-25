@@ -5,10 +5,11 @@ import '../constants.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/restaurant.dart';
 import '../widgets/CustomLinearProgressIndicator.dart';
+import '../models/orders.dart';
 
 class OrderItemCard extends StatelessWidget {
   OrderItemCard({this.order});
-  final order;
+  final Order order;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class OrderItemCard extends StatelessWidget {
        Row(
        mainAxisAlignment: MainAxisAlignment.spaceBetween,
        children: <Widget>[
-      //  Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
+       Text(order.rname, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
        Text('\$ ${order.total.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor))
        ],)
        ],),
@@ -123,7 +124,7 @@ class OrderItemCard extends StatelessWidget {
        children: <Widget>[
        Text("Order #" + order.orderId, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12, color: Colors.grey),),
        Text(order.orderItems.keys.toString().substring(1, 11), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.grey)),
-       Text(restaurant.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
+       Text(order.rname, overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 17, color: kMainColor)),
        ],),
        ),  
        Divider(

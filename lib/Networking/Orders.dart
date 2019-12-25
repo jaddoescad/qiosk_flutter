@@ -8,7 +8,7 @@ import '../models/restaurant.dart';
 class OrdersNetworking {
   final firestore = Firestore.instance;
    Future createOrder(
-      orderId, cart, subtotal, taxes, total, uid, restaurantid, context, token) async {
+      orderId, cart, subtotal, taxes, total, uid, restaurantid, context, token, rname) async {
     final _items = {};
     final status = 'preparing';
     final date = DateTime.now().toUtc().millisecondsSinceEpoch;
@@ -40,6 +40,7 @@ class OrdersNetworking {
       'taxes': taxes,
       'total': total,
       'r_id': restaurantid,
+      'r_name': rname,
       'items': _items,
       'date': date,
       'status': status
@@ -51,7 +52,7 @@ class OrdersNetworking {
 
     final orderModel = Provider.of<RestaurantOrders>(context);
 
-    orderModel.addOrder(orderId, order, status, subtotal, taxes, total, date, true);
+    orderModel.addOrder(orderId, rname,order, status, subtotal, taxes, total, date, true);
     await Future.delayed(const Duration(milliseconds: 1000), () {
       Navigator.of(context).pop();
       cart.clear();
