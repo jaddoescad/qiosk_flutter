@@ -8,7 +8,8 @@ import '../models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({Key key}) : super(key: key);
+  const OrderPage({Key key, this.showBackButton = false}) : super(key: key);
+  final showBackButton;
   @override
   OrderPageState createState() => OrderPageState();
 }
@@ -51,7 +52,22 @@ class OrderPageState extends State<OrderPage>
             brightness: Brightness.light,
             elevation: 1,
             backgroundColor: Colors.white,
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: widget.showBackButton,
+            leading: widget.showBackButton
+                ? IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor:
+                        Colors.transparent, // makes highlight invisible too
+                    icon: Icon(
+                      Icons.close,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      //add to cart
+                      Navigator.of(context).pop();
+                    },
+                  )
+                : null,
             title: Text(
               "Orders",
               overflow: TextOverflow.ellipsis,

@@ -10,7 +10,6 @@ import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/orders.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import '../Networking/Restaurant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +21,7 @@ import '../screens/profile.dart';
 import 'package:flutter/services.dart';
 import '../widgets/Loader.dart';
 import '../models/taxes.dart';
+import '../screens/Orders.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -224,6 +224,32 @@ class QRViewExampleState extends State<QRViewExample>
                 'assets/images/logoappbar.png',
                 height: 20,
               ),
+              actions: <Widget>[
+                IconButton(
+                splashColor: Colors.transparent,
+                highlightColor:
+                    Colors.transparent, // makes highlight invisible too
+                icon: Image.asset(
+                  'assets/images/invoice.png',
+                  height: 30.0,
+                  width: 30.0,
+                ),
+                onPressed: () {
+                  if (_disable == false) {
+                    setState(() {
+                      _disable = true;
+                    });
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                          fullscreenDialog: true,
+                          builder: (ctx) {
+                            return OrderPage(showBackButton: true,);
+                          }),
+                    );
+                  }
+                },
+              ),
+              ],
               leading: new IconButton(
                 splashColor: Colors.transparent,
                 highlightColor:
@@ -248,6 +274,7 @@ class QRViewExampleState extends State<QRViewExample>
                   }
                 },
               ),
+              
             ),
             Center(
               child: Column(
