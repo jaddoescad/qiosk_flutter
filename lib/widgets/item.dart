@@ -3,6 +3,8 @@ import 'package:iamrich/models/restaurant.dart';
 import '../constants.dart';
 import '../screens/ItemOverView.dart';
 import 'package:flutter/cupertino.dart';
+import '../models/Item.dart';
+import 'package:provider/provider.dart';
 
 class ItemContainer extends StatelessWidget {
   ItemContainer({this.item});
@@ -14,10 +16,19 @@ class ItemContainer extends StatelessWidget {
       color: Colors.white,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             CupertinoPageRoute(
-                builder: (ctx) => ItemOverview(fromMenuItem: item, itemID: item.id.toString(),)),
-          );
+                builder: (ctx) => ItemOverview(
+                      fromMenuItem: item,
+                      itemID: item.id.toString(),
+                    )),
+          )
+              .then((value) {
+                print('emptied');
+            final item = Provider.of<Item>(context, listen: false);
+            item.reset();
+          });
         },
         child: Container(
           padding:

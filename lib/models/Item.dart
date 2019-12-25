@@ -5,26 +5,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../models/restaurant.dart';
 
-Future fetchSelection(context, itemID) async {
+Future<bool> fetchSelection(context, itemID) async {
   final restaurant = Provider.of<Restaurant>(context);
-  
+  final item = Provider.of<Item>(context, listen: false);
+
   var document = await Firestore.instance
       .collection('Restaurants')
       .document(restaurant.id)
       .collection('Selections')
       .document(itemID)
       .get();
-  return document.data;
+  await Future.delayed(const Duration(milliseconds: 1000), () {
+    if (document.exists) {
+      item.fromSelectionJson(document);
+      item.checkIfItemMeetsAllConditions();
+    } else {
+      item.checkIfItemMeetsAllConditions();
+    }
+  });
+  return true;
+  // return document.data;
 }
 
- Stream streamSelection(context, itemID)  {
-    final restaurant = Provider.of<Restaurant>(context);
-      return Firestore.instance
-      .collection('Restaurants')
-      .document(restaurant.id)
-      .collection('Selections')
-      .document(itemID).snapshots();
-}
+//  Stream streamSelection(context, itemID)  {
+//     final restaurant = Provider.of<Restaurant>(context);
+//       return Firestore.instance
+//       .collection('Restaurants')
+//       .document(restaurant.id)
+//       .collection('Selections')
+//       .document(itemID).snapshots();
+// }
 
 class Item extends ChangeNotifier {
   String id;
@@ -61,24 +71,24 @@ class Item extends ChangeNotifier {
   checkIfItemMeetsAllConditions() {
     // var exitLoop = false;
     if (sections?.isNotEmpty ?? false) {
-    for (var section in sections) {
-      final selectionsLength =
-          (section.selections.where((i) => i.selected).toList()).length;
-      if (section.type == "Radio") {
-        if (selectionsLength < 1) {
-          disableCart = true;
-          return;
-        }
-      } else if (section.min != null) {
-        if (section.min > 0) {
-          if (!(selectionsLength >= section.min)) {
+      for (var section in sections) {
+        final selectionsLength =
+            (section.selections.where((i) => i.selected).toList()).length;
+        if (section.type == "Radio") {
+          if (selectionsLength < 1) {
             disableCart = true;
             return;
           }
+        } else if (section.min != null) {
+          if (section.min > 0) {
+            if (!(selectionsLength >= section.min)) {
+              disableCart = true;
+              return;
+            }
+          }
         }
       }
-    }
-    disableCart = false;
+      disableCart = false;
     } else {
       disableCart = false;
     }
@@ -96,7 +106,6 @@ class Item extends ChangeNotifier {
   }
 
   selectRadio(selection, section) {
-    
     section.selections.asMap().forEach((index, _selection) {
       section.selections[index].selected = false;
     });
@@ -111,26 +120,25 @@ class Item extends ChangeNotifier {
     List price = [];
     List selected = [];
     if (sections?.isNotEmpty ?? false) {
-sections.map((section) {
-      section.selections.map((selection) {
-        if (selection.selected) {
-          selected.add(selection);
-          selections = selected;
-          if (selection.price != null) {
-            price.add(selection.price);
+      sections.map((section) {
+        section.selections.map((selection) {
+          if (selection.selected) {
+            selected.add(selection);
+            selections = selected;
+            if (selection.price != null) {
+              price.add(selection.price);
+            }
           }
-        }
+        }).toList();
       }).toList();
-    }).toList();
-    if (price.isNotEmpty) {
-      selectionPrice = price.reduce((a, b) => a + b);
+      if (price.isNotEmpty) {
+        selectionPrice = price.reduce((a, b) => a + b);
+      } else {
+        selectionPrice = 0;
+      }
     } else {
       selectionPrice = 0;
     }
-    } else {
-      selectionPrice = 0;
-    }
-    
   }
 
   increment() {
@@ -156,8 +164,8 @@ sections.map((section) {
   }
 
   fromSelectionJson(json) {
-   if  (json.data?.containsKey('sections') ?? false) {
-    sections = getSection(json.data['sections']);
+    if (json.data?.containsKey('sections') ?? false) {
+      sections = getSection(json.data['sections']);
     }
   }
 
