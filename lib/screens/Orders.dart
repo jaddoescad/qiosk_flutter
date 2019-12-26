@@ -10,6 +10,7 @@ import '../Networking/Auth.dart';
 import '../models/restaurant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../widgets/Loader.dart';
+import '../widgets/errorMessage.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage(
@@ -32,29 +33,31 @@ class OrderPageState extends State<OrderPage>
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    Future.delayed(Duration.zero, () {
-        final user = Provider.of<User>(context);
+    Future.delayed(Duration.zero, () async {
+      final user = Provider.of<User>(context);
       if (widget.loadOrders && user.uid != null) {
         setState(() {
           loader = true;
         });
         final restaurant = Provider.of<Restaurant>(context);
         final restaurantOrders = Provider.of<RestaurantOrders>(context);
-        try {
-          Auth()
-              .getOrders(context, user, restaurant, restaurantOrders)
-              .then((onValue) {
-            print('done');
-            Future.delayed(const Duration(milliseconds: 500), () {
-              setState(() {
-                loader = false;
-              });
+        Auth()
+            .getOrders(context, user, restaurant, restaurantOrders)
+            .then((onValue) {
+          Future.delayed(const Duration(milliseconds: 500), () {
+            setState(() {
+              loader = false;
             });
           });
-        } catch (error) {
-          print(error);
-        }
+        }).catchError((onError) async {
+          await showErrorDialog(context, 'There was an Error Loading Orders');
+          Navigator.of(context).pop();
+        });
       }
+    }).catchError((onError) async {
+      print(onError);
+      await showErrorDialog(context, 'There was an Error Loading Orders');
+      Navigator.of(context).pop();
     });
   }
 

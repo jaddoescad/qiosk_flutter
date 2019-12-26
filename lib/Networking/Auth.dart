@@ -38,6 +38,7 @@ class Auth with ChangeNotifier {
     print(data);
     // print('hek');
     restaurantOrders.addOrders(data);
+    throw('ejrb');
     // print('helo');
     return true;
   }

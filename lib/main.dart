@@ -53,7 +53,7 @@ class MyAppState extends State<MyApp> {
     try {
       Auth().checkIfUserExists(context);
     } catch (e) {
-      //dp not out alertdialog here
+      //do not out alertdialog here
       print(e);
     }
     FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iamrich/constants.dart';
 
 void showSuccessDialog(context, e) {
   showDialog(
@@ -32,23 +33,52 @@ void showSuccessDialog(context, e) {
       });
 }
 
+// Future<Null> showErrorDialog(context, e) async {
+//   return showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           elevation: 0,
+//           title: new Text("Error"),
+//           content: new Text(e.toString()),
+//           actions: <Widget>[
+//             // usually buttons at the bottom of the dialog
+//             new FlatButton(
+//               child: new Text("Close"),
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//           ],
+//         );
+//       });
+// }
+
 Future<Null> showErrorDialog(context, e) async {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          elevation: 0,
-          title: new Text("Error"),
-          content: new Text(e.toString()),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+    title: Text("Error"),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0)), //this right here
+    content: Container(
+      child: Text(
+              e, textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 18, color: kMainColor),
             ),
-          ],
-        );
+    ),
+    actions: <Widget> [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Dismiss',
+                    style: TextStyle(color: kMainColor, fontSize: 18.0),
+                  )),
+            ],
+          );
       });
 }
+
