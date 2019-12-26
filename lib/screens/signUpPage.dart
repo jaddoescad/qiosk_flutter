@@ -224,7 +224,7 @@ class _SignUpPageState extends State<SignUpPage> {
         setState(() {
           loader = false;
         });
-      showErrorDialog(context, 'there was an error: ${error.toString()}');
+      showErrorDialog(context, 'There was an error authenticating user');
       print(error);
       }
     }

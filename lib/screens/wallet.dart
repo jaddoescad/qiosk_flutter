@@ -144,8 +144,10 @@ class _WalletState extends State<Wallet> {
                 setState(() {
                   loader = false;
                 });
+                print(error.toString());
                 showErrorDialog(
-                    context, 'there was an error: ${error.toString()}');
+                    context, 'There was an error adding your card');
+
               }
             },
           ),

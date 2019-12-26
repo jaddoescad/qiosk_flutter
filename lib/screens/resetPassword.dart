@@ -152,7 +152,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         });
       } catch (error) {
         print(error);
-        showErrorDialog(context, 'there was an error: ${error.toString()}');
+        showErrorDialog(context, 'There was an error resetting your password}');
         setState(() {
           loader = false;
         });

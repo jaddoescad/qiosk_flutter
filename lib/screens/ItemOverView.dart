@@ -54,7 +54,7 @@ class _ItemOverviewState extends State<ItemOverview> {
 
     } catch(e) {
       print('error');
-      showErrorDialog(context, "error");
+      showErrorDialog(context, "There was an error fetching item");
     }
 
   }

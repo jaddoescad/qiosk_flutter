@@ -241,8 +241,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
             loader = false;
           });
         } catch (error) {
-          print('there was an error processing payment: ${error.toString()}');
-          showErrorDialog(context, 'there was an error: ${error.toString()}');
+          print('there was an error adding card: ${error.toString()}');
+          showErrorDialog(context, 'There was an error adding your card');
         }
       } else if (page == PageToGo.Checkout) {
           loaderText = 'Placing Order...';
@@ -277,7 +277,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           restaurant.title);
     } catch (error) {
       print('error paying : $error');
-      showErrorDialog(context, 'there was an error: ${error.toString()}');
+      showErrorDialog(context, 'There was an error processing payment}');
       setState(() {
         loader = false;
       });

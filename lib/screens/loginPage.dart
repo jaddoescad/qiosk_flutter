@@ -219,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
           loader = false;
         });
         print(error.toString());
-        showErrorDialog(context, 'there was an error: ${error.toString()}');
+        showErrorDialog(context, 'There was an error an error authenticating user');
       }
     }
   }
