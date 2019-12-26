@@ -23,6 +23,9 @@ import 'package:stripe_payment/stripe_payment.dart';
 import 'constants.dart';
 import 'screens/splashScreen.dart';
 import './Networking/Auth.dart';
+import 'package:flutter/rendering.dart';
+
+
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 

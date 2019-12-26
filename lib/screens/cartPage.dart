@@ -162,42 +162,53 @@ class _CartPageState extends State<CartPage> with RouteAware {
             ),
            SliverToBoxAdapter(
              child: cart.items.values.toList().length > 0 ? Container(
-                padding: EdgeInsets.only(top: 15, bottom: 15),
-                margin: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.only(top: 15, bottom: 15, left: 25, right:20),
+                // margin: EdgeInsets.only(left: 30, right: 20),
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Subtotal"),
-                    Text('\$ ${cart.totalAmount.toStringAsFixed(2)}'),
-                  ],
+                             
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Subtotal"),
+                      Text('\$ ${cart.totalAmount.toStringAsFixed(2)}'),
+                    ],
+                  ),
                 ),
 
-                Text(" "),
+                // Text(" "),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Taxes"),
-                    Text('\$ ${taxes.applyTax(cart.totalAmount).toStringAsFixed(2)}'),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Taxes"),
+                      Text('\$ ${taxes.applyTax(cart.totalAmount).toStringAsFixed(2)}'),
+                    ],
+                  ),
                 ),
 
-                Text(" "),
+                // Text(" "),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Total", style: TextStyle(fontWeight: FontWeight.bold),),
-                    Text('\$ ${taxes.getTotal(cart.totalAmount).toStringAsFixed(2)}'),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Total", style: TextStyle(fontWeight: FontWeight.bold),),
+                      Text('\$ ${taxes.getTotal(cart.totalAmount).toStringAsFixed(2)}'),
+                    ],
+                  ),
                 ),
+                Divider()
                 ]
                 ),
                 ) : Container(),

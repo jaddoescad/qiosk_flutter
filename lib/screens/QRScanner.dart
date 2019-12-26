@@ -275,23 +275,15 @@ class QRViewExampleState extends State<QRViewExample>
                   Opacity(
                     opacity: 1,
                     child: Container(
-                      height: MediaQuery.of(context).size.width / 2,
-                      width: MediaQuery.of(context).size.width / 2,
+                      height: MediaQuery.of(context).size.width / 1.7,
+                      width: MediaQuery.of(context).size.width / 1.7,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                         image: AssetImage('assets/images/Scan.png'),
                       )),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text('Scan To Order',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            letterSpacing: 4,
-                            fontWeight: FontWeight.w600)),
-                  )
+  
                 ],
               ),
             ),
