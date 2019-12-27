@@ -25,21 +25,17 @@ class Auth with ChangeNotifier {
     assert(user.uid == currentUser.uid);
     print('signInEmail succeeded: $user');
     await checkIfUserExists(context);
-    // await getOrders(context);
-    //download orders
+    final restaurant = Provider.of<Restaurant>(context);
+    final restaurantOrders = Provider.of<RestaurantOrders>(context);
+    await getOrders(context, user, restaurant, restaurantOrders);
 
     return user;
   }
 
   Future<bool> getOrders(context, user, restaurant, restaurantOrders) async {
-
-
-    final data = await RestaurantNetworking.fetchOrders(restaurant.id, user.uid);
-    print(data);
-    // print('hek');
+    final data =
+        await RestaurantNetworking.fetchOrders(restaurant.id, user.uid);
     restaurantOrders.addOrders(data);
-    throw('ejrb');
-    // print('helo');
     return true;
   }
 
@@ -50,7 +46,7 @@ class Auth with ChangeNotifier {
   Future handleSignUp(email, password, context, name) async {
     AuthResult result = await auth.createUserWithEmailAndPassword(
         email: email, password: password);
-    
+
     final userProvider = Provider.of<User>(context);
     final FirebaseUser user = result.user;
     assert(user != null);
@@ -70,7 +66,6 @@ class Auth with ChangeNotifier {
 
       throw (resp.data['error']);
     } else {
-
       print(resp.data['user']['uid']);
       userProvider.changeUID(
           resp.data['user']['uid'],

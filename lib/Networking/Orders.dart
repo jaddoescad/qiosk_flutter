@@ -43,6 +43,7 @@ class OrdersNetworking {
       'r_name': rname,
       'items': _items,
       'date': date,
+      'archived': false,
       'status': status
     };
     await Firestore.instance
