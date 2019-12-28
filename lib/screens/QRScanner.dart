@@ -71,12 +71,11 @@ class QRViewExampleState extends State<QRViewExample>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-
-      if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed) {
       if (_settingsOpen == true) {
-      setState(() {
-        _settingsOpen = false;
-      });
+        setState(() {
+          _settingsOpen = false;
+        });
         _permissionHandler
             .checkPermissionStatus(PermissionGroup.camera)
             .then((result) {
@@ -103,7 +102,8 @@ class QRViewExampleState extends State<QRViewExample>
       });
       try {
         print(qrValue.split("/")[qrValue.split("/").length - 2]);
-        await getMenuandOrders(qrValue.split("/")[qrValue.split("/").length - 2]);
+        await getMenuandOrders(
+            qrValue.split("/")[qrValue.split("/").length - 2]);
         Future.delayed(const Duration(milliseconds: 500), () {
           goToHomePage();
         });
@@ -146,8 +146,8 @@ class QRViewExampleState extends State<QRViewExample>
     return mounted && cameraPermission
         ? qrScannerView()
         : Scaffold(
-          backgroundColor: kMainColor,
-          appBar:             AppBar(
+            backgroundColor: kMainColor,
+            appBar: AppBar(
               brightness: Brightness.dark,
               backgroundColor: Colors.transparent, //No more green
               elevation: 0.0, //Shadow gone
@@ -158,32 +158,35 @@ class QRViewExampleState extends State<QRViewExample>
               ),
               actions: <Widget>[
                 IconButton(
-                splashColor: Colors.transparent,
-                highlightColor:
-                    Colors.transparent, // makes highlight invisible too
-                icon: Image.asset(
-                  'assets/images/invoice.png',
-                  height: 30.0,
-                  width: 30.0,
+                  splashColor: Colors.transparent,
+                  highlightColor:
+                      Colors.transparent, // makes highlight invisible too
+                  icon: Image.asset(
+                    'assets/images/invoice.png',
+                    height: 30.0,
+                    width: 30.0,
+                  ),
+                  onPressed: () {
+                    if (_disable == false) {
+                      setState(() {
+                        _disable = true;
+                      });
+                      Navigator.of(context)
+                          .push(
+                        CupertinoPageRoute(
+                            fullscreenDialog: true,
+                            builder: (ctx) {
+                              return OrderPage(
+                                  showBackButton: true, loadOrders: true);
+                            }),
+                      )
+                          .then((onValue) {
+                        final orders = Provider.of<RestaurantOrders>(context);
+                        orders.clear();
+                      });
+                    }
+                  },
                 ),
-                onPressed: () {
-                  if (_disable == false) {
-                    setState(() {
-                      _disable = true;
-                    });
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (ctx) {
-                            return OrderPage(showBackButton: true, loadOrders: true);
-                          }),
-                    ).then((onValue){
-                      final orders = Provider.of<RestaurantOrders>(context);
-                      orders.clear();
-                    });
-                  }
-                },
-              ),
               ],
               leading: new IconButton(
                 splashColor: Colors.transparent,
@@ -209,19 +212,20 @@ class QRViewExampleState extends State<QRViewExample>
                   }
                 },
               ),
-              
             ),
             body: Container(
-              
               child: Center(
                 heightFactor: 10,
                 child: FlatButton(
-                  child: Text('Please press here to enable camera permissions', style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white)),
+                  child: Text(
+                      'Please press here to enable camera permissions',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, color: Colors.white)),
                   onPressed: () async {
                     PermissionHandler()
                         .openAppSettings()
                         .then((bool hasOpened) async {
-                          print(hasOpened);
+                      print(hasOpened);
                       if (hasOpened) {
                         setState(() {
                           _settingsOpen = true;
@@ -238,7 +242,6 @@ class QRViewExampleState extends State<QRViewExample>
   ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
-          
           body: Stack(fit: StackFit.expand, children: <Widget>[
             Container(
               height: double.infinity,
@@ -283,32 +286,35 @@ class QRViewExampleState extends State<QRViewExample>
               ),
               actions: <Widget>[
                 IconButton(
-                splashColor: Colors.transparent,
-                highlightColor:
-                    Colors.transparent, // makes highlight invisible too
-                icon: Image.asset(
-                  'assets/images/invoice.png',
-                  height: 30.0,
-                  width: 30.0,
+                  splashColor: Colors.transparent,
+                  highlightColor:
+                      Colors.transparent, // makes highlight invisible too
+                  icon: Image.asset(
+                    'assets/images/invoice.png',
+                    height: 30.0,
+                    width: 30.0,
+                  ),
+                  onPressed: () {
+                    if (_disable == false) {
+                      setState(() {
+                        _disable = true;
+                      });
+                      Navigator.of(context)
+                          .push(
+                        CupertinoPageRoute(
+                            fullscreenDialog: true,
+                            builder: (ctx) {
+                              return OrderPage(
+                                  showBackButton: true, loadOrders: true);
+                            }),
+                      )
+                          .then((onValue) {
+                        final orders = Provider.of<RestaurantOrders>(context);
+                        orders.clear();
+                      });
+                    }
+                  },
                 ),
-                onPressed: () {
-                  if (_disable == false) {
-                    setState(() {
-                      _disable = true;
-                    });
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (ctx) {
-                            return OrderPage(showBackButton: true, loadOrders: true);
-                          }),
-                    ).then((onValue){
-                      final orders = Provider.of<RestaurantOrders>(context);
-                      orders.clear();
-                    });
-                  }
-                },
-              ),
               ],
               leading: new IconButton(
                 splashColor: Colors.transparent,
@@ -334,7 +340,6 @@ class QRViewExampleState extends State<QRViewExample>
                   }
                 },
               ),
-              
             ),
             Center(
               child: Column(
@@ -352,7 +357,6 @@ class QRViewExampleState extends State<QRViewExample>
                       )),
                     ),
                   ),
-  
                 ],
               ),
             ),
@@ -366,13 +370,13 @@ class QRViewExampleState extends State<QRViewExample>
 
   Future<void> getMenuandOrders(rid) async {
     final FirebaseUser firuser = await FirebaseAuth.instance.currentUser();
-    final data = await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
+    final data =
+        await RestaurantNetworking.fetchMenuandOrders(rid, firuser?.uid);
     //get tax rate
 
     final restaurantOrders = Provider.of<RestaurantOrders>(context);
     final restaurant = Provider.of<Restaurant>(context);
     final tax = Provider.of<Taxes>(context);
-
 
     final menu = data[0];
     final _orders = data[1];
@@ -381,7 +385,6 @@ class QRViewExampleState extends State<QRViewExample>
     tax.setTaxRate(taxRate);
     restaurant.loadRestaurant(rid, menu);
     restaurantOrders.addOrders(_orders);
-
   }
 
   void goToHomePage() {

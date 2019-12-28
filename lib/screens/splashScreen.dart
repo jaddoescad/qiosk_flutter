@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iamrich/screens/QRScanner.dart';
 import '../util/helper.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../Networking/Auth.dart';
 
 
 class Splash extends StatefulWidget {
@@ -17,6 +18,12 @@ class _Splash extends State<Splash> {
   @override
   void initState() {
     super.initState();
+        try {
+      Auth().checkIfUserExists(context);
+    } catch (e) {
+      //do not out alertdialog here
+      print(e);
+    }
     new Future.delayed(
         const Duration(seconds: 3),
         () {

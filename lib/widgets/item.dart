@@ -39,42 +39,45 @@ class ItemContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               item.imgUrl != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Container(
-                        color: kMainColor,
-                        height: 175,
-                        width: double.infinity,
-                        child: Image.network(item.imgUrl, fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Container(
-                              height: 175,
-                              color: kMainColor,
-                              width: double.infinity,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  backgroundColor: Colors.transparent,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes
-                                      : null,
+                  ? Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Container(
+                          color: kMainColor,
+                          height: 175,
+                          width: double.infinity,
+                          child: Image.network(item.imgUrl, fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context, Widget child,
+                                  ImageChunkEvent loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Container(
+                                height: 175,
+                                color: kMainColor,
+                                width: double.infinity,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.transparent,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress.cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes
+                                        : null,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                        ),
                       ),
-                    )
+                  )
                   : Container(),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 5),
+                padding: const EdgeInsets.only( bottom: 5),
                 child: Container(
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   width: double.infinity,
@@ -95,9 +98,9 @@ class ItemContainer extends StatelessWidget {
               ),
               item.description != null
                   ? Container(
-                      padding: EdgeInsets.only(left: 10.0, right: 8),
+                      padding: EdgeInsets.only(left: 10.0, right: 8, bottom: 5),
                       width: double.infinity,
-                      height: 40,
+                      // height: 40,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -106,15 +109,15 @@ class ItemContainer extends StatelessWidget {
                           maxLines: 2,
                           style: TextStyle(
                               fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
+                              color: kMainColor.withOpacity(0.5),
+                              fontWeight: FontWeight.w500,
                               letterSpacing: 0.2),
                         ),
                       ),
                     )
                   : Container(),
               Container(
-                padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 8),
+                padding: EdgeInsets.only(left: 10.0, right: 10.0),
                 width: double.infinity,
                 child: Align(
                   alignment: Alignment.centerLeft,
@@ -124,7 +127,7 @@ class ItemContainer extends StatelessWidget {
                     maxLines: 1,
                     style: TextStyle(
                         fontSize: 13,
-                        color: Colors.black,
+                        color: kMainColor,
                         fontWeight: FontWeight.w700),
                   ),
                 ),

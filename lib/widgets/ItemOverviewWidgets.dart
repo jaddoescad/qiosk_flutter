@@ -12,11 +12,11 @@ class ItemHeader extends StatelessWidget {
     print("here");
     return Column(
       children: <Widget>[
-        item.imgUrl.isNotEmpty
+        item.imgUrl?.isNotEmpty ?? false
             ? ItemImage(imgUrl: item.imgUrl)
             : ItemSelectionSpacer(),
         ItemTitle(title: item.title),
-        if (item.description.isNotEmpty)
+        if (item.description?.isNotEmpty ?? false)
           ItemDescription(description: item.description),
       ],
     );

@@ -22,7 +22,6 @@ import './screens/QRScanner.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'constants.dart';
 import 'screens/splashScreen.dart';
-import './Networking/Auth.dart';
 import 'package:flutter/rendering.dart';
 
 
@@ -50,12 +49,6 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    try {
-      Auth().checkIfUserExists(context);
-    } catch (e) {
-      //do not out alertdialog here
-      print(e);
-    }
     FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
     StripePayment.setOptions(StripeOptions(
       publishableKey: 'pk_test_3pnCHeZmNkaGk0lwKa9FRKln',
