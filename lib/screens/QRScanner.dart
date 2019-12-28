@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:iamrich/Networking/Auth.dart';
+import 'package:iamrich/constants.dart';
 import 'package:iamrich/models/restaurant.dart';
 import 'package:iamrich/screens/homePage.dart';
 import 'package:provider/provider.dart';
@@ -145,10 +146,77 @@ class QRViewExampleState extends State<QRViewExample>
     return mounted && cameraPermission
         ? qrScannerView()
         : Scaffold(
+          backgroundColor: kMainColor,
+          appBar:             AppBar(
+              brightness: Brightness.dark,
+              backgroundColor: Colors.transparent, //No more green
+              elevation: 0.0, //Shadow gone
+              centerTitle: true,
+              title: Image.asset(
+                'assets/images/logoappbar.png',
+                height: 20,
+              ),
+              actions: <Widget>[
+                IconButton(
+                splashColor: Colors.transparent,
+                highlightColor:
+                    Colors.transparent, // makes highlight invisible too
+                icon: Image.asset(
+                  'assets/images/invoice.png',
+                  height: 30.0,
+                  width: 30.0,
+                ),
+                onPressed: () {
+                  if (_disable == false) {
+                    setState(() {
+                      _disable = true;
+                    });
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                          fullscreenDialog: true,
+                          builder: (ctx) {
+                            return OrderPage(showBackButton: true, loadOrders: true);
+                          }),
+                    ).then((onValue){
+                      final orders = Provider.of<RestaurantOrders>(context);
+                      orders.clear();
+                    });
+                  }
+                },
+              ),
+              ],
+              leading: new IconButton(
+                splashColor: Colors.transparent,
+                highlightColor:
+                    Colors.transparent, // makes highlight invisible too
+                icon: Image.asset(
+                  'assets/images/profile.png',
+                  height: 30.0,
+                  width: 30.0,
+                ),
+                onPressed: () {
+                  if (_disable == false) {
+                    setState(() {
+                      _disable = true;
+                    });
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                          fullscreenDialog: true,
+                          builder: (ctx) {
+                            return Profile();
+                          }),
+                    );
+                  }
+                },
+              ),
+              
+            ),
             body: Container(
+              
               child: Center(
+                heightFactor: 10,
                 child: FlatButton(
-                  child: Text('Please press to activate Camera'),
+                  child: Text('Please press here to enable camera permissions', style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white)),
                   onPressed: () async {
                     PermissionHandler()
                         .openAppSettings()
@@ -170,6 +238,7 @@ class QRViewExampleState extends State<QRViewExample>
   ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
+          
           body: Stack(fit: StackFit.expand, children: <Widget>[
             Container(
               height: double.infinity,
