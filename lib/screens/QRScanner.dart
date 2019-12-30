@@ -49,7 +49,7 @@ class QRViewExampleState extends State<QRViewExample>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _permissionHandler.requestPermissions([PermissionGroup.camera, PermissionGroup.notification]).then(( result){
-      print('passed all permisions')
+      print('passed all permisions');
                     print(result[0]);
 
             if (result[0] == PermissionStatus.granted) {
