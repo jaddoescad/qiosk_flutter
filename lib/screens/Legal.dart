@@ -3,7 +3,7 @@ import '../constants.dart';
 import 'package:flutter/cupertino.dart';
 import '../screens/account.dart';
 import 'dart:math';
-
+import 'package:url_launcher/url_launcher.dart';
 
 class Legal extends StatefulWidget {
   final showBackButton;
@@ -37,20 +37,14 @@ class _LegalState extends State<Legal> {
       ),
       body: ListView(
         children: <Widget>[
-          profileCard(context, 'Copyright', Account() ),
-          profileCard(context, 'Terms & Conditions', Account() ),
-
-          profileCard(context, 'Privacy Policy', Account() ),
-
-          profileCard(context, 'Software Licenses', Account()),
-          profileCard(context, 'Pricing', Account()),
-
+          profileCard(context, 'Terms & Conditions', 'https://docs.flutter.io/flutter/services/UrlLauncher-class.html'),
+          profileCard(context, 'Privacy Policy','https://docs.flutter.io/flutter/services/UrlLauncher-class.html' ),
         ],
       ),
     );
   }
 
-  Container profileCard(BuildContext context, String title, Widget page) {
+  Container profileCard(BuildContext context, String title, String url) {
     return Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -80,7 +74,10 @@ class _LegalState extends State<Legal> {
                     width: double.infinity,
                     height: 75,
                   ),
-                  onPressed: null
+                  onPressed: () {
+                                                      launch(
+                                      url);
+                  }
                 ),
             ],
           ),
