@@ -24,6 +24,8 @@ import '../widgets/Loader.dart';
 import '../models/taxes.dart';
 import '../screens/Orders.dart';
 import '../models/orders.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -34,7 +36,7 @@ class QRViewExample extends StatefulWidget {
 class QRViewExampleState extends State<QRViewExample>
     with RouteAware, WidgetsBindingObserver {
   static final myTabbedPageKey = new GlobalKey<HomePageState>();
-  bool cameraPermission = false;
+  bool cameraPermission = true;
   final PermissionHandler _permissionHandler = PermissionHandler();
 
   bool _isloading = false;
@@ -48,12 +50,14 @@ class QRViewExampleState extends State<QRViewExample>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _permissionHandler.requestPermissions([PermissionGroup.camera, PermissionGroup.notification]).then(( result){
+    _permissionHandler.requestPermissions(
+        [PermissionGroup.camera]).then((result) {
       print('passed all permisions');
-                    print(result[0]);
 
-            if (result[0] == PermissionStatus.granted) {
-              print(result[0]);
+      //
+
+      if (result[PermissionGroup.camera] == PermissionStatus.granted) {
+        print('success');
         setState(() {
           cameraPermission = true;
         });
@@ -62,27 +66,7 @@ class QRViewExampleState extends State<QRViewExample>
           cameraPermission = false;
         });
       }
-    });
-
-
-    try {
-      Auth().checkIfUserExists(context);
-    } catch (e) {
-      print(e);
-    }
-    _permissionHandler
-        .checkPermissionStatus(PermissionGroup.camera)
-        .then((result) {
-      if (result == PermissionStatus.granted) {
-        setState(() {
-          cameraPermission = true;
-        });
-        // permission was granted
-      } else {
-        setState(() {
-          cameraPermission = false;
-        });
-      }
+            OneSignal.shared.promptUserForPushNotificationPermission();
     });
   }
 
