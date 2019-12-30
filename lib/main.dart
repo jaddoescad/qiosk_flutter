@@ -51,9 +51,9 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
-    FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
+    FlutterStripePayment.setStripeSettings("pk_live_Hl2IT8N9Itbdmhs0brBjJazG");
     StripePayment.setOptions(StripeOptions(
-      publishableKey: 'pk_test_3pnCHeZmNkaGk0lwKa9FRKln',
+      publishableKey: 'pk_live_Hl2IT8N9Itbdmhs0brBjJazG',
       // merchantId: 'MERCHANT_ID',
       // androidPayMode: 'test',
     ));
