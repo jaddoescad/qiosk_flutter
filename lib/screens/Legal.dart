@@ -37,8 +37,8 @@ class _LegalState extends State<Legal> {
       ),
       body: ListView(
         children: <Widget>[
-          profileCard(context, 'Terms & Conditions', 'https://docs.flutter.io/flutter/services/UrlLauncher-class.html'),
-          profileCard(context, 'Privacy Policy','https://docs.flutter.io/flutter/services/UrlLauncher-class.html' ),
+          profileCard(context, 'Terms & Conditions', 'https://qiosk.ca/terms'),
+          profileCard(context, 'Privacy Policy','https://qiosk.ca/privacy' ),
         ],
       ),
     );

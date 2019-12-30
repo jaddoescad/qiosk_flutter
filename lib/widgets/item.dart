@@ -140,7 +140,7 @@ class ItemContainer extends StatelessWidget {
             color: Colors.white,
             border: Border(
               bottom: BorderSide(
-                color: Colors.grey,
+                color: Colors.grey.withOpacity(0.5),
                 width: 0.5,
               ),
             ),

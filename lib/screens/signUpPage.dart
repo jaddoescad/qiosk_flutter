@@ -156,7 +156,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ..onTap = () {
                                   print('kmfkr');
                                   launch(
-                                      'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
+                                      'https://qiosk.ca/terms');
                                 }),
                           TextSpan(
                               text: "and ",
@@ -164,11 +164,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           TextSpan(
                               text: "Privacy",
                               style: TextStyle(color: Colors.green),
-                              recognizer: _recognizer1
+                              recognizer: _recognizer2
                                 ..onTap = () {
                                   print('kmfkr');
                                   launch(
-                                      'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
+                                      'https://qiosk.ca/privacy');
                                 }),
                         ],
                       ),

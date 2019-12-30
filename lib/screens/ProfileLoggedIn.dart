@@ -59,8 +59,6 @@ class _ProfileLoggedInState extends State<ProfileLoggedIn> {
           profileCard(context, 'Wallet', Wallet() ),
 
           profileCard(context, 'Legal', Legal() ),
-
-          profileCard(context, 'QIOSK.ca', null),
         ],
       ),
     );
