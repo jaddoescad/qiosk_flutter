@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "1.0.5"
   camera:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: camera
       url: "https://pub.dartlang.org"
@@ -106,13 +106,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.1.0"
-  firebase_analytics:
-    dependency: "direct main"
-    description:
-      name: firebase_analytics
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.9"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -142,7 +135,7 @@ packages:
     source: hosted
     version: "0.1.1+1"
   firebase_ml_vision:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_ml_vision
       url: "https://pub.dartlang.org"
@@ -167,20 +160,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  flutter_launcher_icons:
-    dependency: "direct main"
-    description:
-      name: flutter_launcher_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.4"
-  flutter_signin_button:
-    dependency: "direct main"
-    description:
-      name: flutter_signin_button
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -188,20 +167,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.4"
-  flutter_statusbarcolor:
-    dependency: "direct main"
-    description:
-      name: flutter_statusbarcolor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.3"
-  flutter_sticky_header:
-    dependency: "direct main"
-    description:
-      name: flutter_sticky_header
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   flutter_stripe_payment:
     dependency: "direct main"
     description:
@@ -225,14 +190,7 @@ packages:
       name: flutter_widgets
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.7+1"
-  font_awesome_flutter:
-    dependency: transitive
-    description:
-      name: font_awesome_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "8.5.0"
+    version: "0.1.8"
   html:
     dependency: transitive
     description:
@@ -268,13 +226,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1+1"
-  json_annotation:
-    dependency: "direct main"
-    description:
-      name: json_annotation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   matcher:
     dependency: transitive
     description:
@@ -366,13 +317,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  rxdart:
-    dependency: "direct main"
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.22.6"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -385,13 +329,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.5"
-  splashscreen:
-    dependency: "direct main"
-    description:
-      name: splashscreen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   stack_trace:
     dependency: transitive
     description:
@@ -483,13 +420,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.5.0"
-  yaml:
-    dependency: transitive
-    description:
-      name: yaml
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.0"
 sdks:
   dart: ">=2.4.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.4 <2.0.0"
