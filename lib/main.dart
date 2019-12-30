@@ -23,15 +23,11 @@ import 'package:stripe_payment/stripe_payment.dart';
 import 'constants.dart';
 import 'screens/splashScreen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 List<CameraDescription> cameras;
-bool _enableConsentButton = true;
-String _debugLabelString = "";
-
-// CHANGE THIS parameter to true if you want to test GDPR privacy consent
-bool _requireConsent = true;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +45,8 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+    final PermissionHandler _permissionHandler = PermissionHandler();
+
   @override
   void initState() {
     super.initState();
@@ -68,10 +66,11 @@ class MyAppState extends State<MyApp> {
 
     // OneSignal.shared.setRequiresUserPrivacyConsent(_requireConsent);
 
-    OneSignal.shared.init("fda9b8ab-104c-4afe-9f59-9766313f663e", iOSSettings: {
-      OSiOSSettings.autoPrompt: true,
+OneSignal.shared.init("fda9b8ab-104c-4afe-9f59-9766313f663e", iOSSettings: {
+      OSiOSSettings.autoPrompt: false,
       OSiOSSettings.inAppLaunchUrl: true
     });
+
     OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
 
     OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
@@ -115,7 +114,7 @@ class MyAppState extends State<MyApp> {
           fontFamily: 'Avenir',
           primaryColor: kMainColor,
         ),
-        home: Splash(),
+        home: QRViewExample(),
         navigatorObservers: [routeObserver],
         routes: {
           QRViewExample.routeName: (ctx) => QRViewExample(),

@@ -48,6 +48,23 @@ class QRViewExampleState extends State<QRViewExample>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _permissionHandler.requestPermissions([PermissionGroup.camera, PermissionGroup.notification]).then(( result){
+      print('passed all permisions')
+                    print(result[0]);
+
+            if (result[0] == PermissionStatus.granted) {
+              print(result[0]);
+        setState(() {
+          cameraPermission = true;
+        });
+      } else {
+        setState(() {
+          cameraPermission = false;
+        });
+      }
+    });
+
+
     try {
       Auth().checkIfUserExists(context);
     } catch (e) {
@@ -217,8 +234,7 @@ class QRViewExampleState extends State<QRViewExample>
               child: Center(
                 heightFactor: 10,
                 child: FlatButton(
-                  child: Text(
-                      'Please press here to enable camera permissions',
+                  child: Text('Please press here to enable camera permissions',
                       style: TextStyle(
                           fontWeight: FontWeight.w500, color: Colors.white)),
                   onPressed: () async {
