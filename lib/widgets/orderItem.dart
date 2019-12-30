@@ -21,7 +21,7 @@ class OrderItemCard extends StatelessWidget {
        order.status == "preparing" ? Container(
        padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
          child: Column(children: <Widget>[
-           Text("Preparing Order...", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold)),
+           Text("Preparing Order...", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor.withOpacity(0.75), fontWeight: FontWeight.bold)),
            Text(" "),
            Container(
            padding: EdgeInsets.only(left: 15, right: 15),
@@ -39,9 +39,12 @@ class OrderItemCard extends StatelessWidget {
          crossAxisAlignment: CrossAxisAlignment.center,
          mainAxisAlignment: MainAxisAlignment.center,
          children: <Widget>[
-         Icon(Icons.check_circle_outline, color: Colors.green, size: 30,),
+         Padding(
+           padding: const EdgeInsets.only(bottom: 3.0),
+           child: Icon(CupertinoIcons.check_mark_circled, color: Colors.green, size: 25,),
+         ),
          Text("  "),
-         Text("Order Complete", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold)),
+         Text("Order Complete", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 14, color: kMainColor.withOpacity(0.75), fontWeight: FontWeight.bold)),
          Text("  "),
          Icon(Icons.check_circle_outline, color: Colors.white, size: 30,),
          ],),
