@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
@@ -6,10 +7,11 @@ import '../Networking/Auth.dart';
 import '../models/goToCheckout.dart';
 import '../widgets/errorMessage.dart';
 import '../widgets/Loader.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = '/SignUp';
-   
+
   final Function changePageCallback;
   final String cameFrom;
   SignUpPage({this.changePageCallback, this.cameFrom});
@@ -19,51 +21,61 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-   final loaderText = 'Signing Up...';
+  final loaderText = 'Signing Up...';
   _SignUpData _data = new _SignUpData();
   var authHandler = Auth();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   bool loader = false;
+  TapGestureRecognizer _recognizer1;
+  TapGestureRecognizer _recognizer2;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _recognizer1 = TapGestureRecognizer();
+    _recognizer2 = TapGestureRecognizer();
+  }
+
   /// Normally the signin buttons should be contained in the SignInPage
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return ModalProgressHUD(
       progressIndicator: Loader(context: context, loaderText: loaderText),
       inAsyncCall: loader,
-          child: Scaffold(
-               backgroundColor: Colors.white,
-        appBar: AppBar(
-        iconTheme: IconThemeData(color: kMainColor),
-        brightness: Brightness.light,
-        elevation: 1,
+      child: Scaffold(
         backgroundColor: Colors.white,
-        title: Text(
-          "Sign Up",
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
-            color: kMainColor,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: kMainColor),
+          brightness: Brightness.light,
+          elevation: 1,
+          backgroundColor: Colors.white,
+          title: Text(
+            "Sign Up",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              color: kMainColor,
+            ),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent, // makes highlight invisible too
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            onPressed: () {
+              //add to cart
+              Navigator.of(context).pop();
+            },
           ),
         ),
-        centerTitle: true,
-         leading:  IconButton(
-              splashColor: Colors.transparent,
-              highlightColor:
-                  Colors.transparent, // makes highlight invisible too
-              icon: Icon(
-                Icons.arrow_back_ios,
-                size: 20,
-              ),
-              onPressed: () {
-                //add to cart
-                Navigator.of(context).pop();
-              },
-            ) ,
-      ),
         body: Container(
           // color: Colors.red,
           height: double.infinity,
@@ -81,8 +93,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         this._data.name = value;
                       },
                       validator: this._validateName,
-                      keyboardType:
-                          TextInputType.text, // Use email input type for emails.
+                      keyboardType: TextInputType
+                          .text, // Use email input type for emails.
                       decoration: new InputDecoration(
                         fillColor: Colors.white,
                         // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: COlors.)),
@@ -129,13 +141,41 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     margin: new EdgeInsets.only(top: 20.0),
                   ),
-                  Container(
-                      padding: EdgeInsets.only(left: 40, right: 40, top: 10),
-                      child: Text(
-                        "By signing up, you agree with the Terms of Services & Privacy",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 12),
-                      )),
+                  Padding(
+                    padding: EdgeInsets.only(left: 40, right: 40, top: 10),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "By signing up, you agree with the ",
+                              style: TextStyle(color: kMainColor)),
+                          TextSpan(
+                              text: "Terms of Services ",
+                              style: TextStyle(color: Colors.green),
+                              recognizer: _recognizer1
+                                ..onTap = () {
+                                  print('kmfkr');
+                                  launch(
+                                      'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
+                                }),
+                          TextSpan(
+                              text: "and ",
+                              style: TextStyle(color: kMainColor)),
+                          TextSpan(
+                              text: "Privacy",
+                              style: TextStyle(color: Colors.green),
+                              recognizer: _recognizer1
+                                ..onTap = () {
+                                  print('kmfkr');
+                                  launch(
+                                      'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
+                                }),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                      // style: TextStyle(fontSize: 12),
+                    ),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -144,20 +184,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: <Widget>[
                       Text("Need to Login?  ",
                           style: TextStyle(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w300)),
+                              color: kMainColor, fontWeight: FontWeight.w300)),
                       InkWell(
                         highlightColor: Colors.transparent,
                         splashColor: Colors.transparent,
                         child: Text(
                           "Login",
                           style: TextStyle(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w500),
+                              color: kMainColor, fontWeight: FontWeight.w500),
                         ),
                         onTap: () {
-                          widget
-                              .changePageCallback("login"); // function is called
+                          widget.changePageCallback(
+                              "login"); // function is called
                         },
                       ),
                     ],
@@ -206,31 +244,38 @@ class _SignUpPageState extends State<SignUpPage> {
 
       try {
         _formKey.currentState.save();
-        await authHandler.handleSignUp(_data.email, _data.password, context, _data.name);
-        await Future.delayed(const Duration(milliseconds: 500), (){});
+        await authHandler.handleSignUp(
+            _data.email, _data.password, context, _data.name);
+        await Future.delayed(const Duration(milliseconds: 500), () {});
         setState(() {
-            loader = false;
-          });
+          loader = false;
+        });
         if (widget.cameFrom == "cart") {
-
           final goToCheckout = Provider.of<GoToCheckout>(context);
           goToCheckout.setGoToCheckout(true);
         }
-           Navigator.of(context).pop();
+        Navigator.of(context).pop();
         setState(() {
           loader = false;
         });
-      } catch(error) {
+      } catch (error) {
         setState(() {
           loader = false;
         });
-      showErrorDialog(context, 'There was an error authenticating user');
-      print(error);
+        showErrorDialog(context, 'There was an error authenticating user');
+        print(error);
       }
     }
-     
-    }
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _recognizer2.dispose();
+    _recognizer1.dispose();
+    super.dispose();
+  }
+}
 
 class _SignUpData {
   String name = '';

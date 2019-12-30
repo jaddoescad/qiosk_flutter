@@ -22,13 +22,16 @@ import './screens/QRScanner.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'constants.dart';
 import 'screens/splashScreen.dart';
-import 'package:flutter/rendering.dart';
-
-
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 List<CameraDescription> cameras;
+bool _enableConsentButton = true;
+String _debugLabelString = "";
+
+// CHANGE THIS parameter to true if you want to test GDPR privacy consent
+bool _requireConsent = true;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,12 +52,31 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    initPlatformState();
     FlutterStripePayment.setStripeSettings("pk_test_3pnCHeZmNkaGk0lwKa9FRKln");
     StripePayment.setOptions(StripeOptions(
       publishableKey: 'pk_test_3pnCHeZmNkaGk0lwKa9FRKln',
       // merchantId: 'MERCHANT_ID',
       // androidPayMode: 'test',
     ));
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  }
+
+  Future<void> initPlatformState() async {
+    if (!mounted) return;
+
+
+    // OneSignal.shared.setRequiresUserPrivacyConsent(_requireConsent);
+
+    OneSignal.shared.init("fda9b8ab-104c-4afe-9f59-9766313f663e", iOSSettings: {
+      OSiOSSettings.autoPrompt: true,
+      OSiOSSettings.inAppLaunchUrl: true
+    });
+    OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+    OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
+      print("PERMISSION STATE CHANGED: ${changes.jsonRepresentation()}");
+    });
   }
 
   @override

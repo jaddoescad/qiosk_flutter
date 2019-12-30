@@ -107,7 +107,6 @@ class ProfileNotLoggedIn extends StatelessWidget {
           profileCard(context, "Sign Up", AuthPage(
                           pageState: "signUp",
                         )),
-          profileCard(context, "QIOSK.ca", null),
         ],
       ),
     );

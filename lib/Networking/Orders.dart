@@ -4,14 +4,17 @@ import 'package:provider/provider.dart';
 import '../models/orders.dart';
 import '../models/user.dart';
 import '../models/restaurant.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class OrdersNetworking {
   final firestore = Firestore.instance;
+
    Future createOrder(
       orderId, cart, subtotal, taxes, total, uid, restaurantid, context, token, rname) async {
     final _items = {};
     final status = 'preparing';
     final date = DateTime.now().toUtc().millisecondsSinceEpoch;
+   var notifUser = await OneSignal.shared.getPermissionSubscriptionState();
 
     cart.items.forEach((final String key, final cartItem) {
       final _selections = {};
@@ -44,8 +47,10 @@ class OrdersNetworking {
       'items': _items,
       'date': date,
       'archived': false,
+      'notification_id':  notifUser.subscriptionStatus.userId,
       'status': status
     };
+
     await Firestore.instance
         .collection('Orders')
         .document(orderId)

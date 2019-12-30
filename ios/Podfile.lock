@@ -362,6 +362,10 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - OneSignal (2.12.2)
+  - onesignal_flutter (2.3.1):
+    - Flutter
+    - OneSignal (= 2.12.2)
   - path_provider (0.0.1):
     - Flutter
   - permission_handler (4.0.0):
@@ -371,6 +375,12 @@ PODS:
   - stripe_payment (1.0.0):
     - Flutter
     - Stripe (>= 18.0.0)
+  - url_launcher (0.0.1):
+    - Flutter
+  - url_launcher_macos (0.0.1):
+    - Flutter
+  - url_launcher_web (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - camera (from `.symlinks/plugins/camera/ios`)
@@ -386,9 +396,13 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
   - flutter_stripe_payment (from `.symlinks/plugins/flutter_stripe_payment/ios`)
+  - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - stripe_payment (from `.symlinks/plugins/stripe_payment/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - url_launcher_macos (from `.symlinks/plugins/url_launcher_macos/ios`)
+  - url_launcher_web (from `.symlinks/plugins/url_launcher_web/ios`)
 
 SPEC REPOS:
   trunk:
@@ -418,6 +432,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - OneSignal
     - Protobuf
     - Stripe
 
@@ -446,12 +461,20 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_statusbarcolor/ios"
   flutter_stripe_payment:
     :path: ".symlinks/plugins/flutter_stripe_payment/ios"
+  onesignal_flutter:
+    :path: ".symlinks/plugins/onesignal_flutter/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
   stripe_payment:
     :path: ".symlinks/plugins/stripe_payment/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
+  url_launcher_macos:
+    :path: ".symlinks/plugins/url_launcher_macos/ios"
+  url_launcher_web:
+    :path: ".symlinks/plugins/url_launcher_web/ios"
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -492,11 +515,16 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  OneSignal: b2c1511c6b5db2d3b0ce1859f574dcf190dde5f3
+  onesignal_flutter: 289d8b75eaa81fc80d657ffa450253a654f5514a
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   permission_handler: 0fb88b8a3c23e31e5de45b8f1bb8b7de28cf8941
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   Stripe: 35b9a54e698c82163d2ef105187a996d009fd386
   stripe_payment: 1baf1bbf556f7a35c210dc9e2eccf2075947b6be
+  url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
+  url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
+  url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
 
 PODFILE CHECKSUM: 16a5cbc7dabca9c0ae88f70e95003c230c03c1bf
 
