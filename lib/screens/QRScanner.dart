@@ -26,7 +26,6 @@ import '../screens/Orders.dart';
 import '../models/orders.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
   @override
@@ -42,7 +41,7 @@ class QRViewExampleState extends State<QRViewExample>
   bool _isloading = false;
   bool _disable = false;
   bool _settingsOpen = false;
-  final loaderText = 'Fetching Menu...';
+  String loaderText = '';
   BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
   final _scanKey = GlobalKey<CameraMlVisionState>();
 
@@ -50,9 +49,23 @@ class QRViewExampleState extends State<QRViewExample>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Auth().checkIfUserExists(context);
-    _permissionHandler.requestPermissions(
-        [PermissionGroup.camera]).then((result) {
+
+    setState(() {
+      loaderText = 'Launching...';
+      _isloading = true;
+      _disable = true;
+    });
+    Auth().checkIfUserExists(context).then((onValue) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        setState(() {
+          _isloading = false;
+          _disable = false;
+        });
+      });
+    });
+
+    _permissionHandler
+        .requestPermissions([PermissionGroup.camera]).then((result) {
       print('passed all permisions');
 
       //
@@ -67,7 +80,7 @@ class QRViewExampleState extends State<QRViewExample>
           cameraPermission = false;
         });
       }
-            OneSignal.shared.promptUserForPushNotificationPermission();
+      OneSignal.shared.promptUserForPushNotificationPermission();
     });
   }
 
@@ -99,6 +112,7 @@ class QRViewExampleState extends State<QRViewExample>
   Future _readBarcode(qrValue) async {
     if (_isloading == false && _disable == false) {
       setState(() {
+        loaderText = 'Fetching Menu...';
         _isloading = true;
         _disable = true;
       });
@@ -145,228 +159,230 @@ class QRViewExampleState extends State<QRViewExample>
 
   @override
   Widget build(BuildContext context) {
-    return mounted && cameraPermission
-        ? qrScannerView()
-        : Scaffold(
-            backgroundColor: kMainColor,
-            appBar: AppBar(
-              brightness: Brightness.dark,
-              backgroundColor: Colors.transparent, //No more green
-              elevation: 0.0, //Shadow gone
-              centerTitle: true,
-              title: Image.asset(
-                'assets/images/logoappbar.png',
-                height: 20,
-              ),
-              actions: <Widget>[
-                IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor:
-                      Colors.transparent, // makes highlight invisible too
-                  icon: Image.asset(
-                    'assets/images/invoice.png',
-                    height: 30.0,
-                    width: 30.0,
-                  ),
-                  onPressed: () {
-                    if (_disable == false) {
-                      setState(() {
-                        _disable = true;
-                      });
-                      Navigator.of(context)
-                          .push(
-                        CupertinoPageRoute(
-                            fullscreenDialog: true,
-                            builder: (ctx) {
-                              return OrderPage(
-                                  showBackButton: true, loadOrders: true);
-                            }),
-                      )
-                          .then((onValue) {
-                        final orders = Provider.of<RestaurantOrders>(context);
-                        orders.clear();
-                      });
-                    }
-                  },
-                ),
-              ],
-              leading: new IconButton(
-                splashColor: Colors.transparent,
-                highlightColor:
-                    Colors.transparent, // makes highlight invisible too
-                icon: Image.asset(
-                  'assets/images/profile.png',
-                  height: 30.0,
-                  width: 30.0,
-                ),
-                onPressed: () {
-                  if (_disable == false) {
-                    setState(() {
-                      _disable = true;
-                    });
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (ctx) {
-                            return Profile();
-                          }),
-                    );
-                  }
-                },
-              ),
-            ),
-            body: Container(
-              child: Center(
-                heightFactor: 10,
-                child: FlatButton(
-                  child: Text('Please press here to enable camera permissions',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500, color: Colors.white)),
-                  onPressed: () async {
-                    PermissionHandler()
-                        .openAppSettings()
-                        .then((bool hasOpened) async {
-                      print(hasOpened);
-                      if (hasOpened) {
-                        setState(() {
-                          _settingsOpen = true;
-                        });
-                      }
-                    });
-                  },
-                ),
-              ),
-            ),
-          );
-  }
-
-  ModalProgressHUD qrScannerView() {
     return ModalProgressHUD(
         child: Scaffold(
-          body: Stack(fit: StackFit.expand, children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: Color(0xff131111),
-            ),
-            CameraMlVision<List<Barcode>>(
-              // loadingBuilder: ,
-              loadingBuilder: (c) {
-                return Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: Color(0xff131111),
-                );
-              },
-              resolution: ResolutionPreset.medium,
-              key: _scanKey,
-
-              detector: detector.detectInImage,
-              onResult: (barcodes) {
-                if (barcodes == null ||
-                    barcodes.isEmpty ||
-                    !mounted ||
-                    _isloading ||
-                    _disable) {
-                  return;
-                }
-                _readBarcode(barcodes.first.displayValue);
-              },
-              onDispose: () {
-                detector.close();
-              },
-            ),
-            AppBar(
-              brightness: Brightness.dark,
-              backgroundColor: Colors.transparent, //No more green
-              elevation: 0.0, //Shadow gone
-              centerTitle: true,
-              title: Image.asset(
-                'assets/images/logoappbar.png',
-                height: 20,
-              ),
-              actions: <Widget>[
-                IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor:
-                      Colors.transparent, // makes highlight invisible too
-                  icon: Image.asset(
-                    'assets/images/invoice.png',
-                    height: 30.0,
-                    width: 30.0,
-                  ),
-                  onPressed: () {
-                    if (_disable == false) {
-                      setState(() {
-                        _disable = true;
-                      });
-                      Navigator.of(context)
-                          .push(
-                        CupertinoPageRoute(
-                            fullscreenDialog: true,
-                            builder: (ctx) {
-                              return OrderPage(
-                                  showBackButton: true, loadOrders: true);
-                            }),
-                      )
-                          .then((onValue) {
-                        final orders = Provider.of<RestaurantOrders>(context);
-                        orders.clear();
-                      });
-                    }
-                  },
-                ),
-              ],
-              leading: new IconButton(
-                splashColor: Colors.transparent,
-                highlightColor:
-                    Colors.transparent, // makes highlight invisible too
-                icon: Image.asset(
-                  'assets/images/profile.png',
-                  height: 30.0,
-                  width: 30.0,
-                ),
-                onPressed: () {
-                  if (_disable == false) {
-                    setState(() {
-                      _disable = true;
-                    });
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (ctx) {
-                            return Profile();
-                          }),
-                    );
-                  }
-                },
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Opacity(
-                    opacity: 1,
-                    child: Container(
-                      height: MediaQuery.of(context).size.width / 1.7,
-                      width: MediaQuery.of(context).size.width / 1.7,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/images/Scan.png'),
-                      )),
+          backgroundColor: kMainColor,
+            body: mounted && cameraPermission
+                ? qrScannerView()
+                : Scaffold(
+                    backgroundColor: kMainColor,
+                    appBar: AppBar(
+                      brightness: Brightness.dark,
+                      backgroundColor: Colors.transparent, //No more green
+                      elevation: 0.0, //Shadow gone
+                      centerTitle: true,
+                      title: Image.asset(
+                        'assets/images/logoappbar.png',
+                        height: 20,
+                      ),
+                      actions: <Widget>[
+                        IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors
+                              .transparent, // makes highlight invisible too
+                          icon: Image.asset(
+                            'assets/images/invoice.png',
+                            height: 30.0,
+                            width: 30.0,
+                          ),
+                          onPressed: () {
+                            if (_disable == false) {
+                              setState(() {
+                                _disable = true;
+                              });
+                              Navigator.of(context)
+                                  .push(
+                                CupertinoPageRoute(
+                                    fullscreenDialog: true,
+                                    builder: (ctx) {
+                                      return OrderPage(
+                                          showBackButton: true,
+                                          loadOrders: true);
+                                    }),
+                              )
+                                  .then((onValue) {
+                                final orders =
+                                    Provider.of<RestaurantOrders>(context);
+                                orders.clear();
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                      leading: new IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor:
+                            Colors.transparent, // makes highlight invisible too
+                        icon: Image.asset(
+                          'assets/images/profile.png',
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                        onPressed: () {
+                          if (_disable == false) {
+                            setState(() {
+                              _disable = true;
+                            });
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) {
+                                    return Profile();
+                                  }),
+                            );
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ]),
-        ),
+                    body: Container(
+                      child: Center(
+                        heightFactor: 10,
+                        child: FlatButton(
+                          child: Text(
+                              'Please press here to enable camera permissions',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white)),
+                          onPressed: () async {
+                            PermissionHandler()
+                                .openAppSettings()
+                                .then((bool hasOpened) async {
+                              print(hasOpened);
+                              if (hasOpened) {
+                                setState(() {
+                                  _settingsOpen = true;
+                                });
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  )),
         inAsyncCall: _isloading,
         opacity: 0.2,
         color: Colors.white,
         progressIndicator: Loader(context: context, loaderText: loaderText));
+  }
+
+  Widget qrScannerView() {
+    return Stack(fit: StackFit.expand, children: <Widget>[
+      Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: Color(0xff131111),
+      ),
+      CameraMlVision<List<Barcode>>(
+        // loadingBuilder: ,
+        loadingBuilder: (c) {
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Color(0xff131111),
+          );
+        },
+        resolution: ResolutionPreset.medium,
+        key: _scanKey,
+
+        detector: detector.detectInImage,
+        onResult: (barcodes) {
+          if (barcodes == null ||
+              barcodes.isEmpty ||
+              !mounted ||
+              _isloading ||
+              _disable) {
+            return;
+          }
+          _readBarcode(barcodes.first.displayValue);
+        },
+        onDispose: () {
+          detector.close();
+        },
+      ),
+      AppBar(
+        brightness: Brightness.dark,
+        backgroundColor: Colors.transparent, //No more green
+        elevation: 0.0, //Shadow gone
+        centerTitle: true,
+        title: Image.asset(
+          'assets/images/logoappbar.png',
+          height: 20,
+        ),
+        actions: <Widget>[
+          IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent, // makes highlight invisible too
+            icon: Image.asset(
+              'assets/images/invoice.png',
+              height: 30.0,
+              width: 30.0,
+            ),
+            onPressed: () {
+              if (_disable == false) {
+                setState(() {
+                  _disable = true;
+                });
+                Navigator.of(context)
+                    .push(
+                  CupertinoPageRoute(
+                      fullscreenDialog: true,
+                      builder: (ctx) {
+                        return OrderPage(
+                            showBackButton: true, loadOrders: true);
+                      }),
+                )
+                    .then((onValue) {
+                  final orders = Provider.of<RestaurantOrders>(context);
+                  orders.clear();
+                });
+              }
+            },
+          ),
+        ],
+        leading: new IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent, // makes highlight invisible too
+          icon: Image.asset(
+            'assets/images/profile.png',
+            height: 30.0,
+            width: 30.0,
+          ),
+          onPressed: () {
+            if (_disable == false) {
+              setState(() {
+                _disable = true;
+              });
+              Navigator.of(context).push(
+                CupertinoPageRoute(
+                    fullscreenDialog: true,
+                    builder: (ctx) {
+                      return Profile();
+                    }),
+              );
+            }
+          },
+        ),
+      ),
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Opacity(
+              opacity: 1,
+              child: Container(
+                height: MediaQuery.of(context).size.width / 1.7,
+                width: MediaQuery.of(context).size.width / 1.7,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage('assets/images/Scan.png'),
+                )),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ]);
   }
 
   Future<void> getMenuandOrders(rid) async {
