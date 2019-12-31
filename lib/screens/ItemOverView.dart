@@ -100,7 +100,7 @@ class SelectionPage extends StatelessWidget {
         children: <Widget>[
           Container(
             child: Scaffold(
-              bottomNavigationBar: SelectionCartButton(),
+              bottomNavigationBar: SafeArea(child: SelectionCartButton()),
               backgroundColor: Colors.white,
               body: Column(
                 children: [

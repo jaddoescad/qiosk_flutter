@@ -22,11 +22,9 @@ class CartButton extends StatelessWidget {
       padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
       decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [BoxShadow(
-            color: Colors.grey,
-            // blurRadius: 1.0,
-          ),
-          ]
+          border: Border(top: BorderSide(width: 0.5, color: kMainColor.withOpacity(0.5)))
+  
+
       ),
       child: RaisedButton(
         elevation: 0,

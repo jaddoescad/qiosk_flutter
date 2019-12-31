@@ -176,8 +176,6 @@ PODS:
     - Flutter
   - device_info (0.0.1):
     - Flutter
-  - Firebase/Analytics (6.13.0):
-    - Firebase/Core
   - Firebase/Auth (6.13.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.4.0)
@@ -198,10 +196,6 @@ PODS:
   - Firebase/MLVisionBarcodeModel (6.13.0):
     - Firebase/CoreOnly
     - FirebaseMLVisionBarcodeModel (~> 0.19.0)
-  - firebase_analytics (0.0.1):
-    - Firebase/Analytics (~> 6.0)
-    - Firebase/Core
-    - Flutter
   - firebase_auth (0.0.1):
     - Firebase/Auth (~> 6.0)
     - Firebase/Core
@@ -285,8 +279,6 @@ PODS:
   - FirebaseMLVisionBarcodeModel (0.19.0):
     - FirebaseMLVision (~> 0.19)
   - Flutter (1.0.0)
-  - flutter_statusbarcolor (0.0.1):
-    - Flutter
   - flutter_stripe_payment (0.0.8):
     - Flutter
     - Stripe (= 18.3.0)
@@ -388,13 +380,11 @@ DEPENDENCIES:
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Firebase/MLVisionBarcodeModel
-  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - firebase_ml_vision (from `.symlinks/plugins/firebase_ml_vision/ios`)
   - Flutter (from `Flutter`)
-  - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
   - flutter_stripe_payment (from `.symlinks/plugins/flutter_stripe_payment/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -445,8 +435,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cloud_functions/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
-  firebase_analytics:
-    :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -457,8 +445,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_ml_vision/ios"
   Flutter:
     :path: Flutter
-  flutter_statusbarcolor:
-    :path: ".symlinks/plugins/flutter_statusbarcolor/ios"
   flutter_stripe_payment:
     :path: ".symlinks/plugins/flutter_stripe_payment/ios"
   onesignal_flutter:
@@ -484,7 +470,6 @@ SPEC CHECKSUMS:
   cloud_functions: c4bd92b7867760f21811061e8a2ef34a1a4e764c
   device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
-  firebase_analytics: d83001d25b9a58ca5eda8db0ef566c02d7af5258
   firebase_auth: d99b993c1405096e66c58211b1cd956c23eed1c5
   firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
@@ -502,7 +487,6 @@ SPEC CHECKSUMS:
   FirebaseMLVision: 7a456009787690e3b53436092ae9b635563de8f3
   FirebaseMLVisionBarcodeModel: 96ef18a75ecdf867244ef2e75c8c1f01517667dc
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
   flutter_stripe_payment: d82d252f3e0500536bfe3b09ad9a0d3a7116274a
   GoogleAPIClientForREST: 4acfffd77f1c3c8741b6be9eaed0e603278efbde
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f

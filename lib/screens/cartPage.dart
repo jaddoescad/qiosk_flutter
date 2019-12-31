@@ -93,7 +93,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
         child: Scaffold(
           backgroundColor: Colors.white,
           bottomNavigationBar: cart.items.values.toList().length > 0
-              ? CartButton(title: "Place Your Order", func: checkout)
+              ? SafeArea(child: CartButton(title: "Place Your Order", func: checkout))
               : null,
           appBar: AppBar(
             iconTheme: IconThemeData(color: kMainColor),

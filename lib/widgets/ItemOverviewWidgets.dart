@@ -153,12 +153,8 @@ class SelectionCartButton extends StatelessWidget {
     return Container(
       height: 75,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 0.3,
-        ),
-      ]),
+      decoration: BoxDecoration(color: Colors.white, border: Border(top: BorderSide(width: 0.5, color: Colors.black.withOpacity(0.5)) )
+      ),
       child: RaisedButton(
         disabledColor: Color(0xffC0C0C0),
         child: CartButtonChildren(
