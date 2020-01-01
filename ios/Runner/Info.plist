@@ -48,5 +48,21 @@
 	<true/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We would like to access your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We would like to access your location in the background</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>We would like to access speech recognition tools</string>
+	<key>NSMotionUsageDescription</key>
+	<string>We would like to access motion usage tools</string>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>We would like to access music usage tools</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We would like to access calendar usage tools</string>
+	<key>NSContactsUsageDescription</key>
+	<string>We would like to access contact description tools</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>We would like to access Apple Music description tools</string>
 </dict>
 </plist>
