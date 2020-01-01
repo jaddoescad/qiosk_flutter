@@ -62,6 +62,12 @@ class QRViewExampleState extends State<QRViewExample>
           _disable = false;
         });
       });
+    }).catchError((onError) {
+      print(onError.toString());
+      setState(() {
+        _isloading = false;
+        _disable = false;
+      });
     });
 
     _permissionHandler
@@ -161,7 +167,7 @@ class QRViewExampleState extends State<QRViewExample>
   Widget build(BuildContext context) {
     return ModalProgressHUD(
         child: Scaffold(
-          backgroundColor: kMainColor,
+            backgroundColor: kMainColor,
             body: mounted && cameraPermission
                 ? qrScannerView()
                 : Scaffold(
