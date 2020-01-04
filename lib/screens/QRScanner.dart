@@ -23,8 +23,8 @@ import 'package:flutter/services.dart';
 import '../widgets/Loader.dart';
 import '../models/taxes.dart';
 import '../screens/Orders.dart';
-import '../models/orders.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:device_info/device_info.dart';
 
 class QRViewExample extends StatefulWidget {
   static const routeName = '/QRView';
@@ -37,6 +37,8 @@ class QRViewExampleState extends State<QRViewExample>
   static final myTabbedPageKey = new GlobalKey<HomePageState>();
   bool cameraPermission = false;
   final PermissionHandler _permissionHandler = PermissionHandler();
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  IosDeviceInfo iosInfo;
 
   bool _isloading = false;
   bool _disable = false;
@@ -45,11 +47,15 @@ class QRViewExampleState extends State<QRViewExample>
   BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
   final _scanKey = GlobalKey<CameraMlVisionState>();
 
+  fetchDeviceInfo() async {
+    iosInfo = await deviceInfo.iosInfo;
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
+    fetchDeviceInfo();
     setState(() {
       loaderText = 'Launching...';
       _isloading = true;
@@ -287,7 +293,7 @@ class QRViewExampleState extends State<QRViewExample>
             color: Color(0xff131111),
           );
         },
-        resolution: ResolutionPreset.medium,
+        resolution: getResolution(),
         key: _scanKey,
 
         detector: detector.detectInImage,
@@ -389,6 +395,20 @@ class QRViewExampleState extends State<QRViewExample>
         ),
       ),
     ]);
+  }
+
+  ResolutionPreset getResolution() {
+    double info = double.tryParse(iosInfo.systemVersion);
+    print(info);
+    if (info is double) {
+      if (info < 13.0) {
+        return ResolutionPreset.low;
+      } else {
+        return ResolutionPreset.medium;
+      }
+    } else {
+      return ResolutionPreset.medium;
+    }
   }
 
   Future<void> getMenuandOrders(rid) async {
