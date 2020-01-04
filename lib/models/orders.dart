@@ -101,14 +101,15 @@ class RestaurantOrders with ChangeNotifier {
     if (snapshot.data != null) {
       snapshot.data.documentChanges.forEach((diff) {
         if (diff.type == DocumentChangeType.modified) {
-          snapshot.data.documents.forEach((order) {
+          print(diff.document.documentID);
             final orderToUpdateIndex = _orders
-                .indexWhere((i) => i.orderId == order.documentID.toString());
-            if (orderToUpdateIndex != null) {
-              _orders[orderToUpdateIndex].status = order.data['status'];
-              notifyListeners();
+                .indexWhere((i) => i.orderId == diff.document.documentID.toString());
+             print(orderToUpdateIndex);
+            
+            if (orderToUpdateIndex != null && orderToUpdateIndex >=  0) {
+              _orders[orderToUpdateIndex].status = diff.document.data['status'];
+              // notifyListeners();r
             }
-          });
         }
       });
     }
