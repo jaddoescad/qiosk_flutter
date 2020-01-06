@@ -39,7 +39,14 @@ class Order {
     return {..._orderItems};
   }
 
-  Order({this.orderId, this.status, this.subtotal, this.taxes, this.total, this.date, this.rname});
+  Order(
+      {this.orderId,
+      this.status,
+      this.subtotal,
+      this.taxes,
+      this.total,
+      this.date,
+      this.rname});
 
   void addOrderItem(item) {
     final orderItem = OrderItem(
@@ -68,17 +75,32 @@ class RestaurantOrders with ChangeNotifier {
   void addOrders(orders) {
     _orders = [];
     orders.forEach((id, order) {
-      addOrder(order['orderId'], order['r_name'],order, order['status'],
-          order['subtotal'].toDouble(), order['taxes'].toDouble(), order['total'].toDouble(), order['date'], false);
+      addOrder(
+          order['orderId'],
+          order['r_name'],
+          order,
+          order['status'],
+          order['subtotal'].toDouble(),
+          order['taxes'].toDouble(),
+          order['total'].toDouble(),
+          order['date'],
+          false);
     });
     _orders.sort((a, b) {
       return b.date.compareTo(a.date);
     });
   }
 
-  void addOrder(String orderId, rname, orderJson, status, subtotal, taxes, total, date, dismiss) {
-    final order =
-        Order(orderId: orderId, status: status, subtotal: subtotal, taxes: taxes, total: total, date: date, rname: rname);
+  void addOrder(String orderId, rname, orderJson, status, subtotal, taxes,
+      total, date, dismiss) {
+    final order = Order(
+        orderId: orderId,
+        status: status,
+        subtotal: subtotal,
+        taxes: taxes,
+        total: total,
+        date: date,
+        rname: rname);
 
     orderJson['items'].forEach((final key, final orderItem) {
       order.addOrderItem(orderItem);
@@ -91,7 +113,7 @@ class RestaurantOrders with ChangeNotifier {
     if (dismiss == true) {
       QRViewExampleState.myTabbedPageKey.currentState.changeMyTab();
       if (HomePageState.scrollToTopKey.currentState != null) {
-      HomePageState.scrollToTopKey.currentState.scrollToTop();
+        HomePageState.scrollToTopKey.currentState.scrollToTop();
       }
     }
     notifyListeners();
@@ -101,15 +123,15 @@ class RestaurantOrders with ChangeNotifier {
     if (snapshot.data != null) {
       snapshot.data.documentChanges.forEach((diff) {
         if (diff.type == DocumentChangeType.modified) {
-          print(diff.document.documentID);
-            final orderToUpdateIndex = _orders
-                .indexWhere((i) => i.orderId == diff.document.documentID.toString());
-             print(orderToUpdateIndex);
-            
-            if (orderToUpdateIndex != null && orderToUpdateIndex >=  0) {
-              _orders[orderToUpdateIndex].status = diff.document.data['status'];
+          snapshot.data.documents.forEach((order) {
+            final orderToUpdateIndex = _orders.indexWhere(
+                (i) => i.orderId == order.documentID.toString());
+
+            if (orderToUpdateIndex != null && orderToUpdateIndex >= 0) {
+              _orders[orderToUpdateIndex].status = order.data['status'];
               // notifyListeners();r
             }
+          });
         }
       });
     }

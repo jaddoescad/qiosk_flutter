@@ -143,9 +143,6 @@ class OrderPageState extends State<OrderPage>
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      print(snapshot.connectionState);
-                    }
                     orders.updateFirebaseData(snapshot);
                     return ordersView(orders);
                   })),

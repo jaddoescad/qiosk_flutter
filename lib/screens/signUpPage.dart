@@ -154,7 +154,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               style: TextStyle(color: Colors.green),
                               recognizer: _recognizer1
                                 ..onTap = () {
-                                  print('kmfkr');
                                   launch(
                                       'https://qiosk.ca/terms');
                                 }),

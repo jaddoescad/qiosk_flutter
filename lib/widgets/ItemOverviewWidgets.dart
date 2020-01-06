@@ -9,7 +9,6 @@ class ItemHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Item>(context);
-    print("here");
     return Column(
       children: <Widget>[
         item.imgUrl?.isNotEmpty ?? false
