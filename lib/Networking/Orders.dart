@@ -65,22 +65,4 @@ class OrdersNetworking {
     });
   }
 
-  // void updateOrder(context) async {
-    
-  //   //user restaurant id and userid
-  //   final user = Provider.of<User>(context);
-  //   final restaurant = Provider.of<Restaurant>(context);
-  //   if (user.uid != null && restaurant.id != null) {
-  //   Firestore.instance
-  //         .collection('Orders')
-  //         .where("userId", isEqualTo: user.uid)
-  //         .snapshots()
-  //         .listen((onData) {
-  //       onData.documents.forEach((order) {
-  //         print(order.documentID);
-  //       });
-  //     });
-  //   }
-  
-  // }
 }

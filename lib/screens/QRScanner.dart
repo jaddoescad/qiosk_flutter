@@ -398,7 +398,8 @@ class QRViewExampleState extends State<QRViewExample>
   }
 
   ResolutionPreset getResolution() {
-    double info = double.tryParse(iosInfo.systemVersion);
+    double info = double.tryParse('${iosInfo.systemVersion[0]+iosInfo.systemVersion[1]}');
+    print(iosInfo.systemVersion);
     if (info is double) {
       if (info < 13.0) {
         return ResolutionPreset.low;
