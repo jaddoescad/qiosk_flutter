@@ -278,38 +278,41 @@ class QRViewExampleState extends State<QRViewExample>
   }
 
   Widget qrScannerView() {
-    return Stack(fit: StackFit.expand, children: <Widget>[
+    return Stack(children: <Widget>[
       Container(
         height: double.infinity,
         width: double.infinity,
         color: Color(0xff131111),
       ),
-      CameraMlVision<List<Barcode>>(
-        // loadingBuilder: ,
-        loadingBuilder: (c) {
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Color(0xff131111),
-          );
-        },
-        resolution: getResolution(),
-        key: _scanKey,
+      SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: CameraMlVision<List<Barcode>>(
+          // loadingBuilder: ,
+          loadingBuilder: (c) {
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Color(0xff131111),
+            );
+          },
+          resolution: getResolution(),
+          key: _scanKey,
 
-        detector: detector.detectInImage,
-        onResult: (barcodes) {
-          if (barcodes == null ||
-              barcodes.isEmpty ||
-              !mounted ||
-              _isloading ||
-              _disable) {
-            return;
-          }
-          _readBarcode(barcodes.first.displayValue);
-        },
-        onDispose: () {
-          detector.close();
-        },
+          detector: detector.detectInImage,
+          onResult: (barcodes) {
+            if (barcodes == null ||
+                barcodes.isEmpty ||
+                !mounted ||
+                _isloading ||
+                _disable) {
+              return;
+            }
+            _readBarcode(barcodes.first.displayValue);
+          },
+          onDispose: () {
+            detector.close();
+          },
+        ),
       ),
       AppBar(
         brightness: Brightness.dark,
@@ -398,7 +401,8 @@ class QRViewExampleState extends State<QRViewExample>
   }
 
   ResolutionPreset getResolution() {
-    double info = double.tryParse('${iosInfo.systemVersion[0]+iosInfo.systemVersion[1]}');
+    double info = double.tryParse(
+        '${iosInfo.systemVersion[0] + iosInfo.systemVersion[1]}');
     print(iosInfo.systemVersion);
     if (info is double) {
       if (info < 13.0) {
