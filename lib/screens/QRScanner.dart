@@ -48,7 +48,11 @@ class QRViewExampleState extends State<QRViewExample>
   final _scanKey = GlobalKey<CameraMlVisionState>();
 
   fetchDeviceInfo() async {
+    try {
     iosInfo = await deviceInfo.iosInfo;
+    } catch(error) {
+      print('not ios');
+    }
   }
 
   @override
@@ -401,12 +405,15 @@ class QRViewExampleState extends State<QRViewExample>
   }
 
   ResolutionPreset getResolution() {
-    double info = double.tryParse(
-        '${iosInfo.systemVersion[0] + iosInfo.systemVersion[1]}');
-    print(iosInfo.systemVersion);
-    if (info is double) {
-      if (info < 13.0) {
-        return ResolutionPreset.low;
+    if (iosInfo != null) {
+      double info = double.tryParse(
+          '${iosInfo.systemVersion[0] + iosInfo.systemVersion[1]}');
+      if (info is double) {
+        if (info < 13.0) {
+          return ResolutionPreset.low;
+        } else {
+          return ResolutionPreset.medium;
+        }
       } else {
         return ResolutionPreset.medium;
       }
