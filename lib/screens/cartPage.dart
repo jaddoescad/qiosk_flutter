@@ -18,6 +18,7 @@ import '../widgets/errorMessage.dart';
 import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
 import '../widgets/Loader.dart';
 import '../models/taxes.dart';
+import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
@@ -258,19 +259,57 @@ class _CartPageState extends State<CartPage> with RouteAware {
           showErrorDialog(context, 'There was an error adding your card');
         }
       } else if (page == PageToGo.Checkout) {
-        loaderText = 'Placing Order...';
-        setState(() {
-          loader = true;
-        });
-        await pay(user, cart);
-        setState(() {
-          loader = false;
-        });
+        YYDialog().build(context)
+          ..width = 250
+          ..borderRadius = 4.0
+          ..text(
+            padding: EdgeInsets.all(25.0),
+            alignment: Alignment.center,
+            text: "Where would you like to eat?",
+            color: Colors.black,
+            fontSize: 14.0,
+            fontWeight: FontWeight.w500,
+          )
+          ..divider()
+          ..doubleButton(
+            padding: EdgeInsets.only(top: 10.0),
+            gravity: Gravity.center,
+            withDivider: true,
+            text1: "For Here",
+            color1: Colors.redAccent,
+            fontSize1: 14.0,
+            fontWeight1: FontWeight.bold,
+            onTap1: () async {
+              loaderText = 'Placing Order...';
+              setState(() {
+                loader = true;
+              });
+              await pay(user, cart, 'For Here');
+              setState(() {
+                loader = false;
+              });
+            },
+            text2: "To Go",
+            color2: Colors.redAccent,
+            fontSize2: 14.0,
+            fontWeight2: FontWeight.bold,
+            onTap2: () async {
+              loaderText = 'Placing Order...';
+              setState(() {
+                loader = true;
+              });
+              await pay(user, cart, 'To Go');
+              setState(() {
+                loader = false;
+              });
+            },
+          )
+          ..show();
       }
     });
   }
 
-  Future pay(user, Cart cart) async {
+  Future pay(User user, Cart cart, forwhere) async {
     final restaurant = Provider.of<Restaurant>(context);
     final taxes = Provider.of<Taxes>(context);
 
@@ -286,7 +325,9 @@ class _CartPageState extends State<CartPage> with RouteAware {
           cart,
           restaurant.id,
           context,
-          restaurant.title);
+          restaurant.title,
+          forwhere,
+          user.name);
     } catch (error) {
       print('error paying : $error');
       showErrorDialog(context, 'There was an error processing payment');

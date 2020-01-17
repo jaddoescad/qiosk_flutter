@@ -10,7 +10,7 @@ class OrdersNetworking {
   final firestore = Firestore.instance;
 
    Future createOrder(
-      orderId, cart, subtotal, taxes, total, uid, restaurantid, context, token, rname) async {
+      orderId, cart, subtotal, taxes, total, uid, restaurantid, context, token, rname, eatingWhere, username) async {
     final _items = {};
     final status = 'preparing';
     final date = DateTime.now().toUtc().millisecondsSinceEpoch;
@@ -48,7 +48,9 @@ class OrdersNetworking {
       'date': date,
       'archived': false,
       'notification_id':  notifUser.subscriptionStatus.userId,
-      'status': status
+      'status': status,
+      'name': username,
+      'eatingWhere': eatingWhere
     };
 
     await Firestore.instance

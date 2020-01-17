@@ -61,7 +61,7 @@ class Payments {
     return goToPage;
   }
 
-  static Future pay(uid, stripeId, orderId, subtotal, taxes, total, currency, cart, rid, context, rname) async {
+  static Future pay(uid, stripeId, orderId, subtotal, taxes, total, currency, cart, rid, context, rname, forwhere, username) async {
     final token = Provider.of<PaymentModel>(context).token;
 
     // CloudFunctions cf = CloudFunctions();
@@ -88,7 +88,7 @@ class Payments {
     //     print(paymentIntent.status);
     //     if (paymentIntent.status == 'succeeded') {
     //       print('payment succeeded');
-          await OrdersNetworking().createOrder(orderId, cart, subtotal, taxes, total, uid, rid, context, token, rname);
+          await OrdersNetworking().createOrder(orderId, cart, subtotal, taxes, total, uid, rid, context, token, rname, forwhere, username);
       //   } else {
       //     print(paymentIntent.status);
       //     throw ('error processing payment');
