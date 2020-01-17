@@ -418,7 +418,7 @@ class QRViewExampleState extends State<QRViewExample>
         return ResolutionPreset.medium;
       }
     } else {
-      return ResolutionPreset.medium;
+      return ResolutionPreset.high;
     }
   }
 

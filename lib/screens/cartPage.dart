@@ -21,7 +21,7 @@ import '../models/taxes.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/CartPage';
-  
+
   @override
   _CartPageState createState() => _CartPageState();
 }
@@ -39,7 +39,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
     final goToCheckout = Provider.of<GoToCheckout>(context);
     final cart = Provider.of<Cart>(context);
     final user = Provider.of<User>(context);
-    
 
     FirebaseAuth.instance.currentUser().then((firebaseUser) async {
       if (firebaseUser == null) {
@@ -81,7 +80,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-
     final cart = Provider.of<Cart>(context);
     final taxes = Provider.of<Taxes>(context);
 
@@ -93,7 +91,8 @@ class _CartPageState extends State<CartPage> with RouteAware {
         child: Scaffold(
           backgroundColor: Colors.white,
           bottomNavigationBar: cart.items.values.toList().length > 0
-              ? SafeArea(child: CartButton(title: "Place Your Order", func: checkout))
+              ? SafeArea(
+                  child: CartButton(title: "Place Your Order", func: checkout))
               : null,
           appBar: AppBar(
             iconTheme: IconThemeData(color: kMainColor),
@@ -102,7 +101,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
             backgroundColor: Colors.white,
             title: Text(
               "Cart",
-              
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               textAlign: TextAlign.center,
@@ -160,59 +158,70 @@ class _CartPageState extends State<CartPage> with RouteAware {
                     .map((item) => CartItemCard(item: item)),
               ]),
             ),
-           SliverToBoxAdapter(
-             child: cart.items.values.toList().length > 0 ? Container(
-                padding: EdgeInsets.only(top: 15, bottom: 15, left: 25, right:20),
-                // margin: EdgeInsets.only(left: 30, right: 20),
-                child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget> [
-                             
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Subtotal"),
-                      Text('\$ ${cart.totalAmount.toStringAsFixed(2)}'),
-                    ],
-                  ),
-                ),
+            SliverToBoxAdapter(
+              child: cart.items.values.toList().length > 0
+                  ? Container(
+                      padding: EdgeInsets.only(
+                          top: 15, bottom: 15, left: 25, right: 20),
+                      // margin: EdgeInsets.only(left: 30, right: 20),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Subtotal"),
+                                  Text(
+                                      '\$ ${cart.totalAmount.toStringAsFixed(2)}'),
+                                ],
+                              ),
+                            ),
 
-                // Text(" "),
+                            // Text(" "),
 
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Taxes"),
-                      Text('\$ ${taxes.applyTax(cart.totalAmount).toStringAsFixed(2)}'),
-                    ],
-                  ),
-                ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Taxes"),
+                                  Text(
+                                      '\$ ${taxes.applyTax(cart.totalAmount).toStringAsFixed(2)}'),
+                                ],
+                              ),
+                            ),
 
-                // Text(" "),
+                            // Text(" "),
 
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Total", style: TextStyle(fontWeight: FontWeight.bold),),
-                      Text('\$ ${taxes.getTotal(cart.totalAmount).toStringAsFixed(2)}'),
-                    ],
-                  ),
-                ),
-                Divider()
-                ]
-                ),
-                ) : Container(),
-           ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "Total",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                      '\$ ${taxes.getTotal(cart.totalAmount).toStringAsFixed(2)}'),
+                                ],
+                              ),
+                            ),
+                            Divider()
+                          ]),
+                    )
+                  : Container(),
+            ),
           ]),
         ),
       ),
@@ -229,30 +238,34 @@ class _CartPageState extends State<CartPage> with RouteAware {
       } else if (page == PageToGo.AddCard) {
         try {
           loaderText = 'Adding Payment Card...';
-          PaymentResponse paymentResponse = await FlutterStripePayment.addPaymentMethod();
+          PaymentResponse paymentResponse =
+              await FlutterStripePayment.addPaymentMethod();
 
           setState(() {
             loader = true;
           });
-          
-              await Payments().showPaymentCard(context, paymentResponse);
+
+          await Payments().showPaymentCard(context, paymentResponse);
           showSuccessDialog(context, "Successfully added card");
           setState(() {
             loader = false;
           });
         } catch (error) {
+          setState(() {
+            loader = false;
+          });
           print('there was an error adding card: ${error.toString()}');
           showErrorDialog(context, 'There was an error adding your card');
         }
       } else if (page == PageToGo.Checkout) {
-          loaderText = 'Placing Order...';
-          setState(() {
-            loader = true;
+        loaderText = 'Placing Order...';
+        setState(() {
+          loader = true;
         });
         await pay(user, cart);
-         setState(() {
-           loader = false;
-         });
+        setState(() {
+          loader = false;
+        });
       }
     });
   }
@@ -260,7 +273,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
   Future pay(user, Cart cart) async {
     final restaurant = Provider.of<Restaurant>(context);
     final taxes = Provider.of<Taxes>(context);
-
 
     try {
       await Payments.pay(
@@ -277,7 +289,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           restaurant.title);
     } catch (error) {
       print('error paying : $error');
-      showErrorDialog(context, 'There was an error processing payment}');
+      showErrorDialog(context, 'There was an error processing payment');
       setState(() {
         loader = false;
       });
@@ -290,5 +302,3 @@ class _CartPageState extends State<CartPage> with RouteAware {
     super.dispose();
   }
 }
-
-
