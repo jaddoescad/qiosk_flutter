@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../models/restaurant.dart';
-
+import '../util/helper.dart';
 Future<bool> fetchSelection(context, itemID) async {
   final restaurant = Provider.of<Restaurant>(context);
   final item = Provider.of<Item>(context, listen: false);
@@ -198,15 +198,14 @@ class Item extends ChangeNotifier {
     return selectionArray;
   }
 
-  static List sortArray(map) {
-    map.sort((a, b) {
-      return a.order
-          .toString()
-          .toLowerCase()
-          .compareTo(b.order.toString().toLowerCase());
-    });
-    return map;
-  }
+  // static List sortArray(map) {
+  //   // map.sort((a, b) {
+
+      
+  //   //   return (int.tryParse(a.order) ?? null).compareTo(int.tryParse(b.order) ?? null);
+  //   // });
+  //   return map;
+  // }
 }
 
 class Section {

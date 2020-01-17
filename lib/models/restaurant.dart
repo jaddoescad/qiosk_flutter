@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import '../util/helper.dart';
 
 class Restaurant extends ChangeNotifier {
   String id;
@@ -52,15 +52,21 @@ class Restaurant extends ChangeNotifier {
     return itemArray;
   }
 
-  static List sortArray(map) {
-    map.sort((a, b) {
-      return a.order
-          .toString()
-          .toLowerCase()
-          .compareTo(b.order.toString().toLowerCase());
-    });
-    return map;
-  }
+  // static List sortArray(map) {
+  //   map.sort((a, b) {
+  //     if(a.order == b.order) {
+  //       return 0;
+  //     } else if (a?.order == null || a?.order is! int){
+
+  //        return 1;
+  //     }else if (b?.order == null || b?.order is! int) {
+  //       return -1;
+  //     } else {
+  //       return (int.tryParse(a.order.toString()) ?? null).compareTo(int.tryParse(b.order.toString()) ?? null);
+  //     }
+  //   });
+  //   return map;
+  // }
 
   void loadRestaurant(_id, json)  {
 
