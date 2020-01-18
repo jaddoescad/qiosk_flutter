@@ -64,39 +64,39 @@ class Payments {
   static Future pay(uid, stripeId, orderId, subtotal, taxes, total, currency, cart, rid, context, rname, forwhere, username) async {
     final token = Provider.of<PaymentModel>(context).token;
 
-    // CloudFunctions cf = CloudFunctions();
-    // HttpsCallable callable = cf.getHttpsCallable(
-    //   functionName: 'createPaymentIntent',
-    // );
-    // var resp = await callable.call(<String, dynamic>{
-    //   'uid': uid.toString(),
-    //   'stripeId': stripeId,
-    //   'orderId': orderId,
-    //   'token': token,
-    //   'amount': total,
-    // });
+    CloudFunctions cf = CloudFunctions();
+    HttpsCallable callable = cf.getHttpsCallable(
+      functionName: 'createPaymentIntent',
+    );
+    var resp = await callable.call(<String, dynamic>{
+      'uid': uid.toString(),
+      'stripeId': stripeId,
+      'orderId': orderId,
+      'token': token,
+      'amount': total,
+    });
 
-    // if (resp.data.containsKey('error')) {
-    //   throw ('there was an error processing the payment ${resp.data['error'].toString()}');
-    // } else {
-    //   await StripePayment.confirmPaymentIntent(
-    //     PaymentIntent(
-    //       clientSecret: resp.data['response']['client_secret'],
-    //       paymentMethodId: resp.data['sourceId'],
-    //     ),
-    //   ).then((paymentIntent) async {
-    //     print(paymentIntent.status);
-    //     if (paymentIntent.status == 'succeeded') {
-    //       print('payment succeeded');
+    if (resp.data.containsKey('error')) {
+      throw ('there was an error processing the payment ${resp.data['error'].toString()}');
+    } else {
+      await StripePayment.confirmPaymentIntent(
+        PaymentIntent(
+          clientSecret: resp.data['response']['client_secret'],
+          paymentMethodId: resp.data['sourceId'],
+        ),
+      ).then((paymentIntent) async {
+        print(paymentIntent.status);
+        if (paymentIntent.status == 'succeeded') {
+          print('payment succeeded');
           await OrdersNetworking().createOrder(orderId, cart, subtotal, taxes, total, uid, rid, context, token, rname, forwhere, username);
-      //   } else {
-      //     print(paymentIntent.status);
-      //     throw ('error processing payment');
-      //   }
-      // }).catchError((setError) {
-      //   print(setError.toString());
-      //   throw (setError.toString());
-      // });
-    // }
+        } else {
+          print(paymentIntent.status);
+          throw ('error processing payment');
+        }
+      }).catchError((setError) {
+        print(setError.toString());
+        throw (setError.toString());
+      });
+    }
   }
 }
