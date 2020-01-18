@@ -152,8 +152,11 @@ class SelectionCartButton extends StatelessWidget {
     return Container(
       height: 75,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
-      decoration: BoxDecoration(color: Colors.white, border: Border(top: BorderSide(width: 0.5, color: Colors.black.withOpacity(0.5)) )
-      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+              top: BorderSide(
+                  width: 0.5, color: Colors.black.withOpacity(0.5)))),
       child: RaisedButton(
         disabledColor: Color(0xffC0C0C0),
         child: CartButtonChildren(
@@ -300,7 +303,10 @@ class ItemCounter extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 '${item.itemCount}',
-                style: TextStyle(color: kMainColor, fontWeight: FontWeight.w600, fontSize: 16),
+                style: TextStyle(
+                    color: kMainColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
               ),
             ),
             Padding(
@@ -374,8 +380,24 @@ class SelectionContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Row(
       children: <Widget>[
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: <Widget>[
+                (type == 'Checkbox')
+                    ? SingleCheckbox(selection: selection)
+                    : SingleRadio(section: section, selection: selection),
+                Flexible(
+                  child: Text(selection.title,
+                      style: TextStyle(fontSize: 16, color: kMainColor)),
+                ),
+              ],
+            ),
+          ),
+        ),
         Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -385,18 +407,6 @@ class SelectionContainer extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: kMainColor),
               ),
             )),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: <Widget>[
-              (type == 'Checkbox')
-                  ? SingleCheckbox(selection: selection)
-                  : SingleRadio(section: section, selection: selection),
-              Text(selection.title,
-                  style: TextStyle(fontSize: 16, color: kMainColor)),
-            ],
-          ),
-        ),
       ],
     );
   }

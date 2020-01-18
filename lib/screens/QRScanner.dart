@@ -136,9 +136,7 @@ class QRViewExampleState extends State<QRViewExample>
         print(qrValue.split("/")[qrValue.split("/").length - 2]);
         await getMenuandOrders(
             qrValue.split("/")[qrValue.split("/").length - 2]);
-        Future.delayed(const Duration(milliseconds: 500), () {
           goToHomePage();
-        });
         // setState(() => _isloading = false);
       } catch (error) {
         print('error ${error.toString()}');
