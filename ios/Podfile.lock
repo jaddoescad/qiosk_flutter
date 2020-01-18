@@ -279,6 +279,8 @@ PODS:
   - FirebaseMLVisionBarcodeModel (0.19.0):
     - FirebaseMLVision (~> 0.19)
   - Flutter (1.0.0)
+  - flutter_custom_dialog (0.0.1):
+    - Flutter
   - flutter_stripe_payment (0.0.8):
     - Flutter
     - Stripe (= 18.3.0)
@@ -385,6 +387,7 @@ DEPENDENCIES:
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - firebase_ml_vision (from `.symlinks/plugins/firebase_ml_vision/ios`)
   - Flutter (from `Flutter`)
+  - flutter_custom_dialog (from `.symlinks/plugins/flutter_custom_dialog/ios`)
   - flutter_stripe_payment (from `.symlinks/plugins/flutter_stripe_payment/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -445,6 +448,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_ml_vision/ios"
   Flutter:
     :path: Flutter
+  flutter_custom_dialog:
+    :path: ".symlinks/plugins/flutter_custom_dialog/ios"
   flutter_stripe_payment:
     :path: ".symlinks/plugins/flutter_stripe_payment/ios"
   onesignal_flutter:
@@ -487,6 +492,7 @@ SPEC CHECKSUMS:
   FirebaseMLVision: 7a456009787690e3b53436092ae9b635563de8f3
   FirebaseMLVisionBarcodeModel: 96ef18a75ecdf867244ef2e75c8c1f01517667dc
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_custom_dialog: c0d222a3c35af5b57581e54ef8784c94037cd2ec
   flutter_stripe_payment: d82d252f3e0500536bfe3b09ad9a0d3a7116274a
   GoogleAPIClientForREST: 4acfffd77f1c3c8741b6be9eaed0e603278efbde
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f

@@ -2,21 +2,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Taxes extends ChangeNotifier {
-  double _taxRate;
-
+  double _above;
+  double _below;
+  double _priceThreshold;
 
   void setTaxRate(rate) {
-    _taxRate = rate['taxRate'];
-    print(_taxRate);
+    _above = rate['taxRate']['above'].toDouble();
+    _below = rate['taxRate']['below'].toDouble();
+    _priceThreshold = rate['taxRate']['price'].toDouble();
   }
 
   double applyTax(subtotal) {
-    subtotal = subtotal*_taxRate;
+    if (subtotal < _priceThreshold) {
+      subtotal = subtotal * _below;
+    } else {
+      subtotal = subtotal * _above;
+    }
     return subtotal;
   }
 
   double getTotal(subtotal) {
-    subtotal = subtotal + subtotal*_taxRate;
+    if (subtotal < _priceThreshold) {
+      subtotal = subtotal + subtotal * _below;
+    } else {
+      subtotal = subtotal + subtotal * _above;
+    }
     return subtotal;
   }
 }
