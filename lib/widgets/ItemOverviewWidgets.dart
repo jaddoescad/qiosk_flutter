@@ -360,7 +360,8 @@ class SelectionGroup extends StatelessWidget {
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 onTap: () {
-                  if (type == 'Checkbox') item.selectCheckbox(selection);
+                  if (type == 'Checkbox')
+                    item.selectCheckbox(selection, section);
                   if (type == 'Radio') item.selectRadio(selection, section);
                 },
               )
@@ -403,7 +404,7 @@ class SelectionContainer extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(18),
               child: Text(
-                '\$ ${selection.price.toStringAsFixed(2)}',
+                !(selection.price.toStringAsFixed(2) == "0.00") ? '+\$${selection.price.toStringAsFixed(2)}' : "",
                 style: TextStyle(fontSize: 16, color: kMainColor),
               ),
             )),
@@ -414,12 +415,12 @@ class SelectionContainer extends StatelessWidget {
 
 class SingleCheckbox extends StatelessWidget {
   SingleCheckbox({this.selection});
-  final selection;
+  final Selection selection;
   @override
   Widget build(BuildContext context) {
     return Checkbox(
       activeColor: kMainColor,
-      value: selection.selected,
+      value: selection.disable ? false : selection.selected,
       onChanged: (bool value) {},
     );
   }

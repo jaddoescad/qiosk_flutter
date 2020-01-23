@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../models/restaurant.dart';
 import '../util/helper.dart';
+
 Future<bool> fetchSelection(context, itemID) async {
   final restaurant = Provider.of<Restaurant>(context);
   final item = Provider.of<Item>(context, listen: false);
@@ -26,15 +27,6 @@ Future<bool> fetchSelection(context, itemID) async {
   return true;
   // return document.data;
 }
-
-//  Stream streamSelection(context, itemID)  {
-//     final restaurant = Provider.of<Restaurant>(context);
-//       return Firestore.instance
-//       .collection('Restaurants')
-//       .document(restaurant.id)
-//       .collection('Selections')
-//       .document(itemID).snapshots();
-// }
 
 class Item extends ChangeNotifier {
   String id;
@@ -98,11 +90,48 @@ class Item extends ChangeNotifier {
     return ((basePrice + selectionPrice) * itemCount);
   }
 
-  void selectCheckbox(Selection selection) {
-    selection.selected = !selection.selected;
-    getTotalPrice();
-    checkIfItemMeetsAllConditions();
-    notifyListeners();
+  void selectCheckbox(Selection selection, section) {
+    if (!selection.disable) {
+      selection.selected = !selection.selected;
+      getTotalPrice();
+      toggleCheckboxSection(section);
+      checkIfItemMeetsAllConditions();
+      notifyListeners();
+    }
+  }
+
+  toggleCheckboxSection(Section section) {
+    if (section.max != null) {
+      if (getNumberofselections(section) == section.max) {
+        blockSelections(section);
+      } else if (getNumberofselections(section) < section.max) {
+        unblockSelections(section);
+      }
+    }
+  }
+
+  int getNumberofselections(Section section) {
+    int num = 0;
+    for (var selection in section.selections) {
+      if (selection.selected) {
+        num = num + 1;
+      }
+    }
+    return num;
+  }
+
+  blockSelections(Section section) {
+    for (var selection in section.selections) {
+      if (!selection.selected) {
+        selection.disable = true;
+      }
+    }
+  }
+
+    unblockSelections(Section section) {
+    for (var selection in section.selections) {
+        selection.disable = false;
+    }
   }
 
   selectRadio(selection, section) {
@@ -201,7 +230,6 @@ class Item extends ChangeNotifier {
   // static List sortArray(map) {
   //   // map.sort((a, b) {
 
-      
   //   //   return (int.tryParse(a.order) ?? null).compareTo(int.tryParse(b.order) ?? null);
   //   // });
   //   return map;
@@ -268,10 +296,13 @@ class Selection {
   final String title;
   final int order;
   bool selected;
+  bool disable;
   Selection(
       {@required this.id,
       this.price,
       @required this.title,
       this.order,
-      this.selected = false});
+      this.selected = false,
+      this.disable = false
+      });
 }
