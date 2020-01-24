@@ -62,7 +62,7 @@
 	<string>We would like to access calendar usage tools</string>
 	<key>NSContactsUsageDescription</key>
 	<string>We would like to access contact description tools</string>
-    <key>NSAppleMusicUsageDescription</key>
-    <string>We would like to access Apple Music description tools</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We would like to access Apple Music description tools</string>
 </dict>
 </plist>
