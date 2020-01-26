@@ -198,9 +198,6 @@ class _CartPageState extends State<CartPage> with RouteAware {
                                 ],
                               ),
                             ),
-
-                            // Text(" "),
-
                             Padding(
                               padding: const EdgeInsets.only(bottom: 10.0),
                               child: Row(

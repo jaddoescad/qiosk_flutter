@@ -47,8 +47,9 @@ class Payments {
   Future<PageToGo> goToPage(context) async {
     PageToGo goToPage;
     final payment = Provider.of<PaymentModel>(context);
+    final user = Provider.of<User>(context);
     await FirebaseAuth.instance.currentUser().then((firebaseUser) async {
-      if (firebaseUser != null) {
+      if (firebaseUser != null && user.uid != null) {
         if (payment.token != null) {
           goToPage = PageToGo.Checkout;
         } else {
